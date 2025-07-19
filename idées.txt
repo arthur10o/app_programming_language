@@ -118,3 +118,6 @@
 - Ajout algorithmes Simulated Annealing
 - Ajout algorithmes Dynamic Time Warping (DTW)
 - Ajout gestion des erreurs avancées
+- Ajout l'appel d'API
+- Ajout requête SQL
+- Ajout de la possibilité de tout typé ou non
