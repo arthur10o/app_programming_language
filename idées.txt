@@ -4,7 +4,7 @@
 - Ajout du référencement de variables du meme type
 - Ajout du référencement de constante du meme type
 - Ajout de la possibilité de réassigner des variables en gardant le type précédent
-- Ajout de calcul arithmétique basique (addition, soustraction, multiplicatio, divisio, reste, modulo)
+- Ajout de calcul arithmétique basique (addition, soustraction, multiplication, division, reste, modulo)
 - Ajout de calcul arithmétique complexe (addition, soustraction, multiplication, division, reste, modulo, référencement)
 - Ajout d'opération booléenne basique (==, !=, <, >, !<, !>, =>, !=>, <=, >=, !<=, !>=, &&, !&&, ||, !||, xor, !xor, !)
 - Ajout d'opération booléenne complexe (==, !=, <, >, !<, !>, =>, !=>, <=, >=, !<=, !>=, &&, !&&, ||, !||, xor, !xor, !, référencement)
