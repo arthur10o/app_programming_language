@@ -11,12 +11,12 @@
 <modulo> ::= '%' ;
 
 // Declarations
-<variable_declaration> ::= "let" <identifier> ":" <type> "=" <expression> ;
+<variable_declaration> ::= "var" <identifier> ":" <type> "=" <expression> ;
 <constant_declaration> ::= "const" <identifier> ":" <type> "=" <expression> ;
 <function_declaration> ::= "fn" <identifier> "(" <param_list> ")" ":" <type> "{" <block> "}" ;
 
 // Basic type
-<type> ::= "int" | "float" | "bool" | "string | "none" ;
+<type> ::= "int" | "float" | "bool" | "string | "None" ;
 
 // Expressions
 <expression> ::= <number> | <string> | <identifier> | <expression> <plus> <expression> | <expression> <minus> <expression> ;
