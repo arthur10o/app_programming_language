@@ -8,7 +8,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         },
-        icon: path.join(__dirname, 'assets/icons/icon.png')
+        icon: path.join(__dirname, 'assets/icons/logo_app.png')
     });
 
     mainWindow.loadFile('home/index.html');
