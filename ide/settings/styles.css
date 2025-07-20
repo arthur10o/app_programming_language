@@ -1,12 +1,36 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2f3b52, #1e2a38);
+    color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+}
+
 .settings-container {
-    max-width: 800px;
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .settings {
     background-color: #2e3b47;
-    padding: 20px;
     border-radius: 8px;
+    padding: 20px;
+    height: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 40px;
+    max-width: 70vw;
+    width: 70vw;
+    box-sizing: border-box;
 }
 
 .setting-item {
@@ -32,7 +56,7 @@ select, input[type="range"], input[type="checkbox"] {
 }
 
 input[type="range"] {
-    width: 100%;
+    width: 80%;
 }
 
 input[type="checkbox"] {
@@ -44,4 +68,46 @@ input[type="checkbox"] {
     justify-content: space-between;
     gap: 20px;
     margin-top: 30px;
+}
+
+action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.button {
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.button:hover {
+    background-color: #1e88e5;
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .button {
+        width: 100%;
+        min-width: unset;
+    }
 }
