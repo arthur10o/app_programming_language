@@ -1,0 +1,24 @@
+.console-container {
+    max-width: 1200px;
+}
+
+.console {
+    background-color: #212c39;
+    border-radius: 8px;
+    padding: 20px;
+    height: 300px;
+    overflow-y: auto;
+    color: #ddd;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+pre {
+    margin: 0;
+}
+
+.console .action-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+}

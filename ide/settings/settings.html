@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A++ IDE - Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container settings-container">
+        <header>
+            <h1>Settings</h1>
+            <p>Customize your development environment according to your preferences.</p>
+        </header>
+
+        <main>
+            <div class="settings">
+                <div class="setting-item">
+                    <label for="theme">Theme</label>
+                    <select id="theme">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </div>
+
+                <div class="setting-item">
+                    <label for="font-size">Font Size</label>
+                    <input type="range" id="font-size" min="10" max="30" step="1" value="16">
+                </div>
+
+                <div class="setting-item">
+                    <label for="auto-save">Auto Save</label>
+                    <input type="checkbox" id="auto-save">
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="button" id="save-settings">Save</button>
+                <button class="button" id="reset-settings">Reset</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 A++ IDE. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
