@@ -121,3 +121,6 @@
 - Ajout l'appel d'API
 - Ajout requête SQL
 - Ajout de la possibilité de tout typé ou non
+- Ajouter fichier head (Equivalent au .hpp ou au .h)
+- Ajout d'un debugeur
+- Integration de git pour github

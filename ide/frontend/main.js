@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const PATH = require('path');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -8,7 +8,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         },
-        icon: path.join(__dirname, 'assets/icons/logo_app.png')
+        icon: PATH.join(__dirname, 'assets/icons/logo_app.png')
     });
 
     mainWindow.loadFile('home/index.html');
