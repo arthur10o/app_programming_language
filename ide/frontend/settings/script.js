@@ -38,10 +38,10 @@ function saveSettings(event) {
         }
         settings.data_settings = data_settings;
         fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
-        console.log("[INFO] Paramètres enregistrés :", data_settings);
-        alert("Paramètres enregistrés avec succès !");
+        console.log("[INFO] Saved settings :", data_settings);
+        alert("Settings saved successfully!");
     } catch (error) {
-        console.error("[ERROR] Impossible de lire ou écrire le fichier de configuration:", error);
-        alert("Erreur lors de la sauvegarde des paramètres : " + error.message);
+        console.error("[ERROR] Unable to read or write configuration file:", error);
+        alert("Error saving settings: " + error.message);
     }
 }
