@@ -45,3 +45,27 @@ function saveSettings(event) {
         alert("Error saving settings: " + error.message);
     }
 }
+
+function resetSettings(event) {
+    const DATA_PATH = path.resolve(__dirname, '../data/data_settings.json');
+    if (event) event.preventDefault();
+    try {
+        let settings = {};
+        let default_settings = {};
+        if (fs.existsSync(DATA_PATH)) {
+            const DATA = fs.readFileSync(DATA_PATH, 'utf8');
+            settings = JSON.parse(DATA);
+            default_settings = settings.default_data_settings;
+        } else {
+            alert("No default settings found. Please save your settings first.");
+            return;
+        }
+        settings.data_settings = default_settings;
+        fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
+        console.log("[INFO] Reset settings to default:", default_settings);
+        alert("Settings reset to default successfully!");
+    } catch (error) {
+        console.error("[ERROR] Unable to reset settings:", error);
+        alert("Error resetting settings: " + error.message);
+    }
+}
