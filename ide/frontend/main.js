@@ -3,15 +3,29 @@ const PATH = require('path');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1000,
+        height: 700,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true
         },
         icon: PATH.join(__dirname, 'assets/icons/logo_app.png')
     });
 
-    mainWindow.loadFile('home/index.html');
+    mainWindow.loadFile(PATH.join(__dirname, 'home/index.html'));
 }
 
 app.whenReady().then(createWindow);
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});

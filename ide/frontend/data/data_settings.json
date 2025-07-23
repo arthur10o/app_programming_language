@@ -7,26 +7,25 @@
         },
         "font-family": "Segoe UI",
         "language": "en",
-        "auto-save": true,
-        "tabulation_size": 4,
+        "auto-save": false,
+        "tabulation-size": 4,
         "autocomplete": true,
-        "show_suggestions": true,
+        "show-suggestions": true,
         "syntax-highlighting": true,
         "show-line-numbers": true
     },
-
     "data_settings": {
         "theme": "dark",
         "font-size": {
-            "size": 14,
+            "size": 16,
             "unit": "px"
         },
-        "font-family": "Segoe UI",
+        "font-family": "monospace",
         "language": "en",
-        "auto-save": true,
-        "tabulation_size": 4,
+        "auto-save": false,
+        "tabulation-size": 4,
         "autocomplete": true,
-        "show_suggestions": true,
+        "show-suggestions": true,
         "syntax-highlighting": true,
         "show-line-numbers": true
     }
