@@ -78,6 +78,8 @@ input[type="checkbox"] {
     width: auto;
 }
 
-.settings .action-buttons {
-    justify-content: space-between;
+.value-animate {
+  transition: color 0.3s, font-size 0.3s;
+  color: #42a5f5;
+  font-size: 1.3em;
 }

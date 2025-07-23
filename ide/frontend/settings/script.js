@@ -1,6 +1,24 @@
 const fs = require('fs');
 const path = require('path');
 
+function animateValue(element, newValue) {
+    element.textContent = newValue;
+    element.classList.add('value-animate');
+    setTimeout(() => {
+        element.classList.remove('value-animate');
+    }, 300);
+}
+
+document.getElementById("font-size").addEventListener("change", (event) => {
+    const SELECTED_FONT_SIZE = event.target.value;
+    animateValue(document.getElementById("font-size-value"), SELECTED_FONT_SIZE);
+});
+
+document.getElementById("tabulation-size").addEventListener("change", (event) => {
+    const SELECTED_TABULATION_SIZE = event.target.value;
+    animateValue(document.getElementById("tab-size-value"), SELECTED_TABULATION_SIZE);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const SAVE_SETTINGS_BUTTON = document.getElementById("save-settings");
     const RESET_SETTINGS_BUTTON = document.getElementById("reset-settings");
@@ -10,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function saveSettings(event) {
     const DATA_PATH = path.resolve(__dirname, '../data/data_settings.json');
     if (event) event.preventDefault();
-    const data_settings = {
+    const DATA_SETTINGS = {
         "theme": document.getElementById("theme").value,
         "font-size": {
             "size": Number(document.getElementById("font-size").value),
@@ -28,17 +46,17 @@ function saveSettings(event) {
     try {
         let settings = {};
         if (fs.existsSync(DATA_PATH)) {
-            const data = fs.readFileSync(DATA_PATH, 'utf8');
-            settings = JSON.parse(data);
+            const DATA = fs.readFileSync(DATA_PATH, 'utf8');
+            settings = JSON.parse(DATA);
         } else {
             settings = {
-                default_data_settings: data_settings,
-                data_settings: data_settings
+                default_data_settings: DATA_SETTINGS,
+                data_settings: DATA_SETTINGS
             };
         }
-        settings.data_settings = data_settings;
+        settings.data_settings = DATA_SETTINGS;
         fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
-        console.log("[INFO] Saved settings :", data_settings);
+        console.log("[INFO] Saved settings :", DATA_SETTINGS);
         alert("Settings saved successfully!");
     } catch (error) {
         console.error("[ERROR] Unable to read or write configuration file:", error);

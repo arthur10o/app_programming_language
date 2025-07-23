@@ -124,4 +124,4 @@
 - Ajouter fichier head (Equivalent au .hpp ou au .h)
 - Ajout d'un debugeur
 - Integration de git pour github
-- Possibilité de lire des fichiers JSON
+- Possibilité de lire / écrire / ouvrire des fichiers JSON
