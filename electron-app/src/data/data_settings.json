@@ -1,0 +1,32 @@
+{
+    "default_data_settings": {
+        "theme": "dark",
+        "font-size": {
+            "size": 14,
+            "unit": "px"
+        },
+        "font-family": "Segoe UI",
+        "language": "en",
+        "auto-save": false,
+        "tabulation-size": 4,
+        "autocomplete": true,
+        "show-suggestions": true,
+        "syntax-highlighting": true,
+        "show-line-numbers": true
+    },
+    "data_settings": {
+        "theme": "dark",
+        "font-size": {
+            "size": 14,
+            "unit": "px"
+        },
+        "font-family": "Segoe UI",
+        "language": "en",
+        "auto-save": false,
+        "tabulation-size": 4,
+        "autocomplete": true,
+        "show-suggestions": true,
+        "syntax-highlighting": true,
+        "show-line-numbers": true
+    }
+}

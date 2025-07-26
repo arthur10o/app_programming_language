@@ -1,0 +1,127 @@
+- IDE (autocomplétion, refactoring, Gestion de projet, débogage, profilage)
+- Assignation de variables typé (bool, str, int, float, None)
+- Assignation de constante typé (bool, str, int, float, None)
+- Ajout du référencement de variables du meme type
+- Ajout du référencement de constante du meme type
+- Ajout de la possibilité de réassigner des variables en gardant le type précédent
+- Ajout de calcul arithmétique basique (addition, soustraction, multiplication, division, reste, modulo)
+- Ajout de calcul arithmétique complexe (addition, soustraction, multiplication, division, reste, modulo, référencement)
+- Ajout d'opération booléenne basique (==, !=, <, >, !<, !>, =>, !=>, <=, >=, !<=, !>=, &&, !&&, ||, !||, xor, !xor, !)
+- Ajout d'opération booléenne complexe (==, !=, <, >, !<, !>, =>, !=>, <=, >=, !<=, !>=, &&, !&&, ||, !||, xor, !xor, !, référencement)
+- Ajout de boucle while
+- Ajout de boucle for
+- Ajout de condition (if, else if, else)
+- Ajout de liste et des fonctionnalitées associées
+- Ajout de dictionnaire et des fonctionnalitées associées
+- Ajout de enum et des fonctionnalitées associées
+- Ajout de tuplet et des fonctionnalitées associées
+- Ajout de structure et des fonctionnalitées associées
+- Ajout d'ensembles et des fonctionnalitées associées
+- Ajout de fonction (appel et nomination)
+- Ajout d'un systéme de niveau de porté des déclarations de variables (variables global et local)
+- Ajout de class
+- Ajout d'un constructeur de class
+- Ajout de la possiblité de créé des méthodes
+- Ajout de toutes les fonctionnalitées associées aux class
+- Ajout de constante mathématique qui sont calculé super précisément (+200 décimales)
+- Ajout de constante physique qui sont calculé super précisément (+200 décimales)
+- Ajout de constante chimique qui sont calculé super précisément (+200 décimales)
+- Ajout nombres complexes
+- Ajout formule mathématique
+- Ajout formule physique
+- Ajout formule chimique
+- Ajout de vecteur à 2 dimensions
+- Ajour de vecteur à 3 dimensions
+- Ajout de vecteur à n dimensions
+- Ajout de matrice
+- Ajout de calcul sur les vecteurs
+- Ajout de fonction cryptographique chiffrement de César
+- Ajout de fonction cryptographique chiffrement de Vigenère
+- Ajout de fonction cryptographique chiffrement de AES
+- Ajout de fonction cryptographique chiffrement de DES
+- Ajout de fonction cryptographique chiffrement de RSA
+- Ajout de fonction cryptographique chiffrement de sha-256
+- Ajout de fonction cryptographique chiffrement de sha-512
+- Ajout de fonction cryptographique chiffrement de sha-3
+- Ajout de fonction cryptographique chiffrement de black3
+- Ajout de fonction cryptographique chiffrement de MD5
+- Ajout de fonction cryptographique chiffrement de sha-1
+- Ajout de fonction cryptographique chiffrement de ElGamal
+- Ajout de fonction cryptographique chiffrement de ECC
+- Ajout de fonction cryptographique chiffrement de Diffie-Hellman
+- Ajout de fonction cryptographique chiffrement de ChaCha20
+- Ajout de fonction cryptographique chiffrement de chiffrement affine
+- Ajout de fonction cryptographique chiffrement de chiffrement playfair
+- Ajout de fonction cryptographique chiffrement de chiffrement Hill
+- Ajout de fonction cryptographique chiffrement de chiffrement Hill Cipher
+- Ajout de fonctions de chiffrements d'images
+- Ajout de fonctions de chiffrement de fichiers en tout genre
+- Ajout de fonction asynchrome
+- Ajout d'une gestion du temps
+- Ajout de module
+- Ajout d'import
+- Ajout de traitement de fichier
+- Ajout de Multithreading
+- Possibilité de faire des interfaces graphiques
+- Ajout algorithmes Quik Sort
+- Ajout algorithmes Merge Sort
+- Ajout algorithmes Heap Sort
+- Ajout algorithmes Bubble Sort
+- Ajout algorithmes Insertion Sort
+- Ajout algorithmes Selection Sort
+- Ajout algorithmes Counting Sort
+- Ajout algorithmes Radix Sort
+- Ajout algorithmes Bucket Sort
+- Ajout algorithmes Shell Sort
+- Ajout algorithmes Quik Sort
+- Ajout algorithmes Binary Search
+- Ajout algorithmes Linear Search
+- Ajout algorithmes Jump Search
+- Ajout algorithmes Exponential Search
+- Ajout algorithmes Interpolation Search
+- Ajout de graphes
+- Ajout d'arbre pondéré
+- Ajout algorithmes Dijkstra
+- Ajout algorithmes Bellman-Ford
+- Ajout algorithmes A* 
+- Ajout algorithmes Floyd-Warshall
+- Ajout algorithmes Prim
+- Ajout algorithmes DFS
+- Ajout algorithmes BFS
+- Ajout algorithmes Topological Sort
+- Ajout algorithmes DijkstTarjanra
+- Ajout algorithmes Fibonacci (récursif & dynamique)
+- Ajout algorithmes Factorielle (récursif & itérative)
+- Ajout algorithmes Knapsack Problem (sac à dos 0/1)
+- Ajout algorithmes Longest Common Subsequence
+- Ajout algorithmes Longest Increasing Subsequence
+- Ajout algorithmes Edit Distance (Levenshtein)
+- Ajout algorithmes Matrix Chain Multiplication
+- Ajout algorithmes Rod Cutting Problem
+- Ajout algorithmes Subset Sum
+- Ajout algorithmes Coin Change Problem
+- Ajout algorithmes Crible d'Ératosthène
+- Ajout algorithmes Algorithme d’Euclide
+- Ajout algorithmes Exponentiation rapide
+- Ajout algorithmes Racine carrée de Newton
+- Ajout algorithmes Nombre de Catalan
+- Ajout algorithmes Permutation/Combinaison
+- Ajout algorithmes Fast Fourier Transform
+- Ajout algorithmes Z-Algorithm
+- Ajout algorithmes KMP
+- Ajout algorithmes Manacher
+- Ajout algorithmes Union-Find / Disjoint Set Union
+- Ajout algorithmes Segment Tree / Fenwick Tree (arbre de somme)
+- Ajout algorithmes Backtracking
+- Ajout algorithmes Monte Carlo
+- Ajout algorithmes Minimax
+- Ajout algorithmes Simulated Annealing
+- Ajout algorithmes Dynamic Time Warping (DTW)
+- Ajout gestion des erreurs avancées
+- Ajout l'appel d'API
+- Ajout requête SQL
+- Ajout de la possibilité de tout typé ou non
+- Ajouter fichier head (Equivalent au .hpp ou au .h)
+- Ajout d'un debugeur
+- Integration de git pour github
+- Possibilité de lire / écrire / ouvrire des fichiers JSON

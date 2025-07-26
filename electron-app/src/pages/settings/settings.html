@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A++ IDE - Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../../styles/common_css.css">
+</head>
+<body>
+    <div class="container settings-container">
+        <header>
+            <h1>Settings</h1>
+            <p>Customize your development environment according to your preferences.</p>
+        </header>
+        <br>
+        <main>
+            <form class="settings" aria-label="IDE Settings">
+                <fieldset>
+                    <legend>Appearance</legend>
+                    <div class="setting-item">
+                        <label for="theme">Theme</label>
+                        <select id="theme">
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="font-size">Font Size</label>
+                        <input type="range" id="font-size" min="10" max="30" step="1" value="16">
+                        <span id="font-size-value">16</span>px
+                    </div>
+                    <div class="font-item">
+                        <label for="font-family">Font Family</label>
+                        <select id="font-family">
+                            <option value="Segoe UI">Segoe UI</option>
+                            <option value="monospace">Monospace</option>
+                            <option value="sans-serif">Sans-serif</option>
+                            <option value="serif">Serif</option>
+                        </select>
+                    </div>
+                    <div class="language-item">
+                        <label for="language">Language</label>
+                        <select id="language">
+                            <option value="en">English</option>
+                            <option value="fr">French</option>
+                            <option value="es">Spanish</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Editor Features</legend>
+                    <div class="setting-item">
+                        <label for="auto-save">Auto Save</label>
+                        <input type="checkbox" id="auto-save">
+                    </div>
+                    <div class="tabulation-size-item">
+                        <label for="tabulation-size">Tabulation Size</label>
+                        <input type="range" id="tabulation-size" min="1" max="8" value="4">
+                        <span id="tab-size-value">4</span>
+                    </div>
+                    <div class="autocomplete-item">
+                        <label for="autocomplete">Autocomplete</label>
+                        <input type="checkbox" id="autocomplete" checked>
+                    </div>
+                    <div class="suggestions-item">
+                        <label for="suggestions">Show Suggestions</label>
+                        <input type="checkbox" id="suggestions" checked>
+                    </div>
+                    <div class="syntax-highlighting-item">
+                        <label for="syntax-highlighting">Syntax Highlighting</label>
+                        <input type="checkbox" id="syntax-highlighting" checked>
+                    </div>
+                    <div class="line-numbers-item">
+                        <label for="line-numbers">Show Line Numbers</label>
+                        <input type="checkbox" id="line-numbers" checked>
+                    </div>
+                </fieldset>
+                <!-- TODO: Ajouter la personnalisation des raccourcis clavier -->
+                <!-- TODO: Ajouter la gestion des profils -->
+                <fieldset>
+                    <legend>Preview</legend>
+                    <div id="preview-area" style="border:1px solid #ccc; margin:10px 0; padding:10px; background:#222; color:#fff; font-family:monospace;">
+                        <span id="preview-text"></span>
+                    </div>
+                </fieldset>
+            </form>
+            <div class="action-buttons">
+                <button class="button" id="save-settings" type="button" onclick="saveSettings(event)">Save</button>
+                <button class="button" id="reset-settings" type="button" onclick="resetSettings(event)">Reset</button>
+                <button class="button" id="back-home" type="button" onclick="window.location.href = '../home/index.html';">Back to Home</button>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 A++ IDE. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+    <script src="../../scripts/styleManager.js"></script>
+</body>
+</html>
