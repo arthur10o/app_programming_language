@@ -3,6 +3,7 @@
   display: block;
   padding: 8px 0;
 }
+
 .line-number {
   display: inline-block;
   width: 2em;
@@ -10,6 +11,7 @@
   margin-right: 0.5em;
   opacity: 0.7;
 }
+
 .code-line {
   font-family: inherit;
   display: inline-block;

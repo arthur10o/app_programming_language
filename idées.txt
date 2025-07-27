@@ -12,14 +12,22 @@
 - Ajout de boucle for
 - Ajout de condition (if, else if, else)
 - Ajout de liste et des fonctionnalitées associées
+- Ajout de linked list et des fonctionnalitées associées
 - Ajout de dictionnaire et des fonctionnalitées associées
 - Ajout de enum et des fonctionnalitées associées
 - Ajout de tuplet et des fonctionnalitées associées
 - Ajout de structure et des fonctionnalitées associées
 - Ajout d'ensembles et des fonctionnalitées associées
+- Ajout de stack et des fonctionnaitées associées
+- Ajout de queue et des fonctionnaitées associées
+- Ajout de graphes et des fonctionnaitées associées
+- Ajout de heap et des fonctionnaitées associées
 - Ajout de fonction (appel et nomination)
 - Ajout d'un systéme de niveau de porté des déclarations de variables (variables global et local)
+- Ajout du try / expect
 - Ajout de class
+- Ajout de l'héritage dans les class
+- Ajout du polymorphisme dans les class
 - Ajout d'un constructeur de class
 - Ajout de la possiblité de créé des méthodes
 - Ajout de toutes les fonctionnalitées associées aux class
@@ -34,6 +42,7 @@
 - Ajour de vecteur à 3 dimensions
 - Ajout de vecteur à n dimensions
 - Ajout de matrice
+- Ajout de la récursion
 - Ajout de calcul sur les vecteurs
 - Ajout de fonction cryptographique chiffrement de César
 - Ajout de fonction cryptographique chiffrement de Vigenère
@@ -54,6 +63,7 @@
 - Ajout de fonction cryptographique chiffrement de chiffrement playfair
 - Ajout de fonction cryptographique chiffrement de chiffrement Hill
 - Ajout de fonction cryptographique chiffrement de chiffrement Hill Cipher
+- Ajout de table de hash et des fonctionnaitées associées
 - Ajout de fonctions de chiffrements d'images
 - Ajout de fonctions de chiffrement de fichiers en tout genre
 - Ajout de fonction asynchrome
@@ -80,6 +90,7 @@
 - Ajout algorithmes Exponential Search
 - Ajout algorithmes Interpolation Search
 - Ajout de graphes
+- Ajout d'arbre et des fonctionnaitées associées
 - Ajout d'arbre pondéré
 - Ajout algorithmes Dijkstra
 - Ajout algorithmes Bellman-Ford
@@ -118,6 +129,7 @@
 - Ajout algorithmes Simulated Annealing
 - Ajout algorithmes Dynamic Time Warping (DTW)
 - Ajout gestion des erreurs avancées
+- Ajout des regex
 - Ajout l'appel d'API
 - Ajout requête SQL
 - Ajout de la possibilité de tout typé ou non
@@ -125,3 +137,4 @@
 - Ajout d'un debugeur
 - Integration de git pour github
 - Possibilité de lire / écrire / ouvrire des fichiers JSON
+- Possibilité de lire / écrire / ouvrire des fichiers de tout types
