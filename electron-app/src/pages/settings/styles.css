@@ -1,7 +1,8 @@
 #preview-text.tab-preview {
-  white-space: pre;
+  white-space: pre-wrap;
   display: block;
   padding: 8px 0;
+  word-break: break-word;
 }
 
 .line-number {
@@ -18,9 +19,6 @@
   min-width: 1em;
 }
 
-#preview-text.tab-preview {
-  white-space: pre;
-}
 .settings-container {
     max-width: 100%;
     width: 100%;

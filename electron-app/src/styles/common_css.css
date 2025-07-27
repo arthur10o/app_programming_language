@@ -54,6 +54,25 @@ button:focus {
     outline: none;
 }
 
+.hl-function {
+    color: #C586C0;
+    font-weight: bold;
+}
+.hl-keyword {
+    color: #D16969;
+    font-weight: bold;
+}
+.hl-string {
+    color: #CE9178;
+}
+.hl-number {
+    color: #B5CEA8;
+}
+.hl-comment {
+    color: #6A9955;
+    font-style: italic;
+}
+
 @media (max-width: 600px) {
     .button {
         width: 100%;

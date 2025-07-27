@@ -11,6 +11,7 @@
 - Ajout de boucle while
 - Ajout de boucle for
 - Ajout de condition (if, else if, else)
+- Ajout de default
 - Ajout de liste et des fonctionnalitées associées
 - Ajout de linked list et des fonctionnalitées associées
 - Ajout de dictionnaire et des fonctionnalitées associées
@@ -24,7 +25,7 @@
 - Ajout de heap et des fonctionnaitées associées
 - Ajout de fonction (appel et nomination)
 - Ajout d'un systéme de niveau de porté des déclarations de variables (variables global et local)
-- Ajout du try / expect
+- Ajout du try / expect / finnaly
 - Ajout de class
 - Ajout de l'héritage dans les class
 - Ajout du polymorphisme dans les class
