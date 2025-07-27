@@ -1,22 +1,8 @@
-#preview-text.tab-preview {
+#code-editor.tab-preview {
   white-space: pre-wrap;
   display: block;
   padding: 8px 0;
   word-break: break-word;
-}
-
-.line-number {
-  display: inline-block;
-  width: 2em;
-  text-align: right;
-  margin-right: 0.5em;
-  opacity: 0.7;
-}
-
-.code-line {
-  font-family: inherit;
-  display: inline-block;
-  min-width: 1em;
 }
 
 .settings-container {

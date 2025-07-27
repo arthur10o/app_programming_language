@@ -1,8 +1,14 @@
+const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
+
 const BUTTON_LOAD_CODE = document.getElementById('load-code');
 const FILE_INPUT = document.getElementById('file-input');
 
 const BUTTON_SAVE_CODE = document.getElementById('save-code');
 const CODE_EDITOR = document.getElementById('code-editor');
+
+CODE_EDITOR.addEventListener('input', () => {
+    syntax_highlighting();
+});
 
 BUTTON_LOAD_CODE.addEventListener('click', () => {
     FILE_INPUT.click();

@@ -22,7 +22,7 @@ document.getElementById("theme").addEventListener("change", (event) => {
 document.getElementById("font-size").addEventListener("change", (event) => {
     const SELECTED_FONT_SIZE = event.target.value;
     animateValue(document.getElementById("font-size-value"), SELECTED_FONT_SIZE);
-    document.getElementById("preview-text").style.fontSize = `${SELECTED_FONT_SIZE}px`;
+    document.getElementById("code-editor").style.fontSize = `${SELECTED_FONT_SIZE}px`;
     updatePreview();
 });
 
@@ -102,7 +102,7 @@ function updatePreview() {
     const SYNTAX_HIGHLIGHTING = document.getElementById("syntax-highlighting").checked;
 
     const CODES_LINES =
-        "// Ceci est un commentaire\n/*Ceci est un\n<&tab_char>commentaire multiligne */\n\nfn afficherMessage() {\n<&tab_char>const message = \"HELLO, 'WORD' !\";\n<&tab_char>let compteur = 0;\n<&tab_char>for (let i = 0; i < 10; i++) {\n<&tab_char><&tab_char>if (i % 2 === 0) {\n<&tab_char><&tab_char><&tab_char>log(message + \" \" + i);\n<&tab_char><&tab_char>} else {\n<&tab_char><&tab_char><&tab_char>// Nombre impair\n<&tab_char><&tab_char><&tab_char><&tab_char>console.log(\"Impair : \" + i);\n<&tab_char><&tab_char>}\n<&tab_char>}\n}\n\nconst pi = 3.14159;\ntry {\n<&tab_char>operation();\n} catch (e) {\n<&tab_char>console.log('Erreur : ' + e);\n} finally {\n<&tab_char>return;\n}";
+        "// Ceci est un commentaire\n/*Ceci est un\n<&tab_char>commentaire multiligne */\n\nfn afficherMessage() {\n<&tab_char>const str message = \"HELLO, 'WORD' !\";\n<&tab_char>let int compteur = 0;\n<&tab_char>for (let int i = 0; i < 10; i++) {\n<&tab_char><&tab_char>if (i % 2 === 0) {\n<&tab_char><&tab_char><&tab_char>log(message + \" \" + i);\n<&tab_char><&tab_char>} else {\n<&tab_char><&tab_char><&tab_char>// Nombre impair\n<&tab_char><&tab_char><&tab_char><&tab_char>log(\"Impair : \" + i);\n<&tab_char><&tab_char>}\n<&tab_char>}\n}\n\nconst float pi = 3.14159;\ntry {\n<&tab_char>operation();\n} catch (e) {\n<&tab_char>log('Erreur : ' + e);\n} finally {\n<&tab_char>return;\n}";
     const TAB_CHAR = '\t';
     const TAB_DISPLAY = TAB_CHAR.repeat(TAB_SIZE);
     const LINES = CODES_LINES.split('\n');
@@ -129,7 +129,7 @@ function updatePreview() {
         }
         html += '</div>';
     }
-    const PREVIEW = document.getElementById("preview-text");
+    const PREVIEW = document.getElementById("code-editor");
     PREVIEW.innerHTML = html;
     PREVIEW.style.fontSize = FONT_SIZE + 'px';
     PREVIEW.style.fontFamily = FONT_FAMILY;

@@ -1,16 +1,16 @@
 function syntax_highlighting() {
-    const PREVIEW = document.getElementById("preview-text");
+    const PREVIEW = document.getElementById("code-editor");
     const CODES_LINES = Array.from(PREVIEW.querySelectorAll('.code-line'));
     let inMultiLineComment = false;
 
     for (const CODE_LINE of CODES_LINES) {
         let code = CODE_LINE.textContent;
 
-        if(inMultiLineComment) {
+        if (inMultiLineComment) {
             const END_INDEX = code.indexOf('*/');
-            if(END_INDEX !== -1) {
-                const BEFORE = code.slice(0, END_INDEX +2);
-                const AFTER = code.slice(END_INDEX +2);
+            if (END_INDEX !== -1) {
+                const BEFORE = code.slice(0, END_INDEX + 2);
+                const AFTER = code.slice(END_INDEX + 2);
                 CODE_LINE.innerHTML = `<span class="hl-comment">${BEFORE}</span>${AFTER}`;
                 inMultiLineComment = false;
             } else {
@@ -51,25 +51,19 @@ function syntax_highlighting() {
                     };
                 };
 
-
                 code = code
                     .replace(/\/\/.*/g, protect("hl-comment"))
                     .replace(/(["'])(?:(?!\1)[^\\]|\\.)*\1/g, protect("hl-string"));
 
                 const PATTERNS = [
-                    {
-                        regex: /\b\d+(\.\d+)?\b/g,
-                        className: "hl-number"
-                    },
-                    {
-                        regex: /\b(fn)\s+(\w+)\b/g,
-                        className: "hl-keyword hl-function",
-                        groups: [1, 2]
-                    },
-                    {
-                        regex: /\b(const|let|if|else\s+if|else|for|while|return|switch|case|break|default|try|catch|finally)\b/g,
-                        className: "hl-keyword"
-                    }
+                    { regex: /\bimport\s+(?:[\w*\s{},]*\s+from\s+)?["'][^"']+["']/g, className: "hl-import" },
+                    { regex: /\btrue|false|null|\d+(\.\d+)?\b/g, className: "hl-literal" },
+                    { regex: /\b[a-zA-Z_$][\w$]*\s*\([^)]*\)\s*{/g, className: "hl-function-methode" },
+                    { regex: /\b(const|let|if|else\s+if|else|for|while|return|switch|case|break|default|try|catch|finally|fn)\b/g, className: "hl-keyword" },
+                    { regex: /\b(int|float|bool|str|None)\b/g, className: "hl-native-type" },
+                    { regex: /\b(?:var)\s+[a-z_$][\w$]*/g, className: "hl-variable" },
+                    { regex: /\b(?:const)\s+[A-Z_$][\w$]*/g, className: "hl-constant" },
+                    { regex: /\b(if|else if|else|for|while|do|switch|case|default|break|continue|return|try|catch|finally)\b/g, className: "hl-control-structure" }
                 ];
 
                 for (const { regex, className, groups } of PATTERNS) {
