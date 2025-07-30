@@ -16,6 +16,7 @@
 - Ajout de linked list et des fonctionnalitées associées
 - Ajout de dictionnaire et des fonctionnalitées associées
 - Ajout de enum et des fonctionnalitées associées
+- Ajout de DSA et des fonctionnalitées associées
 - Ajout de tuplet et des fonctionnalitées associées
 - Ajout de structure et des fonctionnalitées associées
 - Ajout d'ensembles et des fonctionnalitées associées
