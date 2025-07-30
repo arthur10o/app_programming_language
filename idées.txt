@@ -22,6 +22,7 @@
 - Ajout d'ensembles et des fonctionnalitées associées
 - Ajout de stack et des fonctionnaitées associées
 - Ajout de queue et des fonctionnaitées associées
+- Ajout de priority queue
 - Ajout de graphes et des fonctionnaitées associées
 - Ajout de heap et des fonctionnaitées associées
 - Ajout de fonction (appel et nomination)
@@ -140,3 +141,6 @@
 - Integration de git pour github
 - Possibilité de lire / écrire / ouvrire des fichiers JSON
 - Possibilité de lire / écrire / ouvrire des fichiers de tout types
+- Ajout d'autre table de hashage
+- Ajout d'une table de hashage personnallisable
+- Ajout de la récursion
