@@ -144,3 +144,4 @@
 - Ajout d'autre table de hashage
 - Ajout d'une table de hashage personnallisable
 - Ajout de la récursion
+- Ajout création base de données
