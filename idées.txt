@@ -145,3 +145,5 @@
 - Ajout d'une table de hashage personnallisable
 - Ajout de la récursion
 - Ajout création base de données
+- Faire son propre éditeur de fichier
+- Ajouter logo A++ à l'extension 
