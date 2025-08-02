@@ -11,8 +11,16 @@
 - Ajout de boucle while
 - Ajout de boucle for
 - Ajout de condition (if, else if, else)
+- Analyse de sécurité du code en temps réel
+- Contrôle des permissions (accès fichiers, net, etc.)
+- Possibilité d'appliquer un chiffrement homomorphique ou une computation chiffrée
 - Ajout de default
+- Ajout de Define
+- Ajout de Macros syntaxiques puissantes
 - Ajout de liste et des fonctionnalitées associées
+- Ajout de liste en 2 dimensions
+- Ajout de liste en 3 dimensions
+- Ajout de liste en n dimensions
 - Ajout de linked list et des fonctionnalitées associées
 - Ajout de dictionnaire et des fonctionnalitées associées
 - Ajout de enum et des fonctionnalitées associées
@@ -25,7 +33,12 @@
 - Ajout de priority queue
 - Ajout de graphes et des fonctionnaitées associées
 - Ajout de heap et des fonctionnaitées associées
+- Ajout de max heap et des fonctionnaitées associées
+- Ajout de hashmap et des fonctionnaitées associées
+- Ajout de hashset et des fonctionnaitées associées
+- Ajout de trie et des fonctionnaitées associées
 - Ajout de fonction (appel et nomination)
+- Ajout de fonction asynchrome
 - Ajout d'un systéme de niveau de porté des déclarations de variables (variables global et local)
 - Ajout du try / expect / finnaly
 - Ajout de class
@@ -34,9 +47,13 @@
 - Ajout d'un constructeur de class
 - Ajout de la possiblité de créé des méthodes
 - Ajout de toutes les fonctionnalitées associées aux class
+- Ajout de fonction mathémarique (sum, integral, factoriel ...)
 - Ajout de constante mathématique qui sont calculé super précisément (+200 décimales)
+- Support natif des unités de mesure mathématique
 - Ajout de constante physique qui sont calculé super précisément (+200 décimales)
+- Support natif des unités de mesure physiques
 - Ajout de constante chimique qui sont calculé super précisément (+200 décimales)
+- Support natif des unités de mesure chimique
 - Ajout nombres complexes
 - Ajout formule mathématique
 - Ajout formule physique
@@ -47,9 +64,14 @@
 - Ajout de matrice
 - Ajout de la récursion
 - Ajout de calcul sur les vecteurs
+- Ajout d'import
+- Ajout de module
+- Ajour de fonctions d'aléatoire
+- Ajout de fonction de probabilité
 - Ajout de fonction cryptographique chiffrement de César
 - Ajout de fonction cryptographique chiffrement de Vigenère
 - Ajout de fonction cryptographique chiffrement de AES
+- Ajout de fonction cryptographique chiffrement de TLS
 - Ajout de fonction cryptographique chiffrement de DES
 - Ajout de fonction cryptographique chiffrement de RSA
 - Ajout de fonction cryptographique chiffrement de sha-256
@@ -67,15 +89,8 @@
 - Ajout de fonction cryptographique chiffrement de chiffrement Hill
 - Ajout de fonction cryptographique chiffrement de chiffrement Hill Cipher
 - Ajout de table de hash et des fonctionnaitées associées
-- Ajout de fonctions de chiffrements d'images
-- Ajout de fonctions de chiffrement de fichiers en tout genre
-- Ajout de fonction asynchrome
-- Ajout d'une gestion du temps
-- Ajout de module
-- Ajout d'import
-- Ajout de traitement de fichier
-- Ajout de Multithreading
-- Possibilité de faire des interfaces graphiques
+- Ajout d'autre table de hashage
+- Ajout d'une table de hashage personnallisable
 - Ajout algorithmes Quik Sort
 - Ajout algorithmes Merge Sort
 - Ajout algorithmes Heap Sort
@@ -92,6 +107,10 @@
 - Ajout algorithmes Jump Search
 - Ajout algorithmes Exponential Search
 - Ajout algorithmes Interpolation Search
+- Ajout d'une gestion du temps
+- Ajout de traitement de fichier
+- Ajout de Multithreading
+- Possibilité de faire des interfaces graphiques
 - Ajout de graphes
 - Ajout d'arbre et des fonctionnaitées associées
 - Ajout d'arbre pondéré
@@ -132,7 +151,9 @@
 - Ajout algorithmes Simulated Annealing
 - Ajout algorithmes Dynamic Time Warping (DTW)
 - Ajout gestion des erreurs avancées
+- Ajout de l'annotations de code personnalisables / meta-programming
 - Ajout des regex
+- Ajout de Pattern Matching
 - Ajout l'appel d'API
 - Ajout requête SQL
 - Ajout de la possibilité de tout typé ou non
@@ -141,17 +162,27 @@
 - Integration de git pour github
 - Possibilité de lire / écrire / ouvrire des fichiers JSON
 - Possibilité de lire / écrire / ouvrire des fichiers de tout types
-- Ajout d'autre table de hashage
-- Ajout d'une table de hashage personnallisable
-- Ajout de la récursion
+- Ajout de fonctions de chiffrements d'images
+- Ajout de fonctions de chiffrement de fichiers en tout genre
 - Ajout de vérification formelle
 - Ajout création base de données
 - Faire son propre éditeur de fichier
-- Ajouter logo A++ à l'extension
+- Ajouter logo A++ à l'extension dans l'explorateur de fichier
 - Ajout de machin learning
 - Ajout du Hot Reload / Live coding
 - Ajout de plugin system pour le langage
-- Ajout de refactorisation automatisée basée sur IA
+- Ajout d'une refactorisation automatisée basée sur IA
+- Ajout d'un système de visualisation de modèle (graphes de neurones, etc.)
+- Moteur de raisonnement logique intégré
+- Optimisation symbolique / différentiable (IA / ML)
 - Ajout d'un autoML intégré
 - Ajout de fonctionnalités NLP intégrées
 - Ajout d'un moteur d’IA intégré pour créer des bots ou assistants internes
+- Ajout de l'interopérabilité multi-langages
+- Documentation auto généré à partir du code
+- Moteur de rendu graphique 2D/3D intégré
+- Physique temps réel intégrée
+- Support de la VR/AR natif
+- Programmation audio / synthèse sonore
+- Tutoriel interactif intégré à l’IDE pour apprendre le langage
+- Traduction automatique des messages d’erreur
