@@ -144,6 +144,14 @@
 - Ajout d'autre table de hashage
 - Ajout d'une table de hashage personnallisable
 - Ajout de la récursion
+- Ajout de vérification formelle
 - Ajout création base de données
 - Faire son propre éditeur de fichier
-- Ajouter logo A++ à l'extension 
+- Ajouter logo A++ à l'extension
+- Ajout de machin learning
+- Ajout du Hot Reload / Live coding
+- Ajout de plugin system pour le langage
+- Ajout de refactorisation automatisée basée sur IA
+- Ajout d'un autoML intégré
+- Ajout de fonctionnalités NLP intégrées
+- Ajout d'un moteur d’IA intégré pour créer des bots ou assistants internes
