@@ -1,3 +1,11 @@
+/*
+    FIle        : script.js
+    Version     : 1.0
+    Description : Settings script for A++ IDE
+    Author      : Arthur
+    Created     : 2025-07-27
+    Last Update : 2025-07-27
+*/
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
 
 const fs = require('fs');

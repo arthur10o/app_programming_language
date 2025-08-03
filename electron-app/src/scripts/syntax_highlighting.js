@@ -1,3 +1,11 @@
+/*
+    FIle        : syntax_highlighting.js
+    Version     : 1.0
+    Description : Syntax highlighting script for A++ IDE
+    Author      : Arthur
+    Created     : 2025-07-27
+    Last Update : 2025-07-27
+*/
 function syntax_highlighting() {
     const PREVIEW = document.getElementById("code-editor");
     const CODES_LINES = Array.from(PREVIEW.querySelectorAll('.code-line'));

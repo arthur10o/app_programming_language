@@ -1,3 +1,11 @@
+/*
+    File        : styles.css
+    Version     : 1.0
+    Description : Settings styles for A++ IDE
+    Author      : Arthur
+    Created     : 2025-07-26
+    Last Update : 2025-07-27
+*/
 #code-editor.tab-preview {
   white-space: pre-wrap;
   display: block;

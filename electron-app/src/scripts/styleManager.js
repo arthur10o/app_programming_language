@@ -1,3 +1,11 @@
+/*
+    File        : styleManager.js
+    Version     : 1.0
+    Description : Style manager script for A++ IDE
+    Author      : Arthur
+    Created     : 2025-07-26
+    Last Update : 2025-07-26
+*/
 const fs = require('fs');
 const path = require('path');
 
