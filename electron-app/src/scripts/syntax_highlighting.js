@@ -64,25 +64,31 @@ function syntax_highlighting() {
                     .replace(/(["'])(?:(?!\1)[^\\]|\\.)*\1/g, protect("hl-string"));
 
                 const PATTERNS = [
+                    { 
+                        regex: /\b(let|const)\s+(int|float|bool|str|None)\s+([a-zA-Z_$][\w$]*)/g,
+                        replaceFn: (match, decl, type, name) => {
+                            const declSpan = `<span class="hl-keyword">${decl}</span>`;
+                            const typeSpan = `<span class="hl-native-type">${type}</span>`;
+                            const nameClass = decl === "const" ? "hl-constant" : "hl-variable";
+                            const nameSpan = `<span class="${nameClass}">${name}</span>`;
+                            return `${declSpan} ${typeSpan} ${nameSpan}`;
+                        }
+                    },
                     { regex: /\bimport\s+(?:[\w*\s{},]*\s+from\s+)?["'][^"']+["']/g, className: "hl-import" },
                     { regex: /\btrue|false|null|\d+(\.\d+)?\b/g, className: "hl-literal" },
                     { regex: /\b[a-zA-Z_$][\w$]*\s*\([^)]*\)\s*{/g, className: "hl-function-methode" },
                     { regex: /\b(const|let|if|else\s+if|else|for|while|return|switch|case|break|default|try|catch|finally|fn)\b/g, className: "hl-keyword" },
                     { regex: /\b(int|float|bool|str|None)\b/g, className: "hl-native-type" },
-                    { regex: /\b(?:var)\s+[a-z_$][\w$]*/g, className: "hl-variable" },
-                    { regex: /\b(?:const)\s+[A-Z_$][\w$]*/g, className: "hl-constant" },
                     { regex: /\b(if|else if|else|for|while|do|switch|case|default|break|continue|return|try|catch|finally)\b/g, className: "hl-control-structure" }
                 ];
 
-                for (const { regex, className, groups } of PATTERNS) {
-                    code = code.replace(regex, (...args) => {
-                        if (groups) {
-                            return groups
-                                .map((g) => `<span class="${className}">${args[g]}</span>`)
-                                .join(' ');
-                        }
-                        return `<span class="${className}">${args[0]}</span>`;
-                    });
+                
+                for (const pattern of PATTERNS) {
+                    if (pattern.replaceFn) {
+                        code = code.replace(pattern.regex, pattern.replaceFn);
+                    } else {
+                        code = code.replace(pattern.regex, (match) => `<span class="${pattern.className}">${match}</span>`);
+                    }
                 }
 
                 for (const { token, html } of PLACEHOLDERS) {

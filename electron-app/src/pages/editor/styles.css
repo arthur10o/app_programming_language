@@ -46,9 +46,8 @@
     resize: vertical;
     transition: all 0.3s ease;
     overflow-y: auto;
-    align-items: flex-start;
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
 }
 
 .textarea:focus {
