@@ -94,8 +94,13 @@ button:focus {
     color: #b3cba6;
 }
 
-.hl-function-methode {
+.hl-function-method {
     color: #dcdcaa;
+}
+
+.hl-function-call {
+    color: #dcdcaa;
+    font-style: italic;
 }
 
 .hl-variable {
