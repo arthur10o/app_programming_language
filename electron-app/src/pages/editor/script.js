@@ -4,7 +4,7 @@
     Description : Editor script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-07-27
+    Last Update : 2025-08-03
 */
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
 
@@ -16,32 +16,6 @@ const FILE_INPUT = document.getElementById('file-input');
 
 const BUTTON_SAVE_CODE = document.getElementById('save-code');
 const CODE_EDITOR = document.getElementById('code-editor');
-
-function updateEditorContent() {
-    let text = CODE_EDITOR.innerText;
-    const lines = text.split(/\r?\n/);
-    let html = '<div style="display: flex; flex-direction: column;">';
-    for (let line of lines) {
-        html += `<div class="code-line">${line}</div>`;
-    }
-    html += '</div>';
-    CODE_EDITOR.innerHTML = html;
-    placeCaretAtEnd(CODE_EDITOR);
-    syntax_highlighting();
-}
-
-function placeCaretAtEnd(el) {
-    el.focus();
-    if (typeof window.getSelection != "undefined"
-        && typeof document.createRange != "undefined") {
-        var range = document.createRange();
-        range.selectNodeContents(el);
-        range.collapse(false);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-    }
-}
 
 CODE_EDITOR.addEventListener('input', () => {
     updateEditorContent();
@@ -112,4 +86,30 @@ function render_code_to_editor(_text) {
     html += '</div>';
     CODE_EDITOR.innerHTML = html;
     syntax_highlighting();
+}
+
+function updateEditorContent() {
+    let text = CODE_EDITOR.innerText;
+    const lines = text.split(/\r?\n/);
+    let html = '<div style="display: flex; flex-direction: column;">';
+    for (let line of lines) {
+        html += `<div class="code-line">${line}</div>`;
+    }
+    html += '</div>';
+    CODE_EDITOR.innerHTML = html;
+    placeCaretAtEnd(CODE_EDITOR);
+    syntax_highlighting();
+}
+
+function placeCaretAtEnd(el) {
+    el.focus();
+    if (typeof window.getSelection != "undefined"
+        && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
 }

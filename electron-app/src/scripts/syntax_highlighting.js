@@ -4,9 +4,8 @@
     Description : Syntax highlighting script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-27
-    Last Update : 2025-07-27
+    Last Update : 2025-08-03
 */
-
 let var_const_list = [];
 
 function syntax_highlighting() {
