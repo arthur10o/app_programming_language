@@ -1,6 +1,7 @@
 - IDE (autocomplétion, refactoring, Gestion de projet, débogage, profilage)
 - Assignation de variables typé (bool, str, int, float, None)
 - Assignation de constante typé (bool, str, int, float, None)
+- Ajout du tipage automatique
 - Ajout du référencement de variables du meme type
 - Ajout du référencement de constante du meme type
 - Ajout de la possibilité de réassigner des variables en gardant le type précédent
