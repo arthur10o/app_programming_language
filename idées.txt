@@ -14,6 +14,7 @@
 - Ajout de condition (if, else if, else)
 - Analyse de sécurité du code en temps réel
 - Contrôle des permissions (accès fichiers, net, etc.)
+- Ajout de type personnalisé
 - Possibilité d'appliquer un chiffrement homomorphique ou une computation chiffrée
 - Ajout de default
 - Ajout de Define
