@@ -4,12 +4,9 @@
     Description : Settings script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-27
-    Last Update : 2025-07-27
+    Last Update : 2025-08-10
 */
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
-
-const fs = require('fs');
-const path = require('path');
 
 function animateValue(element, newValue) {
     element.textContent = newValue;
@@ -122,7 +119,7 @@ function updatePreview() {
         for (let i = 0; i < LINES_REPLACED.length; i++) {
             let line = LINES_REPLACED[i].replace(/\t/g, TAB_DISPLAY);
             html += `<div style="display: flex; align-items: center;">
-                <span class="line-number" style="color:#888;user-select:none;min-width:32px;text-align:right;display:inline-block;margin-right:8px;">${i+1}</span>
+                <span class="line-number" style="user-select:none;min-width:32px;text-align:right;display:inline-block;margin-right:8px;">${i+1}</span>
                 <span class="code-line">${line}</span>
             </div>`;
         }

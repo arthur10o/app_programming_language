@@ -5,11 +5,10 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-07-27
+    Last Update : 2025-08-10
 */
 const { app, BrowserWindow } = require('electron');
 const PATH = require('path');
-const {syntax_highlighting} = require('./src/scripts/syntax_highlighting.js');
 
 function createWindow() {
     const mainWindow = new BrowserWindow({

@@ -4,7 +4,7 @@
     Description : Editor styles for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-03
+    Last Update : 2025-08-07
 */
 .editor-container {
     max-width: 100%;
@@ -18,10 +18,8 @@
 }
 
 .editor {
-    background-color: #2e3b47;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
     margin-bottom: 40px;
     max-width: 70vw;
@@ -34,8 +32,6 @@
     height: 50vh;
     max-height: 500px;
     min-height: 48px;
-    background-color: #1e2a38;
-    color: #fff;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.1rem;
     border: none;
@@ -48,9 +44,4 @@
     overflow-y: auto;
     display: flex;
     align-items: flex-start;
-}
-
-.textarea:focus {
-    border: 2px solid #42a5f5;
-    box-shadow: 0 0 10px rgba(66, 165, 245, 0.5);
 }

@@ -4,7 +4,7 @@
     Description : Settings styles for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-07-27
+    Last Update : 2025-08-07
 */
 #code-editor.tab-preview {
   white-space: pre-wrap;
@@ -25,11 +25,9 @@
 }
 
 .settings {
-    background-color: #2e3b47;
     border-radius: 8px;
     padding: 20px;
     height: auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 40px;
     max-width: 70vw;
     width: 70vw;
@@ -37,16 +35,12 @@
 }
 
 fieldset {
-    border: 1.5px solid #3a4a5e;
     border-radius: 8px;
     margin-bottom: 25px;
     padding: 18px 15px 12px 15px;
-    background: rgba(30,42,56,0.7);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 legend {
-    color: #42a5f5;
     font-size: 1.1rem;
     font-weight: 600;
     padding: 0 10px;
@@ -55,7 +49,6 @@ legend {
 
 #preview-area {
     border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     min-height: 48px;
     font-size: 1.1rem;
     margin-top: 8px;
@@ -69,7 +62,6 @@ legend {
 
 label {
     font-size: 1rem;
-    color: #ddd;
     margin-bottom: 5px;
     display: block;
 }
@@ -78,9 +70,7 @@ select, input[type="range"], input[type="checkbox"] {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
-    background-color: #1e2a38;
     border: none;
-    color: white;
     font-size: 1rem;
     outline: none;
 }
@@ -95,6 +85,5 @@ input[type="checkbox"] {
 
 .value-animate {
   transition: color 0.3s, font-size 0.3s;
-  color: #42a5f5;
   font-size: 1.3em;
 }

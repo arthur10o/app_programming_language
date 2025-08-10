@@ -4,7 +4,7 @@
     Description : Common styles for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-03
+    Last Update : 2025-08-07
 */
 * {
     margin: 0;
@@ -14,8 +14,6 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #2f3b52, #1e2a38);
-    color: #fff;
     text-align: center;
     min-height: 100vh;
     display: flex;
@@ -25,14 +23,11 @@ body {
 }
 
 .button {
-    background-color: #42a5f5;
-    color: white;
     border: none;
     padding: 15px 30px;
     font-size: 1.2rem;
     cursor: pointer;
     border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
     min-width: 200px;
     margin-bottom: 5px;
@@ -48,14 +43,11 @@ body {
 }
 
 .button:hover {
-    background-color: #1e88e5;
     transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .code-line {

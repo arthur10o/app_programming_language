@@ -31,30 +31,53 @@
     },
     "theme": {
         "dark": {
-            "background-color": "linear-gradient(135deg, #273447, #1a2531)",
-            "text-color": "#b0b8c1",
-            "button-color": "#3a8dde",
-            "button-hover-color": "#256db8",
-            "console-editor-background-color": "#2a3644",
-            "text-area-background-color": "#1d2228",
-            "text-area-border": "2px solid #3a8dde",
-            "text-area-box-shadow-focus": "0 0 10px rgba(58, 141, 222, 0.5)",
-            "console-editor-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.35)",
-            "console-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.35)",
-            "console-box-shadow-hover": "0 4px 15px rgba(0, 0, 0, 0.45)",
-            "home-h1-color": "#3a8dde",
-            "home-h1-box-shadow": "2px 2px 5px rgba(0, 0, 0, 0.35)",
-            "home-p-color": "#c2c9d1",
-            "footer-color": "#7a7f89",
-            "footer-p-color": "#a3a9b1",
-            "setting-container-background-color": "#2a3644",
-            "setting-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.35)",
-            "legend-color": "#3a8dde",
-            "preview-area-box-shadow": "0 2px 8px rgba(0, 0, 0, 0.12)",
-            "label-color": "#c2c9d1",
-            "selection-background-color": "#1a2531",
-            "selection-text-color": "#e6ebf0",
-            "value-animate-color": "#3a8dde"
+            "console": {
+                ".console-background-color": "#2e3b47",
+                ".console-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.3)",
+                ".console:hover-box-shadow": "0 4px 15px rgba(0, 0, 0, 0.4)"
+            },
+            "editor": {
+                ".editor-background-color": "#2e3b47",
+                ".editor-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.3)",
+                ".textarea-background-color": "#1e2a38",
+                ".textarea-color": "#fff",
+                ".textarea:focus-border": "2px solid #42a5f5",
+                ".textarea:focus-box-shadow": "0 0 10px rgba(66, 165, 245, 0.5)"
+            },
+            "home": {
+                "h1-color": "#42a5f5",
+                "h1-text-shadow": "2px 2px 5px rgba(0, 0, 0, 0.3)",
+                "p-color": "#ddd",
+                "footer-color": "#888",
+                "footer-p-color": "#bbb"
+            },
+            "settings": {
+                ".settings-background-color": "#2e3b47",
+                ".settings-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.3)",
+                "fieldset-border": "1.5px solid #3a4a5e",
+                "fieldset-background": "rgba(30,42,56,0.7)",
+                "fieldset-box-shadow": "0 2px 6px rgba(0,0,0,0.08)",
+                "legend-color": "#42a5f5",
+                "#preview-area-box-shadow": "0 2px 8px rgba(0,0,0,0.10)",
+                "#preview-area-border": "1px solid #ccc",
+                "#preview-area-background": "#222",
+                "#preview-area-color": "#fff",
+                "label-color": "#ddd",
+                "select-input[type='range']-input[type='checkbox']-background-color": "#1e2a38",
+                "select-input[type='range']-input[type='checkbox']-color": "white",
+                ".value-animate-color": "#42a5f5"
+            },
+            "common_css": {
+                "body-background": "linear-gradient(135deg, #2f3b52, #1e2a38)",
+                "body-color": "#fff",
+                ".button-background-color": "#42a5f5",
+                ".button-color": "white",
+                ".button-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.2)",
+                ".button:hover-background-color": "#1e88e5",
+                ".button:hover-box-shadow": "0 6px 15px rgba(0, 0, 0, 0.2)",
+                ".button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.2)",
+                ".line-number-color": "#888"
+            }
         },
         "light": {
             "background-color": "linear-gradient(135deg, #fafafa, #d9dde2)",

@@ -4,12 +4,9 @@
     Description : Editor script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-03
+    Last Update : 2025-08-10
 */
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
-
-const fs = require('fs');
-const path = require('path');
 
 const BUTTON_LOAD_CODE = document.getElementById('load-code');
 const FILE_INPUT = document.getElementById('file-input');

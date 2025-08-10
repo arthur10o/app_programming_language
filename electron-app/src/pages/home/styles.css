@@ -4,12 +4,10 @@
     Description : Index styles for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-07-26
+    Last Update : 2025-08-07
 */
 h1 {
     font-size: 3rem;
-    color: #42a5f5;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 header {
@@ -18,14 +16,12 @@ header {
 
 p {
     font-size: 1.2rem;
-    color: #ddd;
     margin-top: 10px;
 }
 
 footer {
     margin-top: 40px;
     font-size: 0.9rem;
-    color: #888;
 }
 
 .container {
@@ -33,10 +29,6 @@ footer {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-}
-
-footer p {
-    color: #bbb;
 }
 
 @media (max-width: 600px) {
