@@ -63,8 +63,8 @@
                 "#preview-area-background": "#222",
                 "#preview-area-color": "#fff",
                 "label-color": "#ddd",
-                "select-input[type='range']-input[type='checkbox']-background-color": "#1e2a38",
-                "select-input[type='range']-input[type='checkbox']-color": "white",
+                "select-input-background-color": "#1e2a38",
+                "select-input-color": "white",
                 ".value-animate-color": "#42a5f5"
             },
             "common_css": {
@@ -80,30 +80,53 @@
             }
         },
         "light": {
-            "background-color": "linear-gradient(135deg, #fafafa, #d9dde2)",
-            "text-color": "#1f2733",
-            "button-color": "#1e5bbf",
-            "button-hover-color": "#154a94",
-            "console-editor-background-color": "#ebf0f5",
-            "text-area-background-color": "#fefefe",
-            "text-area-border": "2px solid #1e5bbf",
-            "text-area-box-shadow-focus": "0 0 10px rgba(30, 91, 191, 0.4)",
-            "console-editor-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.12)",
-            "console-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.12)",
-            "console-box-shadow-hover": "0 4px 15px rgba(0, 0, 0, 0.22)",
-            "home-h1-color": "#1e5bbf",
-            "home-h1-box-shadow": "2px 2px 5px rgba(0, 0, 0, 0.12)",
-            "home-p-color": "#2e3b48",
-            "footer-color": "#545a66",
-            "footer-p-color": "#444a55",
-            "setting-container-background-color": "#fefefe",
-            "setting-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.12)",
-            "legend-color": "#1e5bbf",
-            "preview-area-box-shadow": "0 2px 8px rgba(0, 0, 0, 0.06)",
-            "label-color": "#2e3b48",
-            "selection-background-color": "#bdd6fb",
-            "selection-text-color": "#121f35",
-            "value-animate-color": "#1e5bbf"
+            "console": {
+                ".console-background-color": "#f5f7f9",
+                ".console-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.1)",
+                ".console:hover-box-shadow": "0 4px 15px rgba(0, 0, 0, 0.15)"
+            },
+            "editor": {
+                ".editor-background-color": "#ffffff",
+                ".editor-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.1)",
+                ".textarea-background-color": "#f0f4f8",
+                ".textarea-color": "#1e2a38",
+                ".textarea:focus-border": "2px solid #42a5f5",
+                ".textarea:focus-box-shadow": "0 0 10px rgba(66, 165, 245, 0.3)"
+            },
+            "home": {
+                "h1-color": "#1e88e5",
+                "h1-text-shadow": "1px 1px 3px rgba(0, 0, 0, 0.1)",
+                "p-color": "#333",
+                "footer-color": "#666",
+                "footer-p-color": "#777"
+            },
+            "settings": {
+                ".settings-background-color": "#ffffff",
+                ".settings-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.08)",
+                "fieldset-border": "1.5px solid #ccd6e0",
+                "fieldset-background": "rgba(245,247,249,0.85)",
+                "fieldset-box-shadow": "0 2px 6px rgba(0,0,0,0.05)",
+                "legend-color": "#1e88e5",
+                "#preview-area-box-shadow": "0 2px 8px rgba(0,0,0,0.06)",
+                "#preview-area-border": "1px solid #ccc",
+                "#preview-area-background": "#f9f9f9",
+                "#preview-area-color": "#1e2a38",
+                "label-color": "#333",
+                "select-input-background-color": "#f0f4f8",
+                "select-input-color": "#1e2a38",
+                ".value-animate-color": "#1e88e5"
+            },
+            "common_css": {
+                "body-background": "linear-gradient(135deg, #ffffff, #e9eef3)",
+                "body-color": "#1e2a38",
+                ".button-background-color": "#42a5f5",
+                ".button-color": "white",
+                ".button-box-shadow": "0 4px 10px rgba(0, 0, 0, 0.1)",
+                ".button:hover-background-color": "#1e88e5",
+                ".button:hover-box-shadow": "0 6px 15px rgba(0, 0, 0, 0.15)",
+                ".button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.1)",
+                ".line-number-color": "#999"
+            }
         }
     }
 }

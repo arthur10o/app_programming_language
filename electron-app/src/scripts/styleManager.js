@@ -107,8 +107,10 @@ function update_theme() {
             textarea_ELEMENT[i].style.border = settings.theme?.[CURRENT_THEME]?.editor?.[".textarea:focus-border"];
             textarea_ELEMENT[i].style.boxShadow = settings.theme?.[CURRENT_THEME]?.editor?.[".textarea:focus-box-shadow"];
         });
-        // TODO : Ajouter quand textarea n'est plus focus (border et boxShadow)
-
+        textarea_ELEMENT[i].addEventListener('blur', () => {
+            textarea_ELEMENT[i].style.border = '';
+            textarea_ELEMENT[i].style.boxShadow = '';
+        });
     }
                                     // Update settings CSS
     const settings_ELEMENT = document.getElementsByClassName("settings");
@@ -141,15 +143,21 @@ function update_theme() {
 
     const select_ELEMENT = document.getElementsByTagName('select');
     for (let i = 0; i < select_ELEMENT.length; i++) {
-        select_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.["select-input[type='range']-input[type='checkbox']-background-color"];
-        select_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.settings?.["select-input[type='range']-input[type='checkbox']-color"];
+        select_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.settings?.["select-input-background-color"];
+        select_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.["select-input-color"];
     }
+    
     const input_ELEMENT = document.getElementsByTagName('input');
     for (let i = 0; i < input_ELEMENT.length; i++) {
         if (input_ELEMENT[i].type == 'range' || input_ELEMENT[i].type == "checkbox") {
-            input_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.["select-input[type='range']-input[type='checkbox']-background-color"];
-            input_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.settings?.["select-input[type='range']-input[type='checkbox']-color"];
+            input_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.settings?.["select-input-background-color"];
+            input_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.["select-input-color"];
         }
+    }
+
+    const value_animate_ELEMENT = document.getElementsByClassName("value-animate");
+    for (let i = 0; i < value_animate_ELEMENT.length; i++) {
+        value_animate_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.[".value-animate-color"];
     }
 }
 
