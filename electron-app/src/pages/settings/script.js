@@ -17,9 +17,24 @@ function animateValue(element, newValue) {
 }
 
 document.getElementById("theme").addEventListener("change", (event) => {
+    const DATA_PATH = path.resolve(__dirname, '../../data/data_settings.json');
+    if (!fs.existsSync(DATA_PATH)) {
+        console.error("The settings file does not exist :", DATA_PATH);
+        return;
+    }
+
+    let settings = {};
+
+    try {
+        const DATA = fs.readFileSync(DATA_PATH, 'utf8');
+        settings = JSON.parse(DATA);
+    } catch (error) {
+        console.error("Error reading or parsing JSON file :", error);
+        return;
+    }
     const SELECTED_THEME = event.target.value;
-    document.getElementById("preview-area").style.backgroundColor = SELECTED_THEME === 'dark' ? '#222' : '#fff';
-    document.getElementById("preview-area").style.color = SELECTED_THEME === 'dark' ? '#fff' : '#222';
+    document.getElementById("preview-area").style.background = settings.theme?.[SELECTED_THEME]?.common_css?.["body-background"];
+    document.getElementById("preview-area").style.color = settings.theme?.[SELECTED_THEME]?.common_css?.["body-color"]
     animateValue(document.getElementById("theme-value"), SELECTED_THEME);
     updatePreview();
 });
@@ -55,8 +70,6 @@ document.getElementById("syntax-highlighting").addEventListener("change", (event
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const SAVE_SETTINGS_BUTTON = document.getElementById("save-settings");
-    const RESET_SETTINGS_BUTTON = document.getElementById("reset-settings");
     updatePreview();
     update_buttons();
 });
@@ -187,6 +200,7 @@ function saveSettings(event) {
         console.error("[ERROR] Unable to read or write configuration file:", error);
         alert("Error saving settings: " + error.message);
     }
+    update_theme();
 }
 
 function resetSettings(event) {
@@ -213,4 +227,5 @@ function resetSettings(event) {
         console.error("[ERROR] Unable to reset settings:", error);
         alert("Error resetting settings: " + error.message);
     }
+    update_theme();
 }

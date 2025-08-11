@@ -68,53 +68,6 @@ button:focus {
     outline: none;
 }
 
-.hl-comment {
-    color: #A1B3B8;
-    font-style: italic;
-}
-
-.hl-keyword {
-    color: #d8a0df;
-    font-weight: bold;
-}
-
-.hl-native-type {
-    color: #81b3ce;
-}
-
-.hl-literal {
-    color: #b3cba6;
-}
-
-.hl-function-method {
-    color: #dcdcaa;
-}
-
-.hl-function-call {
-    color: #dcdcaa;
-    font-style: italic;
-}
-
-.hl-variable {
-    color: #569cd6;
-}
-
-.hl-constant {
-    color: #569cd6;
-}
-
-.hl-string {
-    color: #ce9178;
-}
-
-.hl-import {
-    color: #d09ad7;
-}
-
-.hl-control-structure {
-    color: #c190c8;
-}
-
 @media (max-width: 600px) {
     .button {
         width: 100%;

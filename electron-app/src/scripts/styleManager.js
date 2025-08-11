@@ -4,7 +4,7 @@
     Description : Style manager script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-10
+    Last Update : 2025-08-11
 */
 const fs = require('fs');
 const path = require('path');
@@ -112,6 +112,7 @@ function update_theme() {
             textarea_ELEMENT[i].style.boxShadow = '';
         });
     }
+
                                     // Update settings CSS
     const settings_ELEMENT = document.getElementsByClassName("settings");
     for (let i = 0; i < settings_ELEMENT.length; i++) {
@@ -158,6 +159,64 @@ function update_theme() {
     const value_animate_ELEMENT = document.getElementsByClassName("value-animate");
     for (let i = 0; i < value_animate_ELEMENT.length; i++) {
         value_animate_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.[".value-animate-color"];
+    }
+
+                                    // Update syntax highlighting CSS
+    const comment_ELEMENT = document.getElementsByClassName('hl-comment');
+    for (let i = 0; i < comment_ELEMENT.length; i++) {
+        comment_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-comment']?.["color"];
+        comment_ELEMENT[i].style.fontStyle = settings.theme?.[CURRENT_THEME]?.['.hl-comment']?.["font-style"];
+    }
+
+    const keyword_ELEMENT = document.getElementsByClassName("hl-keyword");
+    for (let i = 0; i < keyword_ELEMENT.length; i++) {
+        keyword_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-keyword']?.["color"];
+        keyword_ELEMENT[i].style.fontWeight = settings.theme?.[CURRENT_THEME]?.['.hl-keyword']?.["font-weight"];
+    }
+
+    const native_type_ELEMENT = document.getElementsByClassName('hl-native-type');
+    for (let i = 0; i < native_type_ELEMENT.length; i++) {
+        native_type_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-native-type']?.["color"];
+    }
+
+    const literal_ELEMENT = document.getElementsByClassName("hl-literal");
+    for (let i = 0; i < literal_ELEMENT.length; i++) {
+        literal_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-literal']?.["color"];
+    }
+
+    const function_method_ELEMENT = document.getElementsByClassName('hl-function-method');
+    for (let i = 0; i < function_method_ELEMENT.length; i++) {
+        function_method_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-function-method']?.["color"];
+    }
+
+    const function_call_ELEMENT = document.getElementsByClassName('hl-function-call');
+    for (let i = 0; i < function_call_ELEMENT.length; i++) {
+        function_call_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-function-call']?.["color"];
+    }
+
+    const variable_ELEMENT = document.getElementsByClassName('hl-variable');
+    for (let i = 0; i < variable_ELEMENT.length; i++) {
+        variable_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-variable']?.["color"];
+    }
+
+    const constant_ELEMENT = document.getElementsByClassName('hl-constant');
+    for (let i = 0; i < constant_ELEMENT.length; i++) {
+        constant_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-constant']?.["color"];
+    }
+
+    const string_ELEMENT = document.getElementsByClassName("hl-string");
+    for (let i = 0; i < string_ELEMENT.length; i++) {
+        string_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-string']?.["color"];
+    }
+
+    const import_ELEMENT = document.getElementsByClassName('hl-import');
+    for (let i = 0; i < import_ELEMENT.length; i++) {
+        import_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-import']?.['color'];
+    }
+
+    const control_structure_ELEMENT = document.getElementsByClassName('hl-control-structure');
+    for (let i = 0; i < control_structure_ELEMENT.length; i++) {
+        control_structure_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.['.hl-control-structure']?.['color'];
     }
 }
 

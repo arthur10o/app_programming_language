@@ -77,6 +77,41 @@
                 ".button:hover-box-shadow": "0 6px 15px rgba(0, 0, 0, 0.2)",
                 ".button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.2)",
                 ".line-number-color": "#888"
+            },
+            ".hl-comment": {
+                "color": "#6FCF97",
+                "font-style": "italic"
+            },
+            ".hl-keyword": {
+                "color": "#c792ea",
+                "font-weight": "bold"
+            },
+            ".hl-native-type": {
+                "color": "#82aaff"
+            },
+            ".hl-literal": {
+                "color": "#f78c6c"
+            },
+            ".hl-function-method": {
+                "color": "#dcdcaa"
+            },
+            ".hl-function-call": {
+                "color": "#dcdcaa"
+            },
+            ".hl-variable": {
+                "color": "#f07178"
+            },
+            ".hl-constant": {
+                "color": "#ffcb6b"
+            },
+            ".hl-string": {
+                "color": "#c3e88d"
+            },
+            ".hl-import": {
+                "color": "#ab47bc"
+            },
+            ".hl-control-structure": {
+                "color": "#89ddff"
             }
         },
         "light": {
@@ -126,6 +161,41 @@
                 ".button:hover-box-shadow": "0 6px 15px rgba(0, 0, 0, 0.15)",
                 ".button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.1)",
                 ".line-number-color": "#999"
+            },
+            ".hl-comment": {
+                "color": "#22863a",
+                "font-style": "italic"
+            },
+            ".hl-keyword": {
+                "color": "#d73a49",
+                "font-weight": "bold"
+            },
+            ".hl-native-type": {
+                "color": "#005cc5"
+            },
+            ".hl-literal": {
+                "color": "#e36209"
+            },
+            ".hl-function-method": {
+                "color": "#6f42c1"
+            },
+            ".hl-function-call": {
+                "color": "#6f42c1"
+            },
+            ".hl-variable": {
+                "color": "#e36209"
+            },
+            ".hl-constant": {
+                "color": "#005cc5"
+            },
+            ".hl-string": {
+                "color": "#032f62"
+            },
+            ".hl-import": {
+                "color": "#d73a49"
+            },
+            ".hl-control-structure": {
+                "color": "#22863a"
             }
         }
     }
