@@ -11,6 +11,7 @@ const { update_theme } = require("./styleManager");
 let var_const_list = [];
 
 function syntax_highlighting() {
+    var_const_list = [];
     const PREVIEW = document.getElementById("code-editor");
     const CODES_LINES = Array.from(PREVIEW.querySelectorAll('.code-line'));
     let inMultiLineComment = false;

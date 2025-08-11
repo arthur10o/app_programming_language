@@ -4,18 +4,18 @@
     Description : Editor script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-10
+    Last Update : 2025-08-11
 */
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
 
 const BUTTON_LOAD_CODE = document.getElementById('load-code');
 const FILE_INPUT = document.getElementById('file-input');
-
 const BUTTON_SAVE_CODE = document.getElementById('save-code');
 const CODE_EDITOR = document.getElementById('code-editor');
 
 CODE_EDITOR.addEventListener('input', () => {
     updateEditorContent();
+    update_theme();
 });
 
 BUTTON_LOAD_CODE.addEventListener('click', () => {
@@ -29,6 +29,8 @@ FILE_INPUT.addEventListener('change', (event) => {
         READER.onload = (e) => {
             const CODE = e.target.result;
             render_code_to_editor(CODE);
+            updateEditorContent();
+            update_theme();
         };
         READER.readAsText(FILE);
     }
@@ -71,16 +73,14 @@ BUTTON_SAVE_CODE.addEventListener('click', () => {
 
 function render_code_to_editor(_text) {
     const DATA_PATH = path.resolve(__dirname, '../../data/data_settings.json');
-    const TAB_SIZE = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8')).data_settings['tabulation-size'];
-    const TAB_DISPLAY = ' '.repeat(TAB_SIZE);
     const LINES = _text.split('\n');
 
-    let html = '<div style="display: flex; flex-direction: column;">';
+    let html = '<pre><code><div style="display: flex; flex-direction: column;">';
     for (let line of LINES) {
         const replaced = line.replace(/\t/g, TAB_DISPLAY);
         html += `<div class="code-line">${replaced}</div>`;
     }
-    html += '</div>';
+    html += '</div></code></pre>';
     CODE_EDITOR.innerHTML = html;
     syntax_highlighting();
 }
@@ -88,11 +88,11 @@ function render_code_to_editor(_text) {
 function updateEditorContent() {
     let text = CODE_EDITOR.innerText;
     const lines = text.split(/\r?\n/);
-    let html = '<div style="display: flex; flex-direction: column;">';
+    let html = '<pre><code><div style="display: flex; flex-direction: column;">';
     for (let line of lines) {
         html += `<div class="code-line">${line}</div>`;
     }
-    html += '</div>';
+    html += '</div></code></pre>';
     CODE_EDITOR.innerHTML = html;
     placeCaretAtEnd(CODE_EDITOR);
     syntax_highlighting();

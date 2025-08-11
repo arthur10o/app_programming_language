@@ -99,6 +99,9 @@ function update_theme() {
         editor_ELEMENT[i].style.boxShadow = settings.theme?.[CURRENT_THEME]?.editor?.[".editor-box-shadow"];
     }
 
+    document.getElementById('code-editor').style.fontSize = settings.data_settings?.['font-size'].size + settings.data_settings?.['font-size'].unit;
+    document.getElementById('code-editor').style.fontFamily = settings.data_settings?.['font-family'];
+
     const textarea_ELEMENT = document.getElementsByClassName("textarea");
     for (let i = 0; i < textarea_ELEMENT.length; i++) {
         textarea_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.editor?.[".textarea-background-color"];
@@ -132,10 +135,13 @@ function update_theme() {
         legend_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.settings?.["legend-color"]
     }
 
-    document.getElementById('preview-area').style.boxShadow = settings.theme?.[CURRENT_THEME]?.settings?.["#preview-area-box-shadow"];
-    document.getElementById('preview-area').style.border = settings.theme?.[CURRENT_THEME]?.settings?.["#preview--border"];
-    document.getElementById('preview-area').style.background = settings.theme?.[CURRENT_THEME]?.settings?.["#preview-area-background"];
-    document.getElementById('preview-area').style.color = settings.theme?.[CURRENT_THEME]?.settings?.["#preview-area-color"];
+    const preview_area_ELEMENT = document.getElementById('preview-area');
+    if (preview_area_ELEMENT) {
+        preview_area_ELEMENT.style.boxShadow = settings.theme?.[CURRENT_THEME]?.settings?.["preview-area-box-shadow"];
+        preview_area_ELEMENT.style.border = settings.theme?.[CURRENT_THEME]?.settings?.["preview--border"];
+        preview_area_ELEMENT.style.background = settings.theme?.[CURRENT_THEME]?.settings?.["preview-area-background"];
+        preview_area_ELEMENT.style.color = settings.theme?.[CURRENT_THEME]?.settings?.["preview-area-color"];
+    }
 
     const label_ELEMENT = document.getElementsByTagName('label');
     for (let i = 0; i < label_ELEMENT.length; i++) {
