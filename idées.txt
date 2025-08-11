@@ -13,7 +13,6 @@
 - Ajout de boucle for
 - Ajout de condition (if, else if, else)
 - Analyse de sécurité du code en temps réel
-- Contrôle des permissions (accès fichiers, net, etc.)
 - Ajout de type personnalisé
 - Possibilité d'appliquer un chiffrement homomorphique ou une computation chiffrée
 - Ajout de default
@@ -49,7 +48,7 @@
 - Ajout d'un constructeur de class
 - Ajout de la possiblité de créé des méthodes
 - Ajout de toutes les fonctionnalitées associées aux class
-- Ajout de fonction mathémarique (sum, integral, factoriel ...)
+- Ajout de fonction mathémarique (sum, integral, factoriel, n root,, delta ...)
 - Ajout de constante mathématique qui sont calculé super précisément (+200 décimales)
 - Support natif des unités de mesure mathématique
 - Ajout de constante physique qui sont calculé super précisément (+200 décimales)
@@ -66,6 +65,7 @@
 - Ajout de matrice
 - Ajout de la récursion
 - Ajout de calcul sur les vecteurs
+- Ajout systeme de résolution d'équations
 - Ajout d'import
 - Ajout de module
 - Ajour de fonctions d'aléatoire
@@ -159,6 +159,7 @@
 - Ajout l'appel d'API
 - Ajout requête SQL
 - Ajout de la possibilité de tout typé ou non
+- Contrôle des permissions (accès fichiers, net, etc.)
 - Ajouter fichier head (Equivalent au .hpp ou au .h)
 - Ajout d'un debugeur
 - Integration de git pour github
