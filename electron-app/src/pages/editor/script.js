@@ -38,12 +38,12 @@ FILE_INPUT.addEventListener('change', (event) => {
 
 BUTTON_SAVE_CODE.addEventListener('click', () => {
     const LINES = Array.from(CODE_EDITOR.querySelectorAll('.code-line')).map(el => el.textContent);
-    const code = LINES.join('\n');
+    const CODE = LINES.join('\n');
     
     if (window.showSaveFilePicker) {
         (async () => {
             try {
-                const options = {
+                const OPTIONS = {
                     suggestedName: 'mon_code.a2plus',
                     types: [
                         {
@@ -52,22 +52,22 @@ BUTTON_SAVE_CODE.addEventListener('click', () => {
                         }
                     ]
                 };
-                const handle = await window.showSaveFilePicker(options);
-                const writable = await handle.createWritable();
-                await writable.write(code);
-                await writable.close();
+                const HANDLE = await window.showSaveFilePicker(OPTIONS);
+                const WRITABLE = await HANDLE.createWritable();
+                await WRITABLE.write(CODE);
+                await WRITABLE.close();
             } catch (err) {
             }
         })();
     } else {
-        const blob = new Blob([code], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'mon_code.a2plus';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(a.href);
+        const BLOB = new Blob([CODE], { type: 'text/plain' });
+        const A = document.createElement('a');
+        A.href = URL.createObjectURL(BLOB);
+        A.download = 'mon_code.a2plus';
+        document.body.appendChild(A);
+        A.click();
+        document.body.removeChild(A);
+        URL.revokeObjectURL(A.href);
     }
 });
 
@@ -77,8 +77,8 @@ function render_code_to_editor(_text) {
 
     let html = '<pre><code><div style="display: flex; flex-direction: column;">';
     for (let line of LINES) {
-        const replaced = line.replace(/\t/g, TAB_DISPLAY);
-        html += `<div class="code-line">${replaced}</div>`;
+        const REPLACED = line.replace(/\t/g, TAB_DISPLAY);
+        html += `<div class="code-line">${REPLACED}</div>`;
     }
     html += '</div></code></pre>';
     CODE_EDITOR.innerHTML = html;
@@ -87,9 +87,9 @@ function render_code_to_editor(_text) {
 
 function updateEditorContent() {
     let text = CODE_EDITOR.innerText;
-    const lines = text.split(/\r?\n/);
+    const LINES = text.split(/\r?\n/);
     let html = '<pre><code><div style="display: flex; flex-direction: column;">';
-    for (let line of lines) {
+    for (let line of LINES) {
         html += `<div class="code-line">${line}</div>`;
     }
     html += '</div></code></pre>';

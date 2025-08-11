@@ -72,12 +72,12 @@ function syntax_highlighting() {
                     { 
                         regex: /\b(let|const)\s+(int|float|bool|str|None)\s+([a-zA-Z_$][\w$]*)/g,
                         replaceFn: (match, decl, type, name) => {
-                            const declSpan = `<span class="hl-keyword">${decl}</span>`;
-                            const typeSpan = `<span class="hl-native-type">${type}</span>`;
-                            const nameClass = decl === "const" ? "hl-constant" : "hl-variable";
-                            const nameSpan = `<span class="${nameClass}">${name}</span>`;
-                            var_const_list.push([name, nameClass]);
-                            return `${declSpan} ${typeSpan} ${nameSpan}`;
+                            const DECL_SPAN = `<span class="hl-keyword">${decl}</span>`;
+                            const TYPE_SPAN = `<span class="hl-native-type">${type}</span>`;
+                            const NAME_CLASS = decl === "const" ? "hl-constant" : "hl-variable";
+                            const NAME_SPAN = `<span class="${NAME_CLASS}">${name}</span>`;
+                            var_const_list.push([name, NAME_CLASS]);
+                            return `${DECL_SPAN} ${TYPE_SPAN} ${NAME_SPAN}`;
                         }
                     },
                     { regex: /\b[a-zA-Z_$][\w$]*\s*\([^)]*\)\s*{/g, className: "hl-function-method" },
@@ -89,11 +89,11 @@ function syntax_highlighting() {
                     { regex: /\b(if|else if|else|for|while|do|switch|case|default|break|continue|return|try|catch|finally)\b/g, className: "hl-control-structure" }
                 ];
                 
-                for (const pattern of PATTERNS) {
-                    if (pattern.replaceFn) {
-                        code = code.replace(pattern.regex, pattern.replaceFn);
+                for (const PATTERN of PATTERNS) {
+                    if (PATTERN.replaceFn) {
+                        code = code.replace(PATTERN.regex, PATTERN.replaceFn);
                     } else {
-                        code = code.replace(pattern.regex, (match) => `<span class="${pattern.className}">${match}</span>`);
+                        code = code.replace(PATTERN.regex, (match) => `<span class="${PATTERN.className}">${match}</span>`);
                     }
                 }
 
@@ -101,9 +101,9 @@ function syntax_highlighting() {
                     code = code.replace(token, html);
                 }
                 
-                for (const varName of var_const_list) {
-                    const regex = new RegExp(`\\b${varName[0]}\\b`, 'g');
-                    code = code.replace(regex, `<span class="${varName[1]}">${varName[0]}</span>`);
+                for (const VAR_NAME of var_const_list) {
+                    const REGEX = new RegExp(`\\b${VAR_NAME[0]}\\b`, 'g');
+                    code = code.replace(REGEX, `<span class="${VAR_NAME[1]}">${VAR_NAME[0]}</span>`);
                 }
 
                 CODE_LINE.innerHTML = code;

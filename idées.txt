@@ -1,4 +1,4 @@
-- IDE (autocomplétion, refactoring, Gestion de projet, débogage, profilage, thème, langue, raccourci clavie...)
+- IDE (autocomplétion, refactoring, Gestion de projet, débogage, profilage, langue, raccourci clavie...)
 - Assignation de variables typé (bool, str, int, float, None)
 - Assignation de constante typé (bool, str, int, float, None)
 - Ajout du tipage automatique

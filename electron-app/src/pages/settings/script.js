@@ -4,7 +4,7 @@
     Description : Settings script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-27
-    Last Update : 2025-08-10
+    Last Update : 2025-08-11
 */
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
 
@@ -33,8 +33,8 @@ document.getElementById("theme").addEventListener("change", (event) => {
         return;
     }
     const SELECTED_THEME = event.target.value;
-    document.getElementById("preview-area").style.background = settings.theme?.[SELECTED_THEME]?.common_css?.["body-background"];
-    document.getElementById("preview-area").style.color = settings.theme?.[SELECTED_THEME]?.common_css?.["body-color"]
+    document.getElementById("preview-area").style.background = settings.theme?.[SELECTED_THEME]?.editor?.[".textarea-background-color"];
+    document.getElementById("preview-area").style.color = settings.theme?.[SELECTED_THEME]?.editor?.[".textarea-color"]
     animateValue(document.getElementById("theme-value"), SELECTED_THEME);
     updatePreview();
 });
@@ -69,11 +69,6 @@ document.getElementById("syntax-highlighting").addEventListener("change", (event
     updatePreview();
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    updatePreview();
-    update_buttons();
-});
-
 window.addEventListener('DOMContentLoaded', () => {
     updatePreview();
     update_buttons();
@@ -83,28 +78,28 @@ function update_buttons() {
     try {
         const DATA_PATH = path.resolve(__dirname, '../../data/data_settings.json');
         const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-        const settings = JSON.parse(DATA).data_settings;
+        const SETTINGS = JSON.parse(DATA).data_settings;
 
-        const el = (id) => document.getElementById(id);
+        const EL = (id) => document.getElementById(id);
 
-        if (el("theme")) el("theme").value = settings.theme;
-        if (el("font-size")) {
-            el("font-size").value = settings["font-size"].size;
-            const sizeValue = el("font-size-value");
-            if (sizeValue) sizeValue.textContent = settings["font-size"].size;
+        if (EL("theme")) EL("theme").value = SETTINGS.theme;
+        if (EL("font-size")) {
+            EL("font-size").value = SETTINGS["font-size"].size;
+            const SIZE_VALUE = EL("font-size-value");
+            if (SIZE_VALUE) SIZE_VALUE.textContent = SETTINGS["font-size"].size;
         }
-        if (el("font-family")) el("font-family").value = settings["font-family"];
-        if (el("language")) el("language").value = settings.language;
-        if (el("auto-save")) el("auto-save").checked = settings["auto-save"];
-        if (el("tabulation-size")) {
-            el("tabulation-size").value = settings["tabulation-size"];
-            const tabSizeVal = el("tab-size-value");
-            if (tabSizeVal) tabSizeVal.textContent = settings["tabulation-size"];
+        if (EL("font-family")) EL("font-family").value = SETTINGS["font-family"];
+        if (EL("language")) EL("language").value = SETTINGS.language;
+        if (EL("auto-save")) EL("auto-save").checked = SETTINGS["auto-save"];
+        if (EL("tabulation-size")) {
+            EL("tabulation-size").value = SETTINGS["tabulation-size"];
+            const TAB_SIZE_VALUE = EL("tab-size-value");
+            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = SETTINGS["tabulation-size"];
         }
-        if (el("autocomplete")) el("autocomplete").checked = settings.autocomplete;
-        if (el("suggestions")) el("suggestions").checked = settings["show-suggestions"];
-        if (el("syntax-highlighting")) el("syntax-highlighting").checked = settings["syntax-highlighting"];
-        if (el("line-numbers")) el("line-numbers").checked = settings["show-line-numbers"];
+        if (EL("autocomplete")) EL("autocomplete").checked = SETTINGS.autocomplete;
+        if (EL("suggestions")) EL("suggestions").checked = SETTINGS["show-suggestions"];
+        if (EL("syntax-highlighting")) EL("syntax-highlighting").checked = SETTINGS["syntax-highlighting"];
+        if (EL("line-numbers")) EL("line-numbers").checked = SETTINGS["show-line-numbers"];
 
     } catch (error) {
         alert(error);
@@ -125,6 +120,10 @@ function updatePreview() {
     const TAB_DISPLAY = TAB_CHAR.repeat(TAB_SIZE);
     const LINES = CODES_LINES.split('\n');
     const LINES_REPLACED = LINES.map(line => line.split('<&tab_char>').join(" ".repeat(TAB_SIZE)));
+
+    const DATA_PATH = path.resolve(__dirname, '../../data/data_settings.json');
+    const DATA = fs.readFileSync(DATA_PATH, 'utf8');
+    const SETTINGS = JSON.parse(DATA).theme;
 
     let html = '';
     if (SHOW_LINE_NUMBERS) {
@@ -154,8 +153,8 @@ function updatePreview() {
     PREVIEW.classList.add("tab-preview");
 
     const PREVIEW_AREA = document.getElementById("preview-area");
-    PREVIEW_AREA.style.backgroundColor = THEME === 'dark' ? '#222' : '#fff';
-    PREVIEW_AREA.style.color = THEME === 'dark' ? '#fff' : '#222';
+    PREVIEW_AREA.style.backgroundColor = SETTINGS?.[THEME]?.editor?.['.textarea-background-color'];
+    PREVIEW_AREA.style.color = SETTINGS?.[THEME]?.editor?.['.textarea-color'];
 
     if (SYNTAX_HIGHLIGHTING) {
         syntax_highlighting();
