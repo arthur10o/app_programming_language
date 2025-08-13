@@ -4,7 +4,7 @@
     Description : Common styles for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-07
+    Last Update : 2025-08-13
 */
 * {
     margin: 0;
@@ -20,6 +20,10 @@ body {
     flex-direction: column;
     justify-content: center;
     padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
 }
 
 .button {

@@ -9,7 +9,8 @@
 - [ ] GitHub Integration (via Git)
 - [ ] Customizable Keyboard Shortcuts
 - [ ] User Login System (to save individual settings and preferences)
-- [ ] License Path Added to Credits
+- [ ] Profile management
+- [x] License Path Added to Credits
 - [ ] Possibility of creating graphical interfaces
 - [ ] Permission control (file access, network access, etc.)
 - [ ] Creating a header file

@@ -4,7 +4,7 @@
     Description : Style manager script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-11
+    Last Update : 2025-08-13
 */
 const fs = require('fs');
 const path = require('path');
@@ -59,6 +59,17 @@ function update_theme() {
     const LINE_NUMBERS = document.getElementsByClassName("line-number");
     for (let i = 0; i < LINE_NUMBERS.length; i++) {
         LINE_NUMBERS[i].style.color = settings.theme?.[CURRENT_THEME]?.common_css?.[".line-number-color"];
+    }
+
+    const a_ELEMENT = document.getElementsByTagName('a');
+    for (let i = 0; i < a_ELEMENT.length; i++) {
+        a_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.common_css?.["hyperlinks-color"];
+        a_ELEMENT[i].addEventListener('mouseenter', () => {
+            a_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.common_css?.["hyperlinks-hover-color"];
+        });
+        a_ELEMENT[i].addEventListener('mouseout', () => {
+            a_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.common_css?.["hyperlinks-color"];
+        });
     }
 
                                     // Update index CSS
