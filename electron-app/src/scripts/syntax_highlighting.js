@@ -4,15 +4,15 @@
     Description : Syntax highlighting script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-27
-    Last Update : 2025-08-11
+    Last Update : 2025-08-14
 */
-const { update_theme } = require("./styleManager");
+const { update_theme } = require('./styleManager');
 
 let var_const_list = [];
 
 function syntax_highlighting() {
     var_const_list = [];
-    const PREVIEW = document.getElementById("code-editor");
+    const PREVIEW = document.getElementById('code-editor');
     const CODES_LINES = Array.from(PREVIEW.querySelectorAll('.code-line'));
     let inMultiLineComment = false;
 
@@ -24,10 +24,10 @@ function syntax_highlighting() {
             if (END_INDEX !== -1) {
                 const BEFORE = code.slice(0, END_INDEX + 2);
                 const AFTER = code.slice(END_INDEX + 2);
-                CODE_LINE.innerHTML = `<span class="hl-comment">${BEFORE}</span>${AFTER}`;
+                CODE_LINE.innerHTML = `<span class='hl-comment'>${BEFORE}</span>${AFTER}`;
                 inMultiLineComment = false;
             } else {
-                CODE_LINE.innerHTML = `<span class="hl-comment">${code}</span>`;
+                CODE_LINE.innerHTML = `<span class='hl-comment'>${code}</span>`;
             }
             continue;
         } else {
@@ -40,60 +40,60 @@ function syntax_highlighting() {
                     const AFTER = code.slice(END_INDEX + 2);
 
                     code = BEFORE
-                        + `<span class="hl-comment">${COMMENT}</span>`
+                        + `<span class='hl-comment'>${COMMENT}</span>`
                         + AFTER;
                 } else {
                     const BEFORE = code.slice(0, START_INDEX);
                     const COMMENT = code.slice(START_INDEX);
 
                     CODE_LINE.innerHTML = BEFORE
-                        + `<span class="hl-comment">${COMMENT}</span>`;
+                        + `<span class='hl-comment'>${COMMENT}</span>`;
                     inMultiLineComment = true;
                     continue;
                 }
             } else {
                 const PLACEHOLDERS = [];
-                const protect = (className) => {
-                    return (match) => {
-                        const TOKEN = `__${className.toUpperCase()}_${PLACEHOLDERS.length}__`;
+                const protect = (_className) => {
+                    return (_match) => {
+                        const TOKEN = `__${_className.toUpperCase()}_${PLACEHOLDERS.length}__`;
                         PLACEHOLDERS.push({
                             token: TOKEN,
-                            html: `<span class="${className}">${match}</span>`
+                            html: `<span class='${_className}'>${_match}</span>`
                         });
                         return TOKEN;
                     };
                 };
 
                 code = code
-                    .replace(/\/\/.*/g, protect("hl-comment"))
-                    .replace(/(["'])(?:(?!\1)[^\\]|\\.)*\1/g, protect("hl-string"));
+                    .replace(/\/\/.*/g, protect('hl-comment'))
+                    .replace(/([''])(?:(?!\1)[^\\]|\\.)*\1/g, protect('hl-string'));
 
                 const PATTERNS = [
                     { 
                         regex: /\b(let|const)\s+(int|float|bool|str|None)\s+([a-zA-Z_$][\w$]*)/g,
-                        replaceFn: (match, decl, type, name) => {
-                            const DECL_SPAN = `<span class="hl-keyword">${decl}</span>`;
-                            const TYPE_SPAN = `<span class="hl-native-type">${type}</span>`;
-                            const NAME_CLASS = decl === "const" ? "hl-constant" : "hl-variable";
-                            const NAME_SPAN = `<span class="${NAME_CLASS}">${name}</span>`;
-                            var_const_list.push([name, NAME_CLASS]);
+                        replaceFn: (_match, _decl, _type, _name) => {
+                            const DECL_SPAN = `<span class='hl-keyword'>${_decl}</span>`;
+                            const TYPE_SPAN = `<span class='hl-native-type'>${_type}</span>`;
+                            const NAME_CLASS = _decl === 'const' ? 'hl-constant' : 'hl-variable';
+                            const NAME_SPAN = `<span class='${NAME_CLASS}'>${_name}</span>`;
+                            var_const_list.push([_name, NAME_CLASS]);
                             return `${DECL_SPAN} ${TYPE_SPAN} ${NAME_SPAN}`;
                         }
                     },
-                    { regex: /\b[a-zA-Z_$][\w$]*\s*\([^)]*\)\s*{/g, className: "hl-function-method" },
-                    { regex: /\b([a-zA-Z_$][\w$]*)\s*(?=\()/g, className: "hl-function-call" },
-                    { regex: /\bimport\s+(?:[\w*{}\s,]+\s+from\s+)?['"][^'"]+['"]/g, className: "hl-import" },
-                    { regex: /\btrue|false|null|\d+(\.\d+)?\b/g, className: "hl-literal" },
-                    { regex: /\b(const|let|if|else\s+if|else|for|while|return|switch|case|break|default|try|catch|finally|fn|as|from|import)\b/g, className: "hl-keyword" },
-                    { regex: /\b(int|float|bool|str|None)\b/g, className: "hl-native-type" },
-                    { regex: /\b(if|else if|else|for|while|do|switch|case|default|break|continue|return|try|catch|finally)\b/g, className: "hl-control-structure" }
+                    { regex: /\b[a-zA-Z_$][\w$]*\s*\([^)]*\)\s*{/g, className: 'hl-function-method' },
+                    { regex: /\b([a-zA-Z_$][\w$]*)\s*(?=\()/g, className: 'hl-function-call' },
+                    { regex: /\bimport\s+(?:[\w*{}\s,]+\s+from\s+)?[''][^'']+['']/g, className: 'hl-import' },
+                    { regex: /\btrue|false|null|\d+(\.\d+)?\b/g, className: 'hl-literal' },
+                    { regex: /\b(const|let|if|else\s+if|else|for|while|return|switch|case|break|default|try|catch|finally|fn|as|from|import)\b/g, className: 'hl-keyword' },
+                    { regex: /\b(int|float|bool|str|None)\b/g, className: 'hl-native-type' },
+                    { regex: /\b(if|else if|else|for|while|do|switch|case|default|break|continue|return|try|catch|finally)\b/g, className: 'hl-control-structure' }
                 ];
                 
                 for (const PATTERN of PATTERNS) {
                     if (PATTERN.replaceFn) {
                         code = code.replace(PATTERN.regex, PATTERN.replaceFn);
                     } else {
-                        code = code.replace(PATTERN.regex, (match) => `<span class="${PATTERN.className}">${match}</span>`);
+                        code = code.replace(PATTERN.regex, (match) => `<span class='${PATTERN.className}'>${match}</span>`);
                     }
                 }
 
@@ -103,7 +103,7 @@ function syntax_highlighting() {
                 
                 for (const VAR_NAME of var_const_list) {
                     const REGEX = new RegExp(`\\b${VAR_NAME[0]}\\b`, 'g');
-                    code = code.replace(REGEX, `<span class="${VAR_NAME[1]}">${VAR_NAME[0]}</span>`);
+                    code = code.replace(REGEX, `<span class='${VAR_NAME[1]}'>${VAR_NAME[0]}</span>`);
                 }
 
                 CODE_LINE.innerHTML = code;

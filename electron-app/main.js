@@ -7,8 +7,11 @@
     Created     : 2025-07-26
     Last Update : 2025-08-14
 */
-const { app, ipcMain, BrowserWindow, Menu } = require('electron');
+const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
+const fs = require('fs');
+
+let current_file_path = null;
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -42,4 +45,24 @@ app.on('activate', () => {
 
 ipcMain.on('quit-app', () => {
     app.quit();
+});
+
+ipcMain.on('save-current-file', async (event, _code) => {
+    if (!current_file_path) {
+        const { canceled, filePath } = await dialog.showSaveDialog({
+            title: 'Enregistrer le fichier',
+            defaultPath: 'untitled.a2plus',
+            filters: [
+                { name: 'Fichier A++', extensions: ['a2plus'] },
+                { name: 'Tous les fichiers', extensions: ['*'] }
+            ]
+        });
+
+        if (!canceled && filePath) {
+            fs.writeFileSync(filePath, _code, 'utf8');
+            current_file_path = filePath;
+        }
+    } else {
+        fs.writeFileSync(current_file_path, _code, 'utf8');
+    }
 });
