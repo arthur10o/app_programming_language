@@ -5,9 +5,9 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-10
+    Last Update : 2025-08-14
 */
-const { app, BrowserWindow } = require('electron');
+const { app, ipcMain, BrowserWindow, Menu } = require('electron');
 const PATH = require('path');
 
 function createWindow() {
@@ -22,6 +22,7 @@ function createWindow() {
         icon: PATH.join(__dirname, 'src/assets/icons/logo_app.png')
     });
 
+    Menu.setApplicationMenu(null)
     mainWindow.loadFile(PATH.join(__dirname, 'src/pages/home/index.html'));
 }
 
@@ -37,4 +38,8 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
+});
+
+ipcMain.on('quit-app', () => {
+    app.quit();
 });

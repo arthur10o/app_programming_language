@@ -4,7 +4,7 @@
     Description : Editor script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-11
+    Last Update : 2025-08-14
 */
 const {syntax_highlighting} = require('../../scripts/syntax_highlighting.js');
 
@@ -19,6 +19,7 @@ CODE_EDITOR.addEventListener('input', () => {
 });
 
 BUTTON_LOAD_CODE.addEventListener('click', () => {
+    FILE_INPUT.value = '';
     FILE_INPUT.click();
 });
 
@@ -72,16 +73,7 @@ BUTTON_SAVE_CODE.addEventListener('click', () => {
 });
 
 function render_code_to_editor(_text) {
-    const DATA_PATH = path.resolve(__dirname, '../../data/data_settings.json');
-    const LINES = _text.split('\n');
-
-    let html = '<pre><code><div style="display: flex; flex-direction: column;">';
-    for (let line of LINES) {
-        const REPLACED = line.replace(/\t/g, TAB_DISPLAY);
-        html += `<div class="code-line">${REPLACED}</div>`;
-    }
-    html += '</div></code></pre>';
-    CODE_EDITOR.innerHTML = html;
+    CODE_EDITOR.textContent = _text;
     syntax_highlighting();
 }
 
