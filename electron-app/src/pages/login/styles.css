@@ -1,0 +1,135 @@
+/*
+    File        : styles.css
+    Version     : 1.0
+    Description : Login styles for A++ IDE
+    Author      : Arthur
+    Created     : 2025-08-15
+    Last Update : 2025-08-17
+*/
+.login-container {
+    padding: 40px 30px;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.login-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.toggle-password svg {
+    pointer-events: none;
+}
+
+.input-group input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button[type="submit"] {
+    font-size: 1.1rem;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.forgot-password {
+    font-size: 0.95rem;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 40px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+footer a {
+    color: inherit;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .login-container {
+        padding: 30px 20px;
+    }
+
+    .login-container h1 {
+        font-size: 2rem;
+    }
+}

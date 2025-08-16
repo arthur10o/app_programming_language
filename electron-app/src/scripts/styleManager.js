@@ -4,7 +4,7 @@
     Description : Style manager script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-14
+    Last Update : 2025-08-17
 */
 const fs = require('fs');
 const path = require('path');
@@ -35,6 +35,87 @@ function update_theme() {
     if (!CURRENT_THEME) {
         alert('Theme not found in settings');
     }
+
+                                    // Update login css
+    const login_container_ELEMENT = document.getElementsByClassName('login-container');
+    for (let i = 0; i < login_container_ELEMENT.length; i++) {
+        login_container_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.['.login-container-background-color'];
+        login_container_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.login?.['.login-container-color'];
+
+        const h1 = login_container_ELEMENT[i].querySelector('h1');
+        if (h1) {
+            h1.style.color = settings.theme?.[CURRENT_THEME]?.login?.['.login-container-h1-color'];
+        }
+    }
+
+    const input_group_ELEMENT = document.getElementsByClassName('input-group');
+    for (let i = 0; i < input_group_ELEMENT.length; i++) {
+        const label_ELEMENT = input_group_ELEMENT[i].getElementsByTagName('label');
+        for (let j = 0; j < label_ELEMENT.length; j++) {
+            label_ELEMENT[j].style.color = settings.theme?.[CURRENT_THEME]?.login?.[".input-group label-color"];
+        }
+
+        const input_ELEMENT = input_group_ELEMENT[i].getElementsByTagName('input');
+        for (let k = 0; k < input_ELEMENT.length; k++) {
+            const input_ELEMENT_k = input_ELEMENT[k];
+
+            if (input_ELEMENT_k.type === 'email') {
+                input_ELEMENT_k.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='email']-background-color"];
+                input_ELEMENT_k.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='email']-color"];
+            }
+
+            if (input_ELEMENT_k.type === 'password') {
+                input_ELEMENT_k.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='password']-background-color"];
+                input_ELEMENT_k.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='password']-color"];
+            }
+
+            if (input_ELEMENT_k.type === 'checkbox') {
+                input_ELEMENT_k.style.accentColor = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='checkbox']-accent-color"];
+            }
+        }
+    }
+
+    const login_button_ELEMENT = document.querySelector("button[type='submit']");
+    if (login_button_ELEMENT) {
+        login_button_ELEMENT.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.["button[type='submit']-background-color"];
+        login_button_ELEMENT.style.color = settings.theme?.[CURRENT_THEME]?.login?.["button[type='submit']-color"];
+
+        login_button_ELEMENT.addEventListener('mouseenter', () => {
+            login_button_ELEMENT.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.["button[type='submit']:hover-background-color"];
+        });
+        login_button_ELEMENT.addEventListener('mouseout', () => {
+            login_button_ELEMENT.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.["button[type='submit']-background-color"];
+        });
+    }
+
+    const forgot_password_ELEMENT = document.getElementsByClassName('forgot-password');
+    for (let i = 0; i < forgot_password_ELEMENT.length; i++) {
+        const forgot_password_ELEMENT_i = forgot_password_ELEMENT[i];
+        forgot_password_ELEMENT_i.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".forgot-password-color"];
+        forgot_password_ELEMENT_i.addEventListener('mouseenter', () => {
+            forgot_password_ELEMENT_i.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".forgot-password:hover-color"];
+        });
+        forgot_password_ELEMENT_i.addEventListener('mouseout', () => {
+            forgot_password_ELEMENT_i.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".forgot-password-color"];
+        });
+    }
+
+    const toggle_password_ELEMENT = document.getElementById('toggle-password-id');
+    const THEME_COLOR = settings.theme?.[CURRENT_THEME]?.login;
+    const BASE_COLOR = THEME_COLOR?.[".toggle-password-color"];
+    const HOVER_COLOR = THEME_COLOR?.[".toggle-password-color:hover"];
+
+    if (toggle_password_ELEMENT && BASE_COLOR) {
+        toggle_password_ELEMENT.style.color = BASE_COLOR;
+        toggle_password_ELEMENT.addEventListener('mouseenter', () => {
+            toggle_password_ELEMENT.style.color = HOVER_COLOR || BASE_COLOR;
+        });
+        toggle_password_ELEMENT.addEventListener('mouseleave', () => {
+            toggle_password_ELEMENT.style.color = BASE_COLOR;
+        });
+    }
+
+
                                     // Update common CSS
     document.body.style.background = settings.theme?.[CURRENT_THEME]?.common_css?.['body-background'];
     document.body.style.color = settings.theme?.[CURRENT_THEME]?.common_css?.['body-color'];
@@ -84,7 +165,7 @@ function update_theme() {
         p_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.home?.['p-color'];
     }
 
-    const footer_p_ELEMENT = document.getElementsByTagName('footer')/*.getElementsByTagName('p')*/;
+    const footer_p_ELEMENT = document.getElementsByTagName('footer');
     for (let i = 0; i < footer_p_ELEMENT.length; i++) {
         footer_p_ELEMENT[i].style.color = settings.theme?.[CURRENT_THEME]?.home?.['footer-color'];
         footer_p_ELEMENT[i].getElementsByTagName('p')[i].style.color = settings.theme?.[CURRENT_THEME]?.home?.['footer-p-color'];
@@ -149,7 +230,7 @@ function update_theme() {
     const preview_area_ELEMENT = document.getElementById('preview-area');
     if (preview_area_ELEMENT) {
         preview_area_ELEMENT.style.boxShadow = settings.theme?.[CURRENT_THEME]?.settings?.['preview-area-box-shadow'];
-        preview_area_ELEMENT.style.border = settings.theme?.[CURRENT_THEME]?.settings?.['preview--border'];
+        preview_area_ELEMENT.style.border = settings.theme?.[CURRENT_THEME]?.settings?.['preview-area-border'];
         preview_area_ELEMENT.style.background = settings.theme?.[CURRENT_THEME]?.settings?.['preview-area-background'];
         preview_area_ELEMENT.style.color = settings.theme?.[CURRENT_THEME]?.settings?.['preview-area-color'];
     }
