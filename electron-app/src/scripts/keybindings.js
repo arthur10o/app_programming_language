@@ -4,7 +4,7 @@
     Description : Shortcut keyboard executor for A++ IDE
     Author      : Arthur
     Created     : 2025-08-14
-    Last Update : 2025-08-14
+    Last Update : 2025-08-15
 */
 const { ipcRenderer } = require('electron');
 
@@ -50,9 +50,15 @@ async function handle_shortcut(_ACTION) {
     if (_ACTION == 'close ide') {
         ipcRenderer.send('quit-app');
     } else if (_ACTION == 'open file' && document.title == 'A++ IDE - Editor') {
-        const FILE_INPUT = document.getElementById('file-input');
-        FILE_INPUT.click();
+        const BUTTON_LOAD_CODE = document.getElementById('load-code');
+        BUTTON_LOAD_CODE.click();
     } else if (_ACTION == 'save file' && document.title == 'A++ IDE - Editor') {
         document.getElementById('save-code').click();
+    } else if (_ACTION == 'save file' && document.title == 'A++ IDE - Settings') {
+        document.getElementById('save-settings').click();
+    } else if (_ACTION == 'new file' && document.title == 'A++ IDE - Editor') {
+        ipcRenderer.send('new-file');
+    } else if (_ACTION == 'close file' && document.title == 'A++ IDE - Editor') {
+        ipcRenderer.send('close-file');
     }
 }

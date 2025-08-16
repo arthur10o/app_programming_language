@@ -1,4 +1,6 @@
 {
+    "control+shift+q": "log out",
+    "control+alt+q": "change account",
     "control+s": "save file",
     "control+o": "open file",
     "control+n": "new file",
