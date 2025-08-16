@@ -113,6 +113,7 @@
 
 #### Boolean Operations:
 - [ ] Equal To (`==`)
+- [ ] Equal To (`===`)
 - [ ] Not Equal To (`!=`)
 - [ ] Less Than (`<`)
 - [ ] Greater Than (`>`)
