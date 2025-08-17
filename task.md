@@ -18,6 +18,9 @@
 - [ ] Creating a header file
 - [ ] Creating a custom file editor (file explorer + visual editor)
 - [ ] Added A++ logo in File Explorer for specific files
+- [ ]  Digital signature of IDE binaries
+- [ ]  Verification hash during updates (anti-tampering)
+- [ ]  Redundancy & automatic backup of user projects
 
 ### 1.2 Code Editor
 - [ ] Code Auto-Completion
@@ -31,11 +34,14 @@
 - [ ] Advanced error handling
 - [ ] Automatic code refactoring using artificial intelligence (AI-powered refactoring)
 - [ ] Documentation generated automatically from code (docstring + schema type)
+- [ ] Action & access logs for each code execution
 
 ### 1.3 Console
 - [ ] Compiler Output Linked to Console
 - [ ] Debugger Integration
 - [ ] Integration of an AI engine for customizable internal bots/assistants
+- [ ] CPU/memory limitations & timeout for each execution (anti-DoS)
+- [ ] User runtime isolation (sandboxed execution)
 
 ### 1.4 Settings Panel
 - [x] Real-Time Preview of Changes
@@ -50,9 +56,14 @@
 - [ ] Added Hot Reload / Live coding
 - [ ] Enabling/disabling built-in AI features (refacto, doc, bots)
 - [ ] Settings for customizing the file editor
+- [ ] Security dashboard by project (alerts, logs, audit, authentication status)
 
 ### 1.5 Pre-Deployment Checklist
 - [ ] Comprehensive Testing of All Features
+- [ ] Fuzz Testing (random/extreme inputs)
+- [ ] Stress Testing (system and network load)
+- [ ] Resilience after crash
+- [ ] Failure simulation for error testing
 
 ---
 
@@ -248,6 +259,15 @@
 - [ ] Interoperability between languages (function calls between A++ and other languages)
 - [ ] Cross-compilation and multi-language compatibility within the same project
 - [ ] Bridge system for Python, JavaScript, etc. scripts
+
+### 2.8 Language-integrated security
+- [ ] “Safe” mode: strictly controlled execution, no unauthorized system access
+- [ ] Secure types (e.g., `SecureString`, `SafeFile`)
+- [ ] System operations limited by explicit keyword or flag
+- [ ] Static analysis integrated into compilation (linting + vulnerability detection)
+- [ ] Dynamic analysis during execution (sandbox monitoring)
+- [ ] Strict isolation of dependencies/plugins (plugin jail)
+- [ ] Module signing and integrity verification
 
 ---
 
@@ -611,6 +631,10 @@
 - [ ] standard deviation
 - [ ] Machine learning
 
+### 3.11 Mathematical security
+- [ ] Secure arithmetic functions (e.g., `SecureRandom`, modular arithmetic for side-channel resistance)
+- [ ] Secure random number generation (cryptographically secure)
+
 ---
 
 ## 🚀 4. Performance and Optimization
@@ -636,27 +660,35 @@
 - [ ] Performance debugging tools (execution traces, breakpoints)
 - [ ] Visualization of dependency graphs to optimize execution
 - [ ] Integrated logical reasoning engine
+- [ ] Integrity monitoring and anomaly alerts
 
 ### 4.4 Performance Verification:
 - [ ] Performance testing for data structures
 - [ ] Memory consumption profiling
 - [ ] Managing bottlenecks in execution
+- [ ] Load, fuzz, stress, and resilience tests mentioned in 1.5
 
 ---
 
 ## 🛡️ 5. Security, Compatibility, and Portability
 
-### 5.1 Language Safety:
+### 5.1 Language Safety (Language and runtime security):
 - [ ] Permission and execution privilege management (sandboxing)
 - [ ] Injection attack protection (e.g. SQL injection, code injection)
 - [ ] Secure communications (e.g. TLS/SSL encryption support)
 - [ ] Secure management of sensitive data (e.g., passwords)
 - [ ] User input validation and cleaning
 - [ ] Memory leak detection and prevention
-- [ ] Real-time code security analysis (Scan code in real time to detect vulnerabilities, such as injections or security errors)
-- [ ] Homomorphic encryption support (Apply homomorphic encryption or encrypted calculations, allowing calculations to be performed on encrypted data without decrypting it)
-- [ ] Formal Verification (Implement formal methods to verify correctness and security properties of the language)
+- [ ] Real-time code security analysis
+- [ ] Homomorphic encryption support
+- [ ] Formal Verification of correctness and security
 - [ ] Automatic translation of error messages
+- [ ] Fully isolated runtime sandbox
+- [ ] Time, memory, and CPU limits (timeouts/quotas)
+- [ ] Fuzz testing + dynamic sandbox monitoring
+- [ ] Detection of vulnerable dependencies (via CVE DB, Snyk, etc.)
+- [ ] Module/language/plugin signing and verification
+- [ ] Strict separation of plugins (plugin jail)
 
 ### 5.2 Inter-Language Compatibility:
 - [ ] Interoperability with other languages
@@ -675,9 +707,15 @@
 - [ ] Built-in NLP features
 
 ### 5.5 Security Check:
-- [ ]  Vulnerability scanning tools (static and dynamic code analysis)
-- [ ] Security audits to detect potential vulnerabilities in the language
-- [ ] Support for integrating security testing into CI/CD pipelines
+- [ ] Vulnerability scanning tools (static and dynamic code analysis)
+- [ ] Security audits (code, language, IDE)
+- [ ] CI/CD integration of security tests
+- [ ] Network filtering (whitelist/blacklist, outgoing API limitations)
+- [ ] Automatic scanning of uploaded files
+- [ ] Local encryption of sensitive files (configs, secrets)
+- [ ] Path traversal protection
+- [ ] Granular file access control (ACLs)
+- [ ] Optional containerization (Docker, Firejail)
 
 ---
 
@@ -685,6 +723,8 @@
 
 ### 6.1 Educational Features:
 - [ ] Interactive tutorial integrated into the IDE for learning the language
+- [ ] Addition of a **Security.md** or integrated security documentation
+- [ ] Vulnerability disclosure guide and security contact
 
 ---
 
@@ -715,11 +755,16 @@
 - [ ] Integrated AutoML system for model creation, training, and evaluation
 - [ ] Model generator based on descriptions (e.g., NLP → network structure)
 - [ ] Automatic deployment and inference via the IDE
-- [ ] Integration of a dedicated AI engine for:
-    - [ ] Automatic refactoring
-    - [ ] Documentation generation
-    - [ ] Natural language assistance
-    - [ ] Intelligent code generation
+- [ ] Integration of a dedicated AI engine for:
+  - [ ] Automatic refactoring
+  - [ ] Documentation generation
+  - [ ] Natural language assistance
+  - [ ] Intelligent code generation
+- [ ] Prompt filtering (anti-injection/jailbreak)
+- [ ] Explicit user consent for AI analyses
+- [ ] Encrypted history of prompts and responses
+- [ ] Audit of AI decisions (refactor, doc, suggestions)
+- [ ] Isolation of AI suggestions from the system context
 
 ## 📖 9. Documentation and Project Maintenance
 
@@ -729,6 +774,8 @@
 - [ ] Multilingual documentation
 - [ ] Versioning documentation
 - [ ] Interactive interface for viewing documentation (docs integrated into the IDE)
+- [ ] Security documentation (Security.md)
+- [ ] Vulnerability disclosure policy (Responsible Disclosure Policy)
 
 ### 9.2 Project Maintenance & Contributions
 - [ ] Contribution Guide (CONTRIBUTING.md)
@@ -738,3 +785,5 @@
 - [ ] Automatic changelog generation
 - [ ] Documented update history
 - [ ] Code quality badge (lint/test/coverage)
+- [ ] Security audit & badge (security status)
+- [ ] CI/CD pipelines including vulnerability and security testing
