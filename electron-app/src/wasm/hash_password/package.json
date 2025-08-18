@@ -1,0 +1,15 @@
+{
+  "name": "hash_password",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "hash_password_bg.wasm",
+    "hash_password.js",
+    "hash_password.d.ts"
+  ],
+  "main": "hash_password.js",
+  "types": "hash_password.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
