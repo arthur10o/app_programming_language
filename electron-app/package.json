@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/arthur10o/app_programming_language/issues"
   },
-  "homepage": "https://github.com/arthur10o/app_programming_language#readme"
+  "homepage": "https://github.com/arthur10o/app_programming_language#readme",
+  "dependencies": {
+    "electron": "^37.3.0"
+  }
 }
