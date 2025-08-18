@@ -4,7 +4,7 @@
     Description : Style manager script for A++ IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-17
+    Last Update : 2025-08-19
 */
 const fs = require('fs');
 const path = require('path');
@@ -36,7 +36,7 @@ function update_theme() {
         alert('Theme not found in settings');
     }
 
-                                    // Update login css
+                                    // Update login/signup css
     const login_container_ELEMENT = document.getElementsByClassName('login-container');
     for (let i = 0; i < login_container_ELEMENT.length; i++) {
         login_container_ELEMENT[i].style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.['.login-container-background-color'];
@@ -62,11 +62,40 @@ function update_theme() {
             if (input_ELEMENT_k.type === 'email') {
                 input_ELEMENT_k.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='email']-background-color"];
                 input_ELEMENT_k.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='email']-color"];
+                input_ELEMENT_k.addEventListener('focus', () => {
+                    input_ELEMENT_k.style.border = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='email']:focus-border"];
+                    input_ELEMENT_k.style.boxShadow = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='email']:focus-box-shadow"];
+                });
+                input_ELEMENT_k.addEventListener('blur', () => {
+                    input_ELEMENT_k.style.border = '';
+                    input_ELEMENT_k.style.boxShadow = '';
+                });
             }
 
             if (input_ELEMENT_k.type === 'password') {
                 input_ELEMENT_k.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='password']-background-color"];
                 input_ELEMENT_k.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='password']-color"];
+                input_ELEMENT_k.addEventListener('focus', () => {
+                    input_ELEMENT_k.style.border = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='password']:focus-border"];
+                    input_ELEMENT_k.style.boxShadow = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='password']:focus-box-shadow"];
+                });
+                input_ELEMENT_k.addEventListener('blur', () => {
+                    input_ELEMENT_k.style.border = '';
+                    input_ELEMENT_k.style.boxShadow = '';
+                });
+            }
+
+            if (input_ELEMENT_k.type === 'text') {
+                input_ELEMENT_k.style.backgroundColor = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='text']-background-color"];
+                input_ELEMENT_k.style.color = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='text']-color"];
+                input_ELEMENT_k.addEventListener('focus', () => {
+                    input_ELEMENT_k.style.border = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='text']:focus-border"];
+                    input_ELEMENT_k.style.boxShadow = settings.theme?.[CURRENT_THEME]?.login?.[".input-group input[type='text']:focus-box-shadow"];
+                });
+                input_ELEMENT_k.addEventListener('blur', () => {
+                    input_ELEMENT_k.style.border = '';
+                    input_ELEMENT_k.style.boxShadow = '';
+                });
             }
 
             if (input_ELEMENT_k.type === 'checkbox') {
@@ -115,6 +144,17 @@ function update_theme() {
         });
     }
 
+    const toggle_confirm_password_ELEMENT = document.getElementById('toggle-confirm-password-id');
+
+   if (toggle_confirm_password_ELEMENT && BASE_COLOR) {
+        toggle_confirm_password_ELEMENT.style.color = BASE_COLOR;
+        toggle_confirm_password_ELEMENT.addEventListener('mouseenter', () => {
+            toggle_confirm_password_ELEMENT.style.color = HOVER_COLOR || BASE_COLOR;
+        });
+        toggle_confirm_password_ELEMENT.addEventListener('mouseleave', () => {
+            toggle_password_ELEMENT.style.color = BASE_COLOR;
+        });
+    }
 
                                     // Update common CSS
     document.body.style.background = settings.theme?.[CURRENT_THEME]?.common_css?.['body-background'];

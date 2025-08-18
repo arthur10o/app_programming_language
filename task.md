@@ -9,7 +9,6 @@
 - [ ] GitHub Integration (via Git)
 - [ ] Customizable Keyboard Shortcuts
 - [ ] User Login System (to save individual settings and preferences)
-- [ ] Captcha to secure the connection
 - [ ] 2FA to secure the connection
 - [ ] Profile management
 - [x] License Path Added to Credits

@@ -1,25 +1,30 @@
 <!--
-  File        : login.html
+  File        : signup.html
   Version     : 1.0
-  Description : Login page for A++ IDE
+  Description : Sign Up page for A++ IDE
   Author      : Arthur
-  Created     : 2025-08-15
-  Last Update : 2025-08-18
+  Created     : 2025-08-18
+  Last Update : 2025-08-19
 -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>A++ IDE - Login</title>
+        <title>A++ IDE - Sign Up</title>
         <link rel='stylesheet' href='styles.css'>
         <link rel='stylesheet' href='../../styles/common_css.css'>
     </head>
     <body>
         <div class="container">
             <div class="login-container">
-                <h1 id="h1">Login</h1>
+                <h1 id="h1">Sign Up</h1>
                 <form id="login-form">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username" autocomplete="username" required>
+                        <span id="username-error" class="error-message" aria-live="polite"></span>
+                    </div>
                     <div class="input-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" placeholder="Enter your email address" autocomplete="email" required>
@@ -30,7 +35,19 @@
                         <div class="password-wrapper">
                             <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
                             <button type="button" id="toggle-password-id" class="toggle-password" aria-label="Show password">
-                                <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                                <svg id="eye-icon-password" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 4.5C7 4.5 2.73 8.11 1 12c1.73 3.89 6 7.5 11 7.5s9.27-3.61 11-7.5c-1.73-3.89-6-7.5-11-7.5zm0 13c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5 17.5 8.97 17.5 12 15.03 17.5 12 17.5zm0-9a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span id="password-error" class="error-message" aria-live="polite"></span>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirm-password" placeholder="Confirm your password" autocomplete="current-password" required>
+                            <button type="button" id="toggle-confirm-password-id" class="toggle-password" aria-label="Show password">
+                                <svg id="eye-icon-confirm-password" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 4.5C7 4.5 2.73 8.11 1 12c1.73 3.89 6 7.5 11 7.5s9.27-3.61 11-7.5c-1.73-3.89-6-7.5-11-7.5zm0 13c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5 17.5 8.97 17.5 12 15.03 17.5 12 17.5zm0-9a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
                                 </svg>
                             </button>
@@ -43,8 +60,7 @@
                             Remember me
                         </label>
                     </div>
-                    <button class="button" id="login-button" type="submit">Login</button>
-                    <div class="forgot-password" onclick="alert('[TODO]')">Forgot password ?</div>
+                    <button class="button" id="signup-button" type="submit">Sign Up</button>
                 </form>
             </div>
             <footer>
