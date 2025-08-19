@@ -1,0 +1,46 @@
+<!--
+  ==============================================================================
+  File        : console.html
+  Version     : 1.0
+  Description : HTML file for the A++ IDE console
+                - Main user interface for output
+  Author      : Arthur
+  Created     : 2025-07-26
+  Last Update : 2025-08-19
+  ==============================================================================
+-->
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>A++ IDE - Console</title>
+    <link rel='stylesheet' href='console.css'>
+    <link rel='stylesheet' href='../../common/styles.css'>
+</head>
+<body>
+    <div class='container console-container'>
+        <header>
+            <h1>Console</h1>
+            <p>Track the execution of your orders and applications in real time.</p>
+        </header>
+        <br>
+        <main>
+            <div class='console'>
+                <pre id='console-output'>Welcome to the console. Messages will appear here...</pre>
+            </div>
+            <div class='action-buttons'>
+                <button class='button' id='clear-console'>Clear</button>
+                <button class='button' id='back-home' onclick='window.location.href = "../home/index.html";'>Back to Home</button>
+            </div>
+        </main>
+        <footer>
+            <p><a href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'>&copy; 2025 A++ IDE. All rights reserved.</a></p>
+        </footer>
+    </div>
+    <script src='console.js'></script>
+    <script src='../../common/renderer.js'></script>
+    <script src='../../common/styleManager.js'></script>
+    <script src='../../common/keybindings.js'></script>
+</body>
+</html>

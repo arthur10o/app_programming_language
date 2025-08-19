@@ -1,0 +1,50 @@
+<!--
+    ==============================================================================
+    File        : editor.html
+    Version     : 1.0
+    Description : HTML file for the A++ IDE editor
+                - Main user interface for code editing
+    Author      : Arthur
+    Created     : 2025-07-26
+    Last Update : 2025-08-19
+    ==============================================================================
+-->
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>A++ IDE - Editor</title>
+    <link rel='stylesheet' href='editor.css'>
+    <link rel='stylesheet' href='../../common/styles.css'>
+</head>
+<body>
+    <div class='container editor-container'>
+        <header>
+            <h1>Code editor</h1>
+            <p>Write your code here, quickly and fluidly.</p>
+        </header>
+        <br>
+        <main>
+            <div class='editor'>
+                <div contenteditable='true' class='textarea' id='code-editor' placeholder='Start coding here...' spellcheck="false"></div>
+            </div>
+            <div class='action-buttons'>
+                <button class='button' id='run-code' onclick='//ADD RUN FUNCTION !!!!!'>Run</button>
+                <button class='button' id='save-code'>Save</button>
+                <button class='button' id='load-code'>Load</button>
+                <button class='button' id='console-output' onclick='window.location.href = "../console/console.html";'>Console</button>
+                <button class='button' id='settings' onclick='window.location.href = "../settings/settings.html";'>Settings</button>
+                <button class='button' id='back-home' onclick='window.location.href = "../home/index.html";'>Back to Home</button>
+            </div>
+        </main>
+        <footer>
+            <p><a href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'>&copy; 2025 A++ IDE. All rights reserved.</a></p>
+        </footer>
+    </div>
+    <script src='editor.js'></script>
+    <script src='../../common/renderer.js'></script>
+    <script src='../../common/styleManager.js'></script>
+    <script src='../../common/keybindings.js'></script>
+</body>
+</html>

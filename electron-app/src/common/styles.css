@@ -1,0 +1,184 @@
+/*
+    ==============================================================================
+    File        : styles.css
+    Version     : 1.0
+    Description : Styles sheet for all pages on the app
+    Author      : Arthur
+    Created     : 2025-07-26
+    Last Update : 2025-08-19
+    ==============================================================================
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.button {
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    margin-bottom: 5px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 15px;
+    margin-bottom: 10px;
+}
+
+.button:hover {
+    transform: translateY(-5px);
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+.code-line {
+  font-family: inherit;
+  display: inline-block;
+  min-width: 1em;
+}
+
+.line-number {
+  display: inline-block;
+  width: 2em;
+  text-align: right;
+  margin-right: 0.5em;
+  opacity: 0.7;
+}
+
+button:focus {
+    outline: none;
+}
+
+.login-container {
+    padding: 40px 30px;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.login-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="text"] {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.toggle-password svg {
+    pointer-events: none;
+}
+
+.input-group input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button[type="submit"] {
+    font-size: 1.1rem;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .button {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .login-container {
+        padding: 30px 20px;
+    }
+
+    .login-container h1 {
+        font-size: 2rem;
+    }
+}

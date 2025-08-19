@@ -1,0 +1,15 @@
+[package]
+name = "lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+argon2 = "0.5"
+rand = { version = "0.8", default-features = false, features = ["getrandom"] }
+getrandom = { version = "0.2", features = ["js"] }
+wasm-bindgen = "0.2"
+
+[lib]
+name = "lib"
+path = "src/lib.rs"
+crate-type = ["cdylib"]

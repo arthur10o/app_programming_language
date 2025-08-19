@@ -25,11 +25,11 @@ function createWindow() {
             contextIsolation: false,
             enableRemoteModule: true
         },
-        icon: PATH.join(__dirname, 'src/assets/icons/logo_app.png')
+        icon: PATH.join(__dirname, 'public/assets/icons/app-logo.png')
     });
 
     Menu.setApplicationMenu(null)
-    mainWindow.loadFile(PATH.join(__dirname, 'src/pages/home/index.html'));
+    mainWindow.loadFile(PATH.join(__dirname, 'src/app/home/index.html'));
 }
 
 app.whenReady().then(createWindow);
