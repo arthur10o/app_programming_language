@@ -210,8 +210,7 @@ async function registerUser(_username, _email, _password, _remember_me) {
                     "autocomplete": true,
                     "showSuggestions": true,
                     "syntaxHighlighting": true,
-                    "showLineNumbers": true,
-                    "rememberMe": _remember_me
+                    "showLineNumbers": true
                 },
                 "keybindings": keybindings
             };
@@ -221,6 +220,14 @@ async function registerUser(_username, _email, _password, _remember_me) {
             _username = null;
 
             ipcRenderer.send('register-user', new_user);
+            ipcRenderer.send('saved_connected_user', {
+                "connected_user": {
+                    "username": { "cipher": CIPHER_USERNAME, "nonce": NONCE_USERNAME },
+                    "date_of_connection": new Date().toISOString(),
+                    "rememberMe": _remember_me
+                }
+            });
+            window.location.href = "../home/index.html";
         });
     } catch (error) {
         console.error("Error during registration:", error);

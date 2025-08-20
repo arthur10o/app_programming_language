@@ -192,6 +192,29 @@ button[type="submit"]:active {
     flex-shrink: 0;
 }
 
+.login-link,
+.sign-up-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+.login-link a,
+.sign-up-link a {
+    font-weight: bold;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.login-link a:hover
+.sign-up-link a:hover {
+    text-decoration: underline;
+}
+
+.login-link a:focus,
+.sign-up-link a:focus {
+    outline: none;
+}
+
 @media (max-width: 600px) {
     .button {
         width: 100%;

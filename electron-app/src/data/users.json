@@ -1,19 +1,19 @@
 [
   {
     "username": {
-      "cipher": "+LClWMuYucjbB5dfojQfm8izhLro",
-      "nonce": "aAcZ3n7CVYlc9Hoc"
+      "cipher": "twdYG/17YE51NBz2dBhdiIzhzcdp",
+      "nonce": "9VVF0Qk8jNKAy4Hi"
     },
     "email": {
-      "cipher": "iPQp0eL5pOPsX0JsNmVvaXnocPoswD9lTi083q7svpYhj9gsVw==",
-      "nonce": "42EgOCq4crVX0AAI"
+      "cipher": "IdCmv+IuhIs/JK6zEsDXscmc/GzrLKgU1qIIaerq1I4NlDY0ow==",
+      "nonce": "01Rpr7zqjewbyper"
     },
     "aes_key_encrypted": {
-      "cipher": "fKeOtuESLJmkO45aTP0/DuAICun5Gk2/sxc0/nOWMugaBHl+isJ83pLQa1vjJjDlQZhopeJGHeYDJgew",
-      "nonce": "GszzZpaMgz9bQLt5"
+      "cipher": "i/I4S7YJr/8h6z6hGsYLnxcFAHkGllSBJaic495kvz/Z6ch1iZ8zqapEwxiFCZo8fMO8DnCIirUDMXWQ",
+      "nonce": "Eda2YW1TRDlUgDtA"
     },
-    "aes_salt": "jcfU8kYjKNTUptVJXQMH4A==",
-    "password": "$argon2id$v=19$m=262144,t=6,p=2$kK6msguY5tzuRL5r4ZIycA$fEtfutijXeUrtTlBjTsqUD1t9JFOLHnxuIbJTItnE3PLEzgLxQZsRVjni8NvYTbWLGG+6SpUvvqGF3w3ij+0pA",
+    "aes_salt": "9IfENNCwSoEAEz3uX06Ovg==",
+    "password": "$argon2id$v=19$m=262144,t=6,p=2$K7G2JcLlG8SeKKdOd5B8/Q$zakiD/wFahJ6AkV03uqcKQoP3Ha0uybbuwNYU0IqHd6ErnHVnMsFnnek//X4M3iUyR3aj5tu3o/q2B5+6d5gkw",
     "last_project_path": "",
     "profil_picture": "",
     "preferences": {
@@ -29,8 +29,7 @@
       "autocomplete": true,
       "showSuggestions": true,
       "syntaxHighlighting": true,
-      "showLineNumbers": true,
-      "rememberMe": false
+      "showLineNumbers": true
     },
     "keybindings": {
       "control+shift+q": "log out",

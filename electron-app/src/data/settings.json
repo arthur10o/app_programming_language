@@ -101,7 +101,13 @@
                 ".error-message-color": "#f07178",
                 ".error-message-background-color": "rgba(240, 113, 120, 0.08)",
                 ".error-message-border-left": "3px solid #f07178",
-                ".error-icon-fill": "#f07178"
+                ".error-icon-fill": "#f07178",
+                ".login-link-color": "#ddd",
+                ".sign-up-link-color": "#ddd",
+                ".login-link-a-color": "#42a5f5",
+                ".sign-up-link-a-color": "#42a5f5",
+                ".login-link-a:hover-color": "#1e88e5",
+                ".sign-up-link-a:hover-color": "#1e88e5"
             },
             ".hl-comment": {
                 "color": "#6FCF97",
@@ -225,7 +231,13 @@
                 ".error-message-color": "#d32f2f",
                 ".error-message-background-color": "rgba(240, 113, 120, 0.08)",
                 ".error-message-border-left": "3px solid #d32f2f",
-                ".error-icon-fill": "#d32f2f"
+                ".error-icon-fill": "#d32f2f",
+                ".login-link-color": "#555",
+                ".sign-up-link-color": "#555",
+                ".login-link-a-color": "#1e88e5",
+                ".sign-up-link-a-color": "#1e88e5",
+                ".login-link-a:hover-color": "#1565c0",
+                ".sign-up-link-a:hover-color": "#1565c0"
             },
             ".hl-comment": {
                 "color": "#22863a",

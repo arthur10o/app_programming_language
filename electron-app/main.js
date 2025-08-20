@@ -73,6 +73,53 @@ ipcMain.on('register-user', (event, _new_user) => {
     }
 });
 
+ipcMain.on('get-connected-user-information', (event) => {
+    const PATH_CONNECTED_USERS_FILE = PATH.resolve(__dirname, 'src/data/connected_user.json');
+    let data_users = [];
+    try {
+        if (fs.existsSync(PATH_CONNECTED_USERS_FILE)) {
+            const FILE_DATA = fs.readFileSync(PATH_CONNECTED_USERS_FILE, 'utf8');
+            data_users = FILE_DATA.trim() ? JSON.parse(FILE_DATA) : [];
+        }
+    } catch (err) {
+        console.error('Failed to read users.json:', err);
+        return;
+    }
+    event.sender.send('received-connected-user-information', data_users);
+});
+
+ipcMain.on('saved_connected_user', (event, _connected_user) => {
+    const PATH_CONNECTED_USERS_FILE = PATH.resolve(__dirname, 'src/data/connected_user.json');
+    let data_users = [];
+    try {
+        if (fs.existsSync(PATH_CONNECTED_USERS_FILE)) {
+            const FILE_DATA = fs.readFileSync(PATH_CONNECTED_USERS_FILE, 'utf8');
+            data_users = FILE_DATA.trim() ? JSON.parse(FILE_DATA) : [];
+        }
+    } catch (err) {
+        console.error('Failed to read users.json:', err);
+        return;
+    }
+
+    const EXISTING_USER = data_users.find(user =>
+        user.connected_user &&
+        user.connected_user.username.cipher === _connected_user.connected_user.username.cipher &&
+        user.connected_user.username.nonce === _connected_user.connected_user.username.nonce
+    );
+    
+    if (EXISTING_USER) {
+        EXISTING_USER.connected_user.date_of_connection = _connected_user.connected_user.date_of_connection;
+    } else {
+        data_users = [_connected_user];
+    }
+    try {
+        fs.writeFileSync(PATH_CONNECTED_USERS_FILE, JSON.stringify(data_users, null, 2));
+        console.log("Connected user saved successfully.");
+    } catch (err) {
+        console.error('Failed to write to users.json:', err);
+    }
+});
+
 ipcMain.on('get-default-keybindings', (event) => {
     const KEYBINDINGS_PATH = PATH.resolve(__dirname, 'src/data/keybindings.json');
     let keybindings = {};

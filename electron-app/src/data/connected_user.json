@@ -1,0 +1,12 @@
+[
+  {
+    "connected_user": {
+      "username": {
+        "cipher": "",
+        "nonce": ""
+      },
+      "date_of_connection": "",
+      "rememberMe": false
+    }
+  }
+]
