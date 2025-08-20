@@ -1,0 +1,81 @@
+[
+  {
+    "username": {
+      "cipher": "+LClWMuYucjbB5dfojQfm8izhLro",
+      "nonce": "aAcZ3n7CVYlc9Hoc"
+    },
+    "email": {
+      "cipher": "iPQp0eL5pOPsX0JsNmVvaXnocPoswD9lTi083q7svpYhj9gsVw==",
+      "nonce": "42EgOCq4crVX0AAI"
+    },
+    "aes_key_encrypted": {
+      "cipher": "fKeOtuESLJmkO45aTP0/DuAICun5Gk2/sxc0/nOWMugaBHl+isJ83pLQa1vjJjDlQZhopeJGHeYDJgew",
+      "nonce": "GszzZpaMgz9bQLt5"
+    },
+    "aes_salt": "jcfU8kYjKNTUptVJXQMH4A==",
+    "password": "$argon2id$v=19$m=262144,t=6,p=2$kK6msguY5tzuRL5r4ZIycA$fEtfutijXeUrtTlBjTsqUD1t9JFOLHnxuIbJTItnE3PLEzgLxQZsRVjni8NvYTbWLGG+6SpUvvqGF3w3ij+0pA",
+    "last_project_path": "",
+    "profil_picture": "",
+    "preferences": {
+      "theme": "dark",
+      "fontSize": {
+        "size": 14,
+        "unit": "px"
+      },
+      "fontFamily": "Segoe UI",
+      "language": "en",
+      "autoSave": false,
+      "tabSize": 4,
+      "autocomplete": true,
+      "showSuggestions": true,
+      "syntaxHighlighting": true,
+      "showLineNumbers": true,
+      "rememberMe": false
+    },
+    "keybindings": {
+      "control+shift+q": "log out",
+      "control+alt+q": "change account",
+      "control+s": "save file",
+      "control+o": "open file",
+      "control+n": "new file",
+      "control+w": "close file",
+      "meta+f4": "close ide",
+      "control+q": "close ide",
+      "control+z": "undo",
+      "control+y": "redo",
+      "control+shift+z": "redo (alternative)",
+      "control+shift+k": "remove line",
+      "control+shift+arrowdown": "duplication down",
+      "control+shift+arrowup": "duplication up",
+      "control+shift+/": "comment line",
+      "control+a": "select all",
+      "shift+meta+arrowdown": "copy line down",
+      "shift+meta+arrowup": "copy line up",
+      "alt+arrowdown": "move line down",
+      "alt+arrowup": "move line up",
+      "alt+shift+arrowdown": "multi cursor down",
+      "alt+shift+arrowup": "multi cursor up",
+      "control+click": "go to definition",
+      "control+p": "go to file",
+      "control+g": "go to line",
+      "control+shift+o": "go to symbol",
+      "control+b": "toggle sidebar",
+      "control+f": "find",
+      "control+shift+f": "find in files",
+      "control+h": "replace",
+      "control+shift+h": "replace in files",
+      "control+shift+p": "command palette",
+      "control+altgraph+dead": "toggle terminal",
+      "control+f5": "run file",
+      "control+shift+f5": "debug",
+      "f10": "step over",
+      "control+shift+f11": "step into",
+      "shift+f11": "step out",
+      "control+tab": "next tab",
+      "control+shift+tab": "previous tab",
+      "control+shift+t": "reopen closed tab",
+      "control+altgraph+\\": "split editor",
+      "f11": "full screen"
+    }
+  }
+]

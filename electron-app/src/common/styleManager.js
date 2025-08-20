@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-19
+  Last Update : 2025-08-20
   ==============================================================================
 */
 const fs = require('fs');
@@ -157,6 +157,25 @@ function update_theme() {
         toggle_confirm_password_ELEMENT.addEventListener('mouseleave', () => {
             toggle_password_ELEMENT.style.color = BASE_COLOR;
         });
+    }
+
+    const loading_spinner_ELEMENT = document.getElementById('loading-spinner');
+    loading_spinner_ELEMENT.style.background = settings.theme?.[current_theme]?.login_signup?.['#loading-spinner-background'];
+
+    const spinner_ELEMENT = loading_spinner_ELEMENT.querySelector('.spinner');
+    spinner_ELEMENT.style.border = settings.theme?.[current_theme]?.login_signup?.['.spinner-border'];
+    spinner_ELEMENT.style.borderTop = settings.theme?.[current_theme]?.login_signup?.['.spinner-border-top'];
+
+    const error_message_ELEMENT = document.getElementsByClassName('error-message');
+    for (let i = 0; i < error_message_ELEMENT.length; i++) {
+        error_message_ELEMENT[i].style.color = settings.theme?.[current_theme]?.login_signup?.['.error-message-color'];
+        error_message_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.login_signup?.['.error-message-background-color'];
+        error_message_ELEMENT[i].style.borderLeft = settings.theme?.[current_theme]?.login_signup?.['.error-message-border-left'];
+    }
+
+    const error_icon_ELEMENT = document.getElementsByClassName('error-icon');
+    for (let i = 0; i < error_icon_ELEMENT.length; i++) {
+        error_icon_ELEMENT[i].style.fill = settings.theme?.[current_theme]?.login_signup?.['.error-icon-fill'];
     }
 
                                     // Update common CSS

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     SETTINGS_BUTTON.addEventListener('click', () => {
         window.location.href = '../settings/settings.html';
     });
-    // window.location.href = '../signup/signup.html';
+    window.location.href = '../signup/signup.html';
 });
 
 function toggle_menu() {

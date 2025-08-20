@@ -14,21 +14,6 @@
         "syntax-highlighting": true,
         "show-line-numbers": true
     },
-    "data_settings": {
-        "theme": "dark",
-        "font-size": {
-            "size": 14,
-            "unit": "px"
-        },
-        "font-family": "Segoe UI",
-        "language": "en",
-        "auto-save": false,
-        "tabulation-size": 4,
-        "autocomplete": true,
-        "show-suggestions": true,
-        "syntax-highlighting": true,
-        "show-line-numbers": true
-    },
     "theme": {
         "dark": {
             "console": {
@@ -80,7 +65,7 @@
                 ".button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.2)",
                 ".line-number-color": "#888"
             },
-            "login": {
+            "login_signup": {
                 ".login-container-background-color": "rgba(30, 42, 56, 0.9)",
                 ".login-container-box-shadow": "0 4px 15px rgba(0, 0, 0, 0.25)",
                 ".login-container-color": "#fff",
@@ -109,7 +94,14 @@
                 ".forgot-password-color": "#82cfff",
                 ".forgot-password:hover-color": "#ffffff",
                 ".toggle-password-color": "#aaaaaa",
-                ".toggle-password-color:hover": "#ffffff"
+                ".toggle-password-color:hover": "#ffffff",
+                "#loading-spinner-background": "rgba(0, 0, 0, 0.5)",
+                ".spinner-border": "8px solid #2e3b47",
+                ".spinner-border-top": "8px solid #42a5f5",
+                ".error-message-color": "#f07178",
+                ".error-message-background-color": "rgba(240, 113, 120, 0.08)",
+                ".error-message-border-left": "3px solid #f07178",
+                ".error-icon-fill": "#f07178"
             },
             ".hl-comment": {
                 "color": "#6FCF97",
@@ -197,7 +189,7 @@
                 ".button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.1)",
                 ".line-number-color": "#999"
             },
-            "login": {
+            "login_signup": {
                 ".login-container-background-color": "rgba(255, 255, 255, 0.9)",
                 ".login-container-box-shadow": "0 4px 15px rgba(0, 0, 0, 0.1)",
                 ".login-container-color": "#1e2a38",
@@ -226,7 +218,14 @@
                 ".forgot-password-color": "#1e88e5",
                 ".forgot-password:hover-color": "#1565c0",
                 ".toggle-password-color": "#666666",
-                ".toggle-password-color:hover": "#000000"
+                ".toggle-password-color:hover": "#000000",
+                "#loading-spinner-background": "rgba(255, 255, 255, 0.6)",
+                ".spinner-border": "8px solid #f5f7fa",
+                ".spinner-border-top": "8px solid #1e88e5",
+                ".error-message-color": "#d32f2f",
+                ".error-message-background-color": "rgba(240, 113, 120, 0.08)",
+                ".error-message-border-left": "3px solid #d32f2f",
+                ".error-icon-fill": "#d32f2f"
             },
             ".hl-comment": {
                 "color": "#22863a",

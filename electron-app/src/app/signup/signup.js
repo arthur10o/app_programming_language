@@ -6,10 +6,11 @@
                 - Functionality to handle user registration
   Author      : Arthur
   Created     : 2025-08-19
-  Last Update : 2025-08-19
+  Last Update : 2025-08-20
   ==============================================================================
 */
-import init, { hash_password } from "../../wasm/crypto_lib/lib.js";
+import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password } from "../../wasm/crypto_lib/lib.js";
+const { ipcRenderer } = require('electron');
 
 let wasmInitialized = false;
 
@@ -19,6 +20,10 @@ let wasmInitialized = false;
         wasmInitialized = true;
     }
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('username').focus();
+});
 
 document.getElementById('toggle-confirm-password-id').addEventListener('click', () => {
     const PASSWORD_INPUT = document.getElementById('confirm-password');
@@ -46,47 +51,196 @@ document.getElementById('toggle-password-id').addEventListener('click', () => {
 
 document.getElementById('signup-button').addEventListener('click', async (event) => {
     event.preventDefault();
+    const spinner = document.getElementById('loading-spinner');
+    spinner.style.display = 'flex';
+
+    if (all_input_is_valid()) {
+        const USERNAME = document.getElementById("username").value;
+        const EMAIL = document.getElementById("email").value;
+        const PASSWORD = document.getElementById("password").value;
+        const REMEMBER_ME = document.getElementById("remember").checked;
+
+        await registerUser(USERNAME, EMAIL, PASSWORD, REMEMBER_ME);
+    }
+});
+
+document.getElementById("username").addEventListener("input", () => {
+    const USERNAME = document.getElementById("username").value;
+    if (!is_valid_username(USERNAME)) {
+        show_error("username-error", "Username must be between 3 and 20 characters long and can only contain letters, numbers, and underscores.");
+    } else {
+        hide_error("username-error");
+    }
+});
+
+document.getElementById("email").addEventListener("input", () => {
+    const EMAIL = document.getElementById("email").value;
+    if (!is_valid_email(EMAIL)) {
+        show_error("email-error", "Invalid email format.");
+    } else {
+        hide_error("email-error");
+    }
+});
+
+document.getElementById("password").addEventListener("input", () => {
+    const PASSWORD = document.getElementById("password").value;
+    if (!is_valid_password(PASSWORD)) {
+        show_error("password-error", "Password must be at least 10 characters long and contain uppercase, lowercase, number, and symbol.");
+    } else {
+        hide_error("password-error");
+    }
+
+    const CONFIRM_PASSWORD = document.getElementById("confirm-password").value;
+    if (CONFIRM_PASSWORD !== PASSWORD) {
+        show_error("password-confirm-error", "Passwords do not match.");
+    } else {
+        hide_error("password-confirm-error");
+    }
+});
+
+document.getElementById("confirm-password").addEventListener("input", () => {
+    const PASSWORD = document.getElementById("password").value;
+    const CONFIRM_PASSWORD = document.getElementById("confirm-password").value;
+    if (CONFIRM_PASSWORD !== PASSWORD) {
+        show_error("password-confirm-error", "Passwords do not match.");
+    } else {
+        hide_error("password-confirm-error");
+    }
+});
+
+function all_input_is_valid() {
     const USERNAME = document.getElementById("username").value;
     const EMAIL = document.getElementById("email").value;
     const PASSWORD = document.getElementById("password").value;
     const CONFIRM_PASSWORD = document.getElementById("confirm-password").value;
     const REMEMBER_ME = document.getElementById("remember").checked;
-    // if (!USERNAME || !EMAIL || !PASSWORD || !CONFIRM_PASSWORD) {
-    //     alert("All fields are required! [TODO]");
-    //     return;
-    // }
-    // if (!EMAIL.includes('@')) {
-    //     alert("Invalid email format! [TODO]");
-    //     return;
-    // }
-    // if (PASSWORD.length < 8) {
-    //     alert("Password must be at least 8 characters long! [TODO]");
-    //     return;
-    // }
-    // if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/.test(PASSWORD)) {
-    //     alert("Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character! [TODO]");
-    //     return;
-    // }
-    // if (!/^[a-zA-Z0-9_]+$/.test(USERNAME)) {
-    //     alert("Username can only contain letters, numbers, and underscores! [TODO]");
-    //     return;
-    // }
-    // if (USERNAME.length < 3 || USERNAME.length > 20) {
-    //     alert("Username must be between 3 and 20 characters long! [TODO]");
-    //     return;
-    // }
-    // if (EMAIL.length < 5 || EMAIL.length > 50) {
-    //     alert("Email must be between 5 and 50 characters long! [TODO]");
-    //     return;
-    // }
-    // if (PASSWORD !== CONFIRM_PASSWORD) {
-    //     alert("Passwords do not match! [TODO]");
-    //     return;
-    // }
-    await registerUser(USERNAME, EMAIL, PASSWORD, REMEMBER_ME);
-});
+
+    if (!is_valid_username(USERNAME)) {
+        show_error("username-error", "Username must be between 3 and 20 characters long and can only contain letters, numbers, and underscores.");
+        return false
+    } else {
+        hide_error("username-error");
+    }
+
+    if (!is_valid_email(EMAIL)) {
+        show_error("email-error", "Invalid email format.");
+        return false;
+    } else {
+        hide_error("email-error");
+    }
+
+    if (!is_valid_password(PASSWORD)) {
+        show_error("password-error", "Password must be at least 10 characters long and contain uppercase, lowercase, number, and symbol.");
+        return false;
+    } else {
+        hide_error("password-error");
+    }
+
+    if (PASSWORD !== CONFIRM_PASSWORD) {
+        show_error("password-confirm-error", "Passwords do not match.");
+        return false;
+    } else {
+        hide_error("password-confirm-error");
+    }
+    return true;
+}
+
+function is_valid_username(_username) {
+    const LENGTH_IS_VALID = _username.length >= 3 && _username.length <= 20;
+    const VALID_FORMAT = /^[a-zA-Z0-9_]+$/.test(_username);
+    return LENGTH_IS_VALID && VALID_FORMAT;
+}
+
+function is_valid_email(_email) {
+    const LENGTH_IS_VALID = _email.length <= 254 && _email.length > 0;
+    const VALID_FORMAT = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(_email)
+    return LENGTH_IS_VALID && VALID_FORMAT
+}
+
+function is_valid_password(_password) {
+    const LENGTH_IS_VALID = _password.length >= 10;
+    const CONTAINS_UPPERCASE = /[A-Z]/.test(_password);
+    const CONTAINS_LOWERCASE = /[a-z]/.test(_password);
+    const CONTAINS_NUMBER = /[0-9]/.test(_password);
+    const CONTAINS_SYMBOL = /[^a-zA-Z0-9]/.test(_password);
+    const CONTAINS_SPACE = /\s/.test(_password);
+    return LENGTH_IS_VALID && CONTAINS_UPPERCASE && CONTAINS_LOWERCASE && CONTAINS_NUMBER && CONTAINS_SYMBOL && !CONTAINS_SPACE;
+}
 
 async function registerUser(_username, _email, _password, _remember_me) {
-    const PASSWORD_HASH = hash_password(_password);
-    alert(PASSWORD_HASH);
+    const spinner = document.getElementById('loading-spinner');
+
+    try {
+        const PASSWORD_HASH = hash_password(_password);
+
+        const KEY_BYTES = generate_aes_256_gcm_key();
+        const { key: KEY_DERIVED, salt: SALT_DERIVED } = await derive_key_from_password(_password);
+        const { cipher: CIPHER_AES_KEY, nonce: NONCE_AES_KEY } = await encrypt_aes_256_gcm(
+            btoa(String.fromCharCode(...KEY_BYTES)),
+            Uint8Array.from(atob(KEY_DERIVED), c => c.charCodeAt(0))
+        );
+
+        const ENCRYPTED_RESULT_USERNAME = encrypt_aes_256_gcm(_username, KEY_BYTES);
+        const ENCRYPTED_RESULT_EMAIL = encrypt_aes_256_gcm(_email, KEY_BYTES);
+
+        const { cipher: CIPHER_USERNAME, nonce: NONCE_USERNAME } = await ENCRYPTED_RESULT_USERNAME;
+        const { cipher: CIPHER_EMAIL, nonce: NONCE_EMAIL } = await ENCRYPTED_RESULT_EMAIL;
+
+        let keybindings = {};
+        ipcRenderer.send('get-default-keybindings');
+
+        ipcRenderer.on('get-default-keybindings-reply', (event, _keybindingsData) => {
+            keybindings = typeof _keybindingsData === 'string' ? JSON.parse(_keybindingsData) : _keybindingsData;
+
+            let new_user = {
+                "username": { "cipher": CIPHER_USERNAME, "nonce": NONCE_USERNAME },
+                "email": { "cipher": CIPHER_EMAIL, "nonce": NONCE_EMAIL },
+                "aes_key_encrypted": { "cipher": CIPHER_AES_KEY, "nonce": NONCE_AES_KEY },
+                "aes_salt": SALT_DERIVED,
+                "password": PASSWORD_HASH,
+                "last_project_path": "",
+                "profil_picture": "",
+                "preferences": {
+                    "theme": "dark",
+                    "fontSize": { size: 14, unit: "px" },
+                    "fontFamily": "Segoe UI",
+                    "language": "en",
+                    "autoSave": false,
+                    "tabSize": 4,
+                    "autocomplete": true,
+                    "showSuggestions": true,
+                    "syntaxHighlighting": true,
+                    "showLineNumbers": true,
+                    "rememberMe": _remember_me
+                },
+                "keybindings": keybindings
+            };
+
+            _password = null;
+            _email = null;
+            _username = null;
+
+            ipcRenderer.send('register-user', new_user);
+        });
+    } catch (error) {
+        console.error("Error during registration:", error);
+        document.getElementById("registration-error").textContent = "An error occurred during registration. Please try again.";
+    }
+    finally {
+        setTimeout(() => spinner.style.display = 'none', 300);
+    }
+}
+
+function show_error(_id, _message) {
+    const container = document.getElementById(_id);
+    const text = container.querySelector('.error-text');
+    text.textContent = _message;
+    container.style.display = 'flex';
+    container.classList.add('visible');
+}
+
+function hide_error(_id) {
+    const container = document.getElementById(_id);
+    container.classList.remove('visible');
+    setTimeout(() => container.style.display = 'none', 300);
 }

@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-15
+    Last Update : 2025-08-20
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -48,6 +48,46 @@ app.on('activate', () => {
 
 ipcMain.on('quit-app', () => {
     app.quit();
+});
+
+ipcMain.on('register-user', (event, _new_user) => {
+    const PATH_USERS_FILE = PATH.resolve(__dirname, 'src/data/users.json');
+    let data_users = [];
+    try {
+        if (fs.existsSync(PATH_USERS_FILE)) {
+            const FILE_DATA = fs.readFileSync(PATH_USERS_FILE, 'utf8');
+            data_users = FILE_DATA.trim() ? JSON.parse(FILE_DATA) : {};
+        }
+    } catch (err) {
+        console.error('Failed to read users.json:', err);
+        return;
+    }
+
+    data_users.push(_new_user);
+
+    try {
+        fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(data_users, null, 2));
+        console.log("User registered successfully.");
+    } catch (err) {
+        console.error('Failed to write to users.json:', err);
+    }
+});
+
+ipcMain.on('get-default-keybindings', (event) => {
+    const KEYBINDINGS_PATH = PATH.resolve(__dirname, 'src/data/keybindings.json');
+    let keybindings = {};
+
+    if (!fs.existsSync(KEYBINDINGS_PATH)) {
+        console.log('Keyboard shortcut recovery error :', KEYBINDINGS_PATH);
+        return;
+    }
+
+    try {
+        const KEYBINDINGS = fs.readFileSync(KEYBINDINGS_PATH, 'utf8');
+        event.sender.send('get-default-keybindings-reply', KEYBINDINGS);
+    } catch (error) {
+        console.log('Error reading or parsing JSON file :', error);
+    }
 });
 
 ipcMain.on('code-change', (event) => {

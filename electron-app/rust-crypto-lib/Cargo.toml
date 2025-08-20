@@ -8,6 +8,10 @@ argon2 = "0.5"
 rand = { version = "0.8", default-features = false, features = ["getrandom"] }
 getrandom = { version = "0.2", features = ["js"] }
 wasm-bindgen = "0.2"
+aes-gcm = "0.10"
+aead = "0.5"
+base64 = "0.21"
+js-sys = "0.3"
 
 [lib]
 name = "lib"
