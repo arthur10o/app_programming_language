@@ -88,6 +88,21 @@ ipcMain.on('get-connected-user-information', (event) => {
     event.sender.send('received-connected-user-information', data_users);
 });
 
+ipcMain.on('get-users-for-login', (event) => {
+    const PATH_USERS = PATH.resolve(__dirname, 'src/data/users.json');
+    let users = [];
+    try {
+        if (fs.existsSync(PATH_USERS)) {
+            const FILE_DATA = fs.readFileSync(PATH_USERS, 'utf8');
+            users = FILE_DATA.trim() ? JSON.parse(FILE_DATA) : [];
+        }
+    } catch (err) {
+        console.error('Failed to read users.json:', err);
+        return;
+    }
+    event.sender.send('received-users-information', users);
+});
+
 ipcMain.on('saved_connected_user', (event, _connected_user) => {
     const PATH_CONNECTED_USERS_FILE = PATH.resolve(__dirname, 'src/data/connected_user.json');
     let data_users = [];

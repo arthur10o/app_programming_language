@@ -5,10 +5,10 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-08-19
+  Last Update : 2025-08-21
   ==============================================================================
 */
-import init, { verify_password } from "../../wasm/crypto_lib/lib.js";
+import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } from "../../wasm/crypto_lib/lib.js";
 
 let wasmInitialized = false;
 
@@ -18,6 +18,10 @@ let wasmInitialized = false;
         wasmInitialized = true;
     }
 })();
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('email').focus();
+});
 
 document.getElementById('toggle-password-id').addEventListener('click', () => {
     const PASSWORD_INPUT = document.getElementById('password');
@@ -33,16 +37,71 @@ document.getElementById('toggle-password-id').addEventListener('click', () => {
 
 document.getElementById('login-button').addEventListener('click', async (event) => {
     event.preventDefault();
-    await verifyUserPassword();
+    try {
+        const USERS = await get_users();
+        const EMAIL = document.getElementById('email').value;
+        const PASSWORD = document.getElementById('password').value;
+        const USER_ID = find_user_by_email(USERS, EMAIL, PASSWORD);
+        alert(USER_ID);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des utilisateurs :', error);
+    }
 });
 
-async function verifyUserPassword() {
-    const PASSWORD = document.getElementById("password").value;
-    const HASH = "[TODO]"
-    const IS_VALID = verify_password(HASH, PASSWORD);
-    if (IS_VALID) {
-        alert("[TODO] Mot de passe correct !");
-    } else {
-        alert("[TODO] Mot de passe incorrect !");
+function get_users() {
+    return new Promise((resolve, reject) => {
+        ipcRenderer.once('received-users-information', (event, _users) => {
+            resolve(_users);
+        });
+        ipcRenderer.send('get-users-for-login');
+    });
+};
+
+async function find_user_by_email(_users, _email, _password) {
+    for (const USER of _users) {
+        const IS_VALID_PASSWORD = await check_password(USER.password, _password);
+        if (IS_VALID_PASSWORD) {
+            try {
+                const DERIVED_KEY_OBJECT = await derive_key_from_password(_password, USER.aes_salt);
+                const DERIVED_KEY_BYTES = base64_to_bytes(DERIVED_KEY_OBJECT.key);
+
+                const AES_KEY_ENCRYPTED_NONCE = USER.aes_key_encrypted.nonce;
+                const AES_KEY_ENCRYPTED_CIPHER = USER.aes_key_encrypted.cipher;
+                const AES_KEY_BASE64 = await decrypt_aes_256_gcm(AES_KEY_ENCRYPTED_NONCE, AES_KEY_ENCRYPTED_CIPHER, DERIVED_KEY_BYTES);
+                const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
+
+                if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
+                    alert("Error : The AES key must be 32 bytes long. Current size : " + AES_KEY_BYTES.length);
+                    return;
+                }
+
+                const EMAIL_DECRYPTED = await decrypt_aes_256_gcm(USER.email.nonce, USER.email.cipher, AES_KEY_BYTES);
+                if (EMAIL_DECRYPTED == _email) {
+                    return  USER.user_id.toString();
+                } else {
+                    return null;
+                }
+            } catch (e) {
+                console.log("Decryption failed:", e);
+                alert("Decryption failed: " + e);
+            }
+        } else {
+            return null;
+        }
     }
+}
+
+function base64_to_bytes(_base64) {
+    const BINARY = atob(_base64);
+    const LEN = BINARY.length;
+    const BYTES = new Uint8Array(LEN);
+    for (let i = 0; i < LEN; i++) {
+        BYTES[i] = BINARY.charCodeAt(i);
+    }
+    return BYTES;
+}
+
+async function check_password(_hashed_password, _password) {
+    const IS_VALID_PASSWORD = await verify_password(_hashed_password, _password);
+    return IS_VALID_PASSWORD;
 }

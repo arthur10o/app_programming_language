@@ -6,7 +6,7 @@
                 - Functionality to handle user registration
   Author      : Arthur
   Created     : 2025-08-19
-  Last Update : 2025-08-20
+  Last Update : 2025-08-21
   ==============================================================================
 */
 import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password } from "../../wasm/crypto_lib/lib.js";
@@ -193,6 +193,7 @@ async function registerUser(_username, _email, _password, _remember_me) {
             keybindings = typeof _keybindingsData === 'string' ? JSON.parse(_keybindingsData) : _keybindingsData;
 
             let new_user = {
+                "user_id": crypto.randomUUID(),
                 "username": { "cipher": CIPHER_USERNAME, "nonce": NONCE_USERNAME },
                 "email": { "cipher": CIPHER_EMAIL, "nonce": NONCE_EMAIL },
                 "aes_key_encrypted": { "cipher": CIPHER_AES_KEY, "nonce": NONCE_AES_KEY },

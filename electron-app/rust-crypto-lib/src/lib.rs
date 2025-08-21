@@ -7,7 +7,7 @@
                   for use with WebAssembly (wasm-bindgen).
     Author      : Arthur
     Created     : 2025-08-19
-    Last Update : 2025-08-19
+    Last Update : 2025-08-21
     ============================================================================
 */
 use wasm_bindgen::prelude::*;
@@ -46,7 +46,7 @@ pub fn verify_password(_stored_hash: &str, _password: &str) -> bool {
      @panic If the stored hash is invalid or parsing fails.
      */
     let parsed_hash =  PasswordHash::new(_stored_hash).expect("Failed to parse password hash");
-    let params = Params::new(262144, 6, 2, Some(64)).expect("Invalid Argon2 parameters");
+    let params = Params::default();
     let argon2 = Argon2::new(Algorithm::Argon2id, Version::V0x13, params);
     match argon2.verify_password(_password.as_bytes(), &parsed_hash) {
         Ok(_) => true,
@@ -148,7 +148,7 @@ pub fn decrypt_aes_256_gcm(_nonce_b64: &str, _cipher_text_b64: &str, _key_bytes:
 
 #[wasm_bindgen]
 pub fn derive_key_from_password(_password: &str, _salt_b64: Option<String>) -> Result<js_sys::Object, JsValue> {
-     /*
+    /*
      Derives a 256-bit (32 bytes) AES key from a password using Argon2id.
      @param `_password` - The password to derive the key from.
      @param `_salt_b64` - Optional base64 salt (for reuse during login).
@@ -166,6 +166,7 @@ pub fn derive_key_from_password(_password: &str, _salt_b64: Option<String>) -> R
             salt.to_vec()
         }
     };
+
     let params = Params::new(262144, 6, 2, Some(32)).expect("Invalid Argon2 parameters");
     let argon2 = Argon2::new(Algorithm::Argon2id, Version::V0x13, params);
     let mut key = [0u8; 32];
