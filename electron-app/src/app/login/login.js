@@ -8,7 +8,8 @@
   Last Update : 2025-08-21
   ==============================================================================
 */
-import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } from "../../wasm/crypto_lib/lib.js";
+const crypto = require('crypto');
+import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm, encrypt_aes_256_gcm } from "../../wasm/crypto_lib/lib.js";
 
 let wasmInitialized = false;
 
@@ -41,8 +42,30 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         const USERS = await get_users();
         const EMAIL = document.getElementById('email').value;
         const PASSWORD = document.getElementById('password').value;
-        const USER_ID = find_user_by_email(USERS, EMAIL, PASSWORD);
-        alert(USER_ID);
+        const USER_FIND = await find_user_by_email(USERS, EMAIL, PASSWORD);
+        const USER_ID = USER_FIND.user_id;
+        const DERIVED_KEY_BYTES = USER_FIND.derived_key_bytes;
+        if (!USER_FIND || !USER_ID) {
+            alert('Invalid credentials or decryption impossible.');
+            return;
+        }
+        const SESSION = {
+            connected_user: {
+                user_id: USER_ID,
+                token: crypto.randomUUID(),
+                date_of_connection: Date.now(),
+                expires_at: Date.now() + 1000 * 60 * 60, // 1 hour
+                rememberMe: document.getElementById('rememberMe')?.checked || false
+            }
+        };
+        const SESSION_JSON = JSON.stringify(SESSION);
+        const ENCRYPTED_SESSION = encrypt_aes_256_gcm(SESSION_JSON, DERIVED_KEY_BYTES);
+        ipcRenderer.send('save-session', {
+            cipher: ENCRYPTED_SESSION.cipher,
+            nonce: ENCRYPTED_SESSION.nonce,
+            user_id: USER_ID
+        });
+        window.location.href = '../home/index.html';
     } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error);
     }
@@ -77,7 +100,7 @@ async function find_user_by_email(_users, _email, _password) {
 
                 const EMAIL_DECRYPTED = await decrypt_aes_256_gcm(USER.email.nonce, USER.email.cipher, AES_KEY_BYTES);
                 if (EMAIL_DECRYPTED == _email) {
-                    return  USER.user_id.toString();
+                    return  {user_id: USER.user_id, derived_key_bytes: DERIVED_KEY_BYTES};
                 } else {
                     return null;
                 }

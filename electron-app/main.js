@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-20
+    Last Update : 2025-08-21
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -103,38 +103,6 @@ ipcMain.on('get-users-for-login', (event) => {
     event.sender.send('received-users-information', users);
 });
 
-ipcMain.on('saved_connected_user', (event, _connected_user) => {
-    const PATH_CONNECTED_USERS_FILE = PATH.resolve(__dirname, 'src/data/connected_user.json');
-    let data_users = [];
-    try {
-        if (fs.existsSync(PATH_CONNECTED_USERS_FILE)) {
-            const FILE_DATA = fs.readFileSync(PATH_CONNECTED_USERS_FILE, 'utf8');
-            data_users = FILE_DATA.trim() ? JSON.parse(FILE_DATA) : [];
-        }
-    } catch (err) {
-        console.error('Failed to read users.json:', err);
-        return;
-    }
-
-    const EXISTING_USER = data_users.find(user =>
-        user.connected_user &&
-        user.connected_user.username.cipher === _connected_user.connected_user.username.cipher &&
-        user.connected_user.username.nonce === _connected_user.connected_user.username.nonce
-    );
-    
-    if (EXISTING_USER) {
-        EXISTING_USER.connected_user.date_of_connection = _connected_user.connected_user.date_of_connection;
-    } else {
-        data_users = [_connected_user];
-    }
-    try {
-        fs.writeFileSync(PATH_CONNECTED_USERS_FILE, JSON.stringify(data_users, null, 2));
-        console.log("Connected user saved successfully.");
-    } catch (err) {
-        console.error('Failed to write to users.json:', err);
-    }
-});
-
 ipcMain.on('get-default-keybindings', (event) => {
     const KEYBINDINGS_PATH = PATH.resolve(__dirname, 'src/data/keybindings.json');
     let keybindings = {};
@@ -156,6 +124,10 @@ ipcMain.on('code-change', (event) => {
     if (current_file_path) {
         file_state[current_file_path] = false;
     }
+});
+
+ipcMain.on('save-session', (event, _encrypted_session) => {
+    fs.writeFileSync('src/data/connected_user.json', JSON.stringify(_encrypted_session), {mode: 0o600});
 });
 
 ipcMain.on('save-current-file', async (event, _code) => {

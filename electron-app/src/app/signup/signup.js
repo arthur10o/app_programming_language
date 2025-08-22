@@ -11,6 +11,7 @@
 */
 import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password } from "../../wasm/crypto_lib/lib.js";
 const { ipcRenderer } = require('electron');
+const crypto = require('crypto');
 
 let wasmInitialized = false;
 
@@ -189,11 +190,12 @@ async function registerUser(_username, _email, _password, _remember_me) {
         let keybindings = {};
         ipcRenderer.send('get-default-keybindings');
 
-        ipcRenderer.on('get-default-keybindings-reply', (event, _keybindingsData) => {
+        ipcRenderer.on('get-default-keybindings-reply', async (event, _keybindingsData) => {
             keybindings = typeof _keybindingsData === 'string' ? JSON.parse(_keybindingsData) : _keybindingsData;
+            const USER_ID = crypto.randomUUID();
 
             let new_user = {
-                "user_id": crypto.randomUUID(),
+                "user_id": USER_ID,
                 "username": { "cipher": CIPHER_USERNAME, "nonce": NONCE_USERNAME },
                 "email": { "cipher": CIPHER_EMAIL, "nonce": NONCE_EMAIL },
                 "aes_key_encrypted": { "cipher": CIPHER_AES_KEY, "nonce": NONCE_AES_KEY },
@@ -221,12 +223,21 @@ async function registerUser(_username, _email, _password, _remember_me) {
             _username = null;
 
             ipcRenderer.send('register-user', new_user);
-            ipcRenderer.send('saved_connected_user', {
-                "connected_user": {
-                    "username": { "cipher": CIPHER_USERNAME, "nonce": NONCE_USERNAME },
-                    "date_of_connection": new Date().toISOString(),
-                    "rememberMe": _remember_me
+            const SESSION = {
+                connected_user: {
+                    user_id: USER_ID,
+                    token: crypto.randomUUID(),
+                    date_of_connection: Date.now(),
+                    expires_at: Date.now() + 1000 * 60 * 60, // 1 hour
+                    rememberMe: _remember_me
                 }
+            };
+            const SESSION_JSON = JSON.stringify(SESSION);
+            const ENCRYPTED_SESSION = await encrypt_aes_256_gcm(SESSION_JSON, Uint8Array.from(atob(KEY_DERIVED), c => c.charCodeAt(0)));
+            ipcRenderer.send('save-session', {
+                cipher: ENCRYPTED_SESSION.cipher,
+                nonce: ENCRYPTED_SESSION.nonce,
+                user_id: USER_ID
             });
             window.location.href = "../home/index.html";
         });
