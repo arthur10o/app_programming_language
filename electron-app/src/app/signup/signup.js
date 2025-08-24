@@ -6,7 +6,7 @@
                 - Functionality to handle user registration
   Author      : Arthur
   Created     : 2025-08-19
-  Last Update : 2025-08-21
+  Last Update : 2025-08-24
   ==============================================================================
 */
 import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password } from "../../wasm/crypto_lib/lib.js";
@@ -228,12 +228,12 @@ async function registerUser(_username, _email, _password, _remember_me) {
                     user_id: USER_ID,
                     token: crypto.randomUUID(),
                     date_of_connection: Date.now(),
-                    expires_at: Date.now() + 1000 * 60 * 60, // 1 hour
+                    expires_at: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 Days
                     rememberMe: _remember_me
                 }
             };
             const SESSION_JSON = JSON.stringify(SESSION);
-            const ENCRYPTED_SESSION = await encrypt_aes_256_gcm(SESSION_JSON, Uint8Array.from(atob(KEY_DERIVED), c => c.charCodeAt(0)));
+            const ENCRYPTED_SESSION = await encrypt_aes_256_gcm(SESSION_JSON, KEY_BYTES);
             ipcRenderer.send('save-session', {
                 cipher: ENCRYPTED_SESSION.cipher,
                 nonce: ENCRYPTED_SESSION.nonce,

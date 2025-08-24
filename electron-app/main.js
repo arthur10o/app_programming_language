@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-21
+    Last Update : 2025-08-24
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -15,6 +15,10 @@ let current_file_path = null;
 let file_state = {};
 let remove_path = false;
 let dont_show_again = false;
+let fisrt_connection = false;
+
+const CONNECTED_USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/connected_user.json'), {mode: 0o600}));
+const USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/users.json')));
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -30,6 +34,19 @@ function createWindow() {
 
     Menu.setApplicationMenu(null)
     mainWindow.loadFile(PATH.join(__dirname, 'src/app/home/index.html'));
+
+    if (fisrt_connection == false) {
+    if (CONNECTED_USER_FILE.cipher && CONNECTED_USER_FILE.nonce && CONNECTED_USER_FILE.user_id) {
+        mainWindow.webContents.on('did-finish-load', () => {
+            const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
+            const USER_WITH_SESSION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
+            mainWindow.webContents.send('show-pop-up-valid-session', CONNECTED_USER_ID, USER_WITH_SESSION, CONNECTED_USER_FILE);
+        });
+    } else {
+        mainWindow.loadFile(PATH.join(__dirname, 'src/app/login/login.html'));
+    }
+    fisrt_connection = true;
+}
 }
 
 app.whenReady().then(createWindow);

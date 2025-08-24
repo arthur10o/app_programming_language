@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-08-21
+  Last Update : 2025-08-24
   ==============================================================================
 */
 const crypto = require('crypto');
@@ -44,7 +44,7 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         const PASSWORD = document.getElementById('password').value;
         const USER_FIND = await find_user_by_email(USERS, EMAIL, PASSWORD);
         const USER_ID = USER_FIND.user_id;
-        const DERIVED_KEY_BYTES = USER_FIND.derived_key_bytes;
+        const KEY_BYTES = USER_FIND.key_bytes;
         if (!USER_FIND || !USER_ID) {
             alert('Invalid credentials or decryption impossible.');
             return;
@@ -54,12 +54,12 @@ document.getElementById('login-button').addEventListener('click', async (event) 
                 user_id: USER_ID,
                 token: crypto.randomUUID(),
                 date_of_connection: Date.now(),
-                expires_at: Date.now() + 1000 * 60 * 60, // 1 hour
+                expires_at: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 Days
                 rememberMe: document.getElementById('rememberMe')?.checked || false
             }
         };
         const SESSION_JSON = JSON.stringify(SESSION);
-        const ENCRYPTED_SESSION = encrypt_aes_256_gcm(SESSION_JSON, DERIVED_KEY_BYTES);
+        const ENCRYPTED_SESSION = encrypt_aes_256_gcm(SESSION_JSON, KEY_BYTES);
         ipcRenderer.send('save-session', {
             cipher: ENCRYPTED_SESSION.cipher,
             nonce: ENCRYPTED_SESSION.nonce,
@@ -100,7 +100,7 @@ async function find_user_by_email(_users, _email, _password) {
 
                 const EMAIL_DECRYPTED = await decrypt_aes_256_gcm(USER.email.nonce, USER.email.cipher, AES_KEY_BYTES);
                 if (EMAIL_DECRYPTED == _email) {
-                    return  {user_id: USER.user_id, derived_key_bytes: DERIVED_KEY_BYTES};
+                    return  {user_id: USER.user_id, key_bytes: AES_KEY_BYTES};
                 } else {
                     return null;
                 }
