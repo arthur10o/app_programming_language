@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-08-24
+  Last Update : 2025-08-25
   ==============================================================================
 */
 const crypto = require('crypto');
@@ -46,7 +46,7 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         const USER_ID = USER_FIND.user_id;
         const KEY_BYTES = USER_FIND.key_bytes;
         if (!USER_FIND || !USER_ID) {
-            alert('Invalid credentials or decryption impossible.');
+            ipcRenderer.send('show-popup', 'Error', 'Authentication failed due to invalid credentials or decryption error.', 'error', [], [{ label: "Close", action: null }], 0);
             return;
         }
         const SESSION = {
@@ -67,7 +67,7 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         });
         window.location.href = '../home/index.html';
     } catch (error) {
-        console.error('Erreur lors de la récupération des utilisateurs :', error);
+        ipcRenderer.send('show-popup', 'Error', 'Failed to retrieve user information. Please try again later.', 'error', [], [{ label: "Close", action: null }], 0);
     }
 });
 
@@ -94,7 +94,7 @@ async function find_user_by_email(_users, _email, _password) {
                 const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
 
                 if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
-                    alert("Error : The AES key must be 32 bytes long. Current size : " + AES_KEY_BYTES.length);
+                    ipcRenderer.send('show-popup', 'Decryption Error', 'Unable to validate encryption key. Please verify your credentials.', 'error', [], [{ label: "Close", action: null }], 0);
                     return;
                 }
 
@@ -105,8 +105,7 @@ async function find_user_by_email(_users, _email, _password) {
                     return null;
                 }
             } catch (e) {
-                console.log("Decryption failed:", e);
-                alert("Decryption failed: " + e);
+                ipcRenderer.send('show-popup', 'Decryption Error', 'An error occurred while decrypting user data.', 'error', [], [{ label: "Close", action: null }], 0);
             }
         } else {
             return null;

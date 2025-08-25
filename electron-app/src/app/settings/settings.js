@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the settings in A++ IDE
   Author      : Arthur
   Created     : 2025-07-27
-  Last Update : 2025-08-19
+  Last Update : 2025-08-25
   ==============================================================================
 */
 const {syntax_highlighting} = require('../../common/syntaxHighlighting.js');
@@ -21,7 +21,7 @@ function animateValue(_element, _newValue) {
 document.getElementById('theme').addEventListener('change', (event) => {
     const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
     if (!fs.existsSync(DATA_PATH)) {
-        console.error('The settings file does not exist :', DATA_PATH);
+        ipcRenderer.send('show-popup', 'Settings File Missing', 'The user settings file could not be found. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
         return;
     }
 
@@ -31,7 +31,7 @@ document.getElementById('theme').addEventListener('change', (event) => {
         const DATA = fs.readFileSync(DATA_PATH, 'utf8');
         settings = JSON.parse(DATA);
     } catch (error) {
-        console.error('Error reading or parsing JSON file :', error);
+        ipcRenderer.send('show-popup', 'Settings Load Error', 'Unable to load the user settings file. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
         return;
     }
     const SELECTED_THEME = event.target.value;
@@ -104,7 +104,7 @@ function update_buttons() {
         if (EL('line-numbers')) EL('line-numbers').checked = SETTINGS['show-line-numbers'];
 
     } catch (error) {
-        alert(error);
+        ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while loading editor settings. Please ensure the settings file is accessible and properly formatted.', 'error', [], [{ label: "Close", action: null }], 0 );
     }
 }
 
@@ -194,12 +194,10 @@ function saveSettings(event) {
         }
         settings.data_settings = DATA_SETTINGS;
         fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
-        console.log('[INFO] Saved settings :', DATA_SETTINGS);
-        alert('Settings saved successfully!');
+        ipcRenderer.send('show-popup', 'Settings Saved', 'Your preferences have been successfully saved.', 'success', [], [{ label: "Close", action: null }], 0);
         update_buttons();
     } catch (error) {
-        console.error('[ERROR] Unable to read or write configuration file:', error);
-        alert('Error saving settings: ' + error.message);
+        ipcRenderer.send('show-popup', 'Settings Save Error', 'An error occurred while saving your preferences. Please try again.', 'error', [], [{ label: "Close", action: null }], 0);
     }
     update_theme();
 }
@@ -215,18 +213,16 @@ function resetSettings(event) {
             settings = JSON.parse(DATA);
             default_settings = settings.default_data_settings;
         } else {
-            alert('No default settings found. Please save your settings first.');
+            ipcRenderer.send('show-popup', 'Default Settings Not Found', 'Unable to locate default settings. Please save your current preferences before attempting a reset.', 'warning', [], [{ label: "Close", action: null }], 0);
             return;
         }
         settings.data_settings = default_settings;
         fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
-        console.log('[INFO] Reset settings to default:', default_settings);
-        alert('Settings reset to default successfully!');
+        ipcRenderer.send('show-popup', 'Settings Reset', 'Your settings have been successfully reset to default.', 'success', [], [{ label: "Close", action: null }], 0);
         update_buttons();
         updatePreview();
     } catch (error) {
-        console.error('[ERROR] Unable to reset settings:', error);
-        alert('Error resetting settings: ' + error.message);
+        ipcRenderer.send('show-popup', 'Reset Failed', 'An error occurred while resetting your settings. Please try again.', 'error', [], [{ label: "Close", action: null }], 0);
     }
     update_theme();
 }

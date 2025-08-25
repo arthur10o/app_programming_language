@@ -9,7 +9,7 @@
                 - IPC event management for interaction with the backend
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-19
+  Last Update : 2025-08-25
   ==============================================================================
 */
 window.addEventListener('DOMContentLoaded', () => {
@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     ipcRenderer.on('file-loaded-error', (event, _message) => {
-        alert(_message);
+        ipcRenderer.send('show-popup', 'Error', _message, 'error', [], [{ label: "Close", action: null }], 0)
     });
 
     ipcRenderer.on('clear-editor', (event) => {

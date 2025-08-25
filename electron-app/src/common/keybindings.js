@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-08-19
+  Last Update : 2025-08-25
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -17,7 +17,7 @@ let pressed_keys = [];
 window.addEventListener('load', () => {
     const DATA_PATH = path.resolve(__dirname, '../../data/keybindings.json');
     if (!fs.existsSync(DATA_PATH)) {
-        console.error('Keyboard shortcut recovery error :', DATA_PATH);
+        ipcRenderer.send('show-popup', 'Keybindings File Missing', 'The shortcut configuration file could not be found. Please ensure your installation is complete or try reinstalling the application.', 'error', [], [{ label: "Close", action: null }], 0);
         return;
     }
 
@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
         const DATA = fs.readFileSync(DATA_PATH, 'utf8');
         keybindings = JSON.parse(DATA);
     } catch (error) {
-        console.error('Error reading or parsing JSON file :', error);
+        ipcRenderer.send('show-popup', 'Keybindings Load Error', 'An error occurred while reading the shortcut configuration file. Please verify the file format or reset your settings.', 'error', [], [{ label: "Close", action: null }], 0);
         return;
     }
 });

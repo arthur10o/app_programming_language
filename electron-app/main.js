@@ -15,7 +15,7 @@ let current_file_path = null;
 let file_state = {};
 let remove_path = false;
 let dont_show_again = false;
-let fisrt_connection = false;
+let first_connection = false;
 
 const CONNECTED_USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/connected_user.json'), {mode: 0o600}));
 const USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/users.json')));
@@ -32,21 +32,22 @@ function createWindow() {
         icon: PATH.join(__dirname, 'public/assets/icons/app-logo.png')
     });
 
-    Menu.setApplicationMenu(null)
-    mainWindow.loadFile(PATH.join(__dirname, 'src/app/home/index.html'));
+    Menu.setApplicationMenu(null);
 
-    if (fisrt_connection == false) {
     if (CONNECTED_USER_FILE.cipher && CONNECTED_USER_FILE.nonce && CONNECTED_USER_FILE.user_id) {
-        mainWindow.webContents.on('did-finish-load', () => {
-            const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
-            const USER_WITH_SESSION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
-            mainWindow.webContents.send('show-pop-up-valid-session', CONNECTED_USER_ID, USER_WITH_SESSION, CONNECTED_USER_FILE);
-        });
+        mainWindow.loadFile(PATH.join(__dirname, 'src/app/home/index.html'));
     } else {
         mainWindow.loadFile(PATH.join(__dirname, 'src/app/login/login.html'));
     }
-    fisrt_connection = true;
-}
+
+    mainWindow.webContents.on('did-finish-load', () => {
+        if (!first_connection && CONNECTED_USER_FILE.cipher && CONNECTED_USER_FILE.nonce && CONNECTED_USER_FILE.user_id) {
+            const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
+            const USER_WITH_SESSION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
+            mainWindow.webContents.send('show-pop-up-valid-session', CONNECTED_USER_ID, USER_WITH_SESSION, CONNECTED_USER_FILE);
+            first_connection = true;
+        }
+    });
 }
 
 app.whenReady().then(createWindow);
@@ -65,6 +66,10 @@ app.on('activate', () => {
 
 ipcMain.on('quit-app', () => {
     app.quit();
+});
+
+ipcMain.on('show-popup', (event, title, message, type, inputs, buttons, autoClose) => {
+    event.sender.send('display-popup', title, message, type, inputs, buttons, autoClose);
 });
 
 ipcMain.on('register-user', (event, _new_user) => {

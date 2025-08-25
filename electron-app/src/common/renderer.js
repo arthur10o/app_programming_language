@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the renderer in A++ IDE
   Author      : Arthur
   Created     : 2025-08-13
-  Last Update : 2025-08-24
+  Last Update : 2025-08-25
   ==============================================================================
 */
 import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } from "../wasm/crypto_lib/lib.js";
@@ -40,8 +40,19 @@ ipcRenderer.on('show-pop-up-valid-session', (event, _connected_user_id, _user_wi
         ],
         buttons: [
             { label: "Submit", action: (_password) => verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file)},
-            { label: "Quit", action: () => alert("Quit") }
+            { label: "Quit", action: () => ipcRenderer.send('quit-app') }
         ]
+    });
+});
+
+ipcRenderer.on('display-popup', (event, _title, _message, _type, _inputs, _buttons, _auto_close) => {
+  showNotification({
+        title: _title,
+        message: _message,
+        type: _type,
+        inputs: _inputs,
+        buttons: _buttons,
+        autoClose: _auto_close
     });
 });
 
@@ -81,6 +92,16 @@ function showNotification({
         font-family: "Segoe UI", sans-serif;
         color: #fff;
         animation: popupSlideUp 0.35s ease-out;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+
+      .popup.fade-out {
+        animation: popupSlideDown 0.3s forwards;
+      }
+
+      .popup-overlay.fade-out {
+        animation: fadeOutOverlay 0.3s forwards;
       }
 
       .popup h2 {
@@ -94,6 +115,9 @@ function showNotification({
         margin: 12px 0;
         font-size: 0.95em;
         color: #ddd;
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: pre-wrap;
       }
 
       .popup input,
@@ -155,6 +179,16 @@ function showNotification({
         to { opacity: 1; }
       }
 
+      @keyframes popupSlideDown {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(30px); }
+      }
+
+      @keyframes fadeOutOverlay {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+
       .popup-info h2 { color: #42a5f5; }
       .popup-success h2 { color: #28a745; }
       .popup-error h2 { color: #f07178; }
@@ -207,10 +241,15 @@ function showNotification({
     const button = document.createElement('button');
     button.textContent = btn.label;
     button.onclick = () => {
-      overlay.remove();
-      if (typeof btn.action === 'function') {
-        btn.action(inputValues);
-      }
+      popup.classList.add('fade-out');
+      overlay.classList.add('fade-out');
+
+      popup.addEventListener('animationend', () => {
+        overlay.remove();
+        if (typeof btn.action === 'function') {
+          btn.action(inputValues);
+        }
+      }, { once: true });
     };
     buttonContainer.appendChild(button);
   });
@@ -220,7 +259,11 @@ function showNotification({
   document.body.appendChild(overlay);
 
   if (autoClose > 0) {
-    setTimeout(() => overlay.remove(), autoClose);
+    setTimeout(() => {
+      popup.classList.add('fade-out');
+      overlay.classList.add('fade-out');
+      popup.addEventListener('animationend', () => overlay.remove(), { once: true });
+    }, autoClose);
   }
 }
 
@@ -228,7 +271,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
    const PASSWORD_ENTERED = _values.password;
 
     if (_connected_user_id !== _user_with_session.user_id) {
-        alert("An error has occurred. Please try again.");
+        ipcRenderer.send('show-popup', 'Session Verification Failed', 'User session mismatch detected. Please restart the application.', 'error', [], [{ label: "Close", action: null }], 0);
         return;
     }
 
@@ -237,15 +280,15 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
 
     if (!IS_VALID) {
         showNotification({
-            title: "Session verification",
-            message: "Invalid password. Please try again.",
+            title: "Invalid Password",
+            message: "The password entered is incorrect. Please try again.",
             type: "error",
             inputs: [
                 { type: 'text', name: 'password', placeholder: 'Enter your password' }
             ],
             buttons: [
-                { label: "Submit", action: (_password) => verify_password_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file) },
-                { label: "Quit", action: () => alert("Quit") }
+                { label: "Submit", action: (_password) => verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file) },
+                { label: "Quit", action: () => ipcRenderer.send('quit-app') }
             ]
         });
         return;
@@ -262,7 +305,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
         const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
 
         if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
-            alert("Error: AES key must be 32 bytes long. Got: " + AES_KEY_BYTES.length);
+            ipcRenderer.send('show-popup', 'Decryption Error', `Invalid AES key size. Expected 32 bytes, received ${AES_KEY_BYTES.length}.`, 'error', [], [{ label: "Close", action: null }], 0);
             return;
         }
 
@@ -275,8 +318,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
           window.location.href = '../login/login.html';
         }
     } catch (error) {
-        console.error("Decryption failed:", error);
-        alert("An error occurred during session decryption.");
+          ipcRenderer.send('show-popup', 'Session Verification Error', 'An error occurred while verifying your session. Please try again or log in again.', 'error', [], [{ label: "Login", action: () => window.location.href = '../app/login/login.html' }], 0);
     }
 }
 
