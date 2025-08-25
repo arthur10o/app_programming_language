@@ -5,7 +5,7 @@
     Description : Styles sheet for all pages on the app
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-20
+    Last Update : 2025-08-25
     ==============================================================================
 */
 * {
@@ -228,4 +228,35 @@ button[type="submit"]:active {
     .login-container h1 {
         font-size: 2rem;
     }
+}
+
+#loader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+.spinner, .loader-spinner {
+    border: 6px solid #e0e0e0;
+    border-top: 6px solid #42a5f5;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spinLoader 1s linear infinite;
+    margin-bottom: 16px;
+}
+.loader-text, #loader span {
+    color: #fff;
+    font-size: 1.1em;
+    font-family: "Segoe UI", sans-serif;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+@keyframes spinLoader {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

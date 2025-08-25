@@ -52,8 +52,7 @@ document.getElementById('toggle-password-id').addEventListener('click', () => {
 
 document.getElementById('signup-button').addEventListener('click', async (event) => {
     event.preventDefault();
-    const spinner = document.getElementById('loading-spinner');
-    spinner.style.display = 'flex';
+    document.getElementById('loader').style.display = 'flex';
 
     if (all_input_is_valid()) {
         const USERNAME = document.getElementById("username").value;
@@ -169,8 +168,6 @@ function is_valid_password(_password) {
 }
 
 async function registerUser(_username, _email, _password, _remember_me) {
-    const spinner = document.getElementById('loading-spinner');
-
     try {
         const PASSWORD_HASH = hash_password(_password);
 
@@ -239,14 +236,13 @@ async function registerUser(_username, _email, _password, _remember_me) {
                 nonce: ENCRYPTED_SESSION.nonce,
                 user_id: USER_ID
             });
-            window.location.href = "../home/index.html";
+            setTimeout(() => {
+                window.location.href = '../home/index.html';
+            }, 600); 
         });
     } catch (error) {
         ipcRenderer.send('show-popup', 'Registration Error', 'An unexpected error occurred while finalizing registration. Please try again.', 'error', [], [{ label: "Close", action: null }], 0);
         document.getElementById("registration-error").textContent = "An error occurred during registration. Please try again.";
-    }
-    finally {
-        setTimeout(() => spinner.style.display = 'none', 300);
     }
 }
 

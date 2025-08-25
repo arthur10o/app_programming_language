@@ -38,6 +38,7 @@ document.getElementById('toggle-password-id').addEventListener('click', () => {
 
 document.getElementById('login-button').addEventListener('click', async (event) => {
     event.preventDefault();
+    document.getElementById('loader').style.display = 'flex';
     try {
         const USERS = await get_users();
         const EMAIL = document.getElementById('email').value;
@@ -65,10 +66,13 @@ document.getElementById('login-button').addEventListener('click', async (event) 
             nonce: ENCRYPTED_SESSION.nonce,
             user_id: USER_ID
         });
-        window.location.href = '../home/index.html';
+        setTimeout(() => {
+            window.location.href = '../home/index.html';
+        }, 600);
     } catch (error) {
         ipcRenderer.send('show-popup', 'Error', 'Failed to retrieve user information. Please try again later.', 'error', [], [{ label: "Close", action: null }], 0);
     }
+    document.getElementById('loader').style.display = 'none';
 });
 
 function get_users() {

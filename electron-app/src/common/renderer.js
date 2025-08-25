@@ -31,18 +31,20 @@ document.addEventListener('click', (event) => {
 });
 
 ipcRenderer.on('show-pop-up-valid-session', (event, _connected_user_id, _user_with_session, _connected_user_file) => {
-    showNotification({
-        title: "Session verification",
-        message: "Please enter your password.",
-        type: "info",
-        inputs: [
-            { type: 'text', name: 'password', placeholder: 'Enter your password'}
-        ],
-        buttons: [
-            { label: "Submit", action: (_password) => verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file)},
-            { label: "Quit", action: () => ipcRenderer.send('quit-app') }
-        ]
-    });
+  showNotification({
+      title: "Session verification",
+      message: "Please enter your password.",
+      type: "info",
+      inputs: [
+          { type: 'text', name: 'password', placeholder: 'Enter your password'}
+      ],
+      buttons: [
+          { label: "Submit", action: async (_password) => {
+            await verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file);
+          }},
+          { label: "Quit", action: () => ipcRenderer.send('quit-app') }
+      ]
+  });
 });
 
 ipcRenderer.on('display-popup', (event, _title, _message, _type, _inputs, _buttons, _auto_close) => {
@@ -268,58 +270,83 @@ function showNotification({
 }
 
 async function verify_session_is_correct(_values, _connected_user_id, _user_with_session, _connected_user_file) {
-   const PASSWORD_ENTERED = _values.password;
+  await new Promise(requestAnimationFrame);
+  document.getElementById('loader').style.display = 'flex';
+  await new Promise(requestAnimationFrame);
 
-    if (_connected_user_id !== _user_with_session.user_id) {
-        ipcRenderer.send('show-popup', 'Session Verification Failed', 'User session mismatch detected. Please restart the application.', 'error', [], [{ label: "Close", action: null }], 0);
+  const PASSWORD_ENTERED = _values.password;
+
+  if (_connected_user_id !== _user_with_session.user_id) {
+    setTimeout(() => {
+      document.getElementById('loader').style.display = 'none';
+    }, 600);
+    ipcRenderer.send('show-popup', 'Session Verification Failed', 'User session mismatch detected. Please restart the application.', 'error', [], [{ label: "Close", action: null }], 0);
+    return;
+  }
+
+  const HASHED_PASSWORD = _user_with_session.password;
+  const IS_VALID = await verify_password(HASHED_PASSWORD, PASSWORD_ENTERED);
+
+  if (!IS_VALID) {
+    setTimeout(() => {
+      document.getElementById('loader').style.display = 'none';
+    }, 600);
+    showNotification({
+        title: "Invalid Password",
+        message: "The password entered is incorrect. Please try again.",
+        type: "error",
+        inputs: [
+            { type: 'text', name: 'password', placeholder: 'Enter your password' }
+        ],
+        buttons: [
+            { label: "Submit", action: async (_password) => {
+              await verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file);
+            }},
+            { label: "Quit", action: () => ipcRenderer.send('quit-app') }
+        ]
+    });
+    return;
+  }
+
+  try {
+    const DERIVED_KEY_OBJECT = await derive_key_from_password(PASSWORD_ENTERED, _user_with_session.aes_salt);
+    const DERIVED_KEY_BYTES = base64_to_bytes(DERIVED_KEY_OBJECT.key);
+
+    const AES_KEY_ENCRYPTED_NONCE = _user_with_session.aes_key_encrypted.nonce;
+    const AES_KEY_ENCRYPTED_CIPHER = _user_with_session.aes_key_encrypted.cipher;
+    const AES_KEY_BASE64 = await decrypt_aes_256_gcm(AES_KEY_ENCRYPTED_NONCE, AES_KEY_ENCRYPTED_CIPHER, DERIVED_KEY_BYTES);
+
+    const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
+
+    if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
+        setTimeout(() => {
+          document.getElementById('loader').style.display = 'none';
+        }, 600);
+        ipcRenderer.send('show-popup', 'Decryption Error', `Invalid AES key size. Expected 32 bytes, received ${AES_KEY_BYTES.length}.`, 'error', [], [{ label: "Close", action: null }], 0);
         return;
     }
 
-    const HASHED_PASSWORD = _user_with_session.password;
-    const IS_VALID = await verify_password(HASHED_PASSWORD, PASSWORD_ENTERED);
+    const DECRYPTED_SESSION_STRING = await decrypt_aes_256_gcm(_connected_user_file.nonce, _connected_user_file.cipher, AES_KEY_BYTES);
 
-    if (!IS_VALID) {
-        showNotification({
-            title: "Invalid Password",
-            message: "The password entered is incorrect. Please try again.",
-            type: "error",
-            inputs: [
-                { type: 'text', name: 'password', placeholder: 'Enter your password' }
-            ],
-            buttons: [
-                { label: "Submit", action: (_password) => verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file) },
-                { label: "Quit", action: () => ipcRenderer.send('quit-app') }
-            ]
-        });
-        return;
+    const DECRYPTED_SESSION = JSON.parse(DECRYPTED_SESSION_STRING);
+    const CURRENT_TIME = Date.now();
+    const DATE_TO_EXPIRES = DECRYPTED_SESSION.connected_user.expires_at;
+    if (DATE_TO_EXPIRES < CURRENT_TIME) {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+      }, 600);
+      window.location.href = '../login/login.html';
+    } else {
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+      }, 600);
     }
-
-    try {
-        const DERIVED_KEY_OBJECT = await derive_key_from_password(PASSWORD_ENTERED, _user_with_session.aes_salt);
-        const DERIVED_KEY_BYTES = base64_to_bytes(DERIVED_KEY_OBJECT.key);
-
-        const AES_KEY_ENCRYPTED_NONCE = _user_with_session.aes_key_encrypted.nonce;
-        const AES_KEY_ENCRYPTED_CIPHER = _user_with_session.aes_key_encrypted.cipher;
-        const AES_KEY_BASE64 = await decrypt_aes_256_gcm(AES_KEY_ENCRYPTED_NONCE, AES_KEY_ENCRYPTED_CIPHER, DERIVED_KEY_BYTES);
-
-        const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
-
-        if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
-            ipcRenderer.send('show-popup', 'Decryption Error', `Invalid AES key size. Expected 32 bytes, received ${AES_KEY_BYTES.length}.`, 'error', [], [{ label: "Close", action: null }], 0);
-            return;
-        }
-
-        const DECRYPTED_SESSION_STRING = await decrypt_aes_256_gcm(_connected_user_file.nonce, _connected_user_file.cipher, AES_KEY_BYTES);
-
-        const DECRYPTED_SESSION = JSON.parse(DECRYPTED_SESSION_STRING);
-        const CURRENT_TIME = Date.now();
-        const DATE_TO_EXPIRES = DECRYPTED_SESSION.connected_user.expires_at;
-        if (DATE_TO_EXPIRES < CURRENT_TIME) {
-          window.location.href = '../login/login.html';
-        }
-    } catch (error) {
-          ipcRenderer.send('show-popup', 'Session Verification Error', 'An error occurred while verifying your session. Please try again or log in again.', 'error', [], [{ label: "Login", action: () => window.location.href = '../app/login/login.html' }], 0);
-    }
+  } catch (error) {
+    setTimeout(() => {
+      document.getElementById('loader').style.display = 'none';
+    }, 600);
+    ipcRenderer.send('show-popup', 'Session Verification Error', 'An error occurred while verifying your session. Please try again or log in again.', 'error', [], [{ label: "Login", action: () => window.location.href = '../app/login/login.html' }], 0);
+  }
 }
 
 function base64_to_bytes(_base64) {
