@@ -5,11 +5,9 @@
   Description : JavaScript file to highlight syntax to the editor in A++ IDE
   Author      : Arthur
   Created     : 2025-07-27
-  Last Update : 2025-08-19
+  Last Update : 2025-08-25
   ==============================================================================
 */
-const { update_theme } = require('./styleManager');
-
 let var_const_list = [];
 
 function syntax_highlighting() {

@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-08-25
+  Last Update : 2025-08-26
   ==============================================================================
 */
 const crypto = require('crypto');
@@ -43,6 +43,7 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         const USERS = await get_users();
         const EMAIL = document.getElementById('email').value;
         const PASSWORD = document.getElementById('password').value;
+        const REMEMBER_ME = document.getElementById('remember')?.checked;
         const USER_FIND = await find_user_by_email(USERS, EMAIL, PASSWORD);
         const USER_ID = USER_FIND.user_id;
         const KEY_BYTES = USER_FIND.key_bytes;
@@ -50,13 +51,19 @@ document.getElementById('login-button').addEventListener('click', async (event) 
             ipcRenderer.send('show-popup', 'Error', 'Authentication failed due to invalid credentials or decryption error.', 'error', [], [{ label: "Close", action: null }], 0);
             return;
         }
+
+        let expires_at = 0;
+        if (REMEMBER_ME) {
+            expires_at = Date.now() + 1000 * 60 * 60 * 24 * 90; // 90 Days
+        } else {
+            expires_at = Date.now() + 1000 * 60 * 60 * 24 * 7;  // 7 Days
+        }
         const SESSION = {
             connected_user: {
                 user_id: USER_ID,
                 token: crypto.randomUUID(),
                 date_of_connection: Date.now(),
-                expires_at: Date.now() + 1000 * 60 * 60 * 24 * 7, // 7 Days
-                rememberMe: document.getElementById('rememberMe')?.checked || false
+                expires_at: expires_at
             }
         };
         const SESSION_JSON = JSON.stringify(SESSION);

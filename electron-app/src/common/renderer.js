@@ -45,6 +45,10 @@ ipcRenderer.on('show-pop-up-valid-session', (event, _connected_user_id, _user_wi
           { label: "Quit", action: () => ipcRenderer.send('quit-app') }
       ]
   });
+  setTimeout(() => {
+    const firstInput = document.querySelector('.popup input, .popup textarea');
+    if (firstInput) firstInput.focus();
+  }, 10);
 });
 
 ipcRenderer.on('display-popup', (event, _title, _message, _type, _inputs, _buttons, _auto_close) => {

@@ -215,21 +215,6 @@ button[type="submit"]:active {
     outline: none;
 }
 
-@media (max-width: 600px) {
-    .button {
-        width: 100%;
-        min-width: unset;
-    }
-
-    .login-container {
-        padding: 30px 20px;
-    }
-
-    .login-container h1 {
-        font-size: 2rem;
-    }
-}
-
 #loader {
     position: fixed;
     top: 0; left: 0;
@@ -256,7 +241,23 @@ button[type="submit"]:active {
     font-family: "Segoe UI", sans-serif;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
 }
+
 @keyframes spinLoader {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+    .button {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .login-container {
+        padding: 30px 20px;
+    }
+
+    .login-container h1 {
+        font-size: 2rem;
+    }
 }

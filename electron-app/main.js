@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-24
+    Last Update : 2025-08-26
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -19,6 +19,9 @@ let first_connection = false;
 
 const CONNECTED_USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/connected_user.json'), {mode: 0o600}));
 const USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/users.json')));
+
+const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
+const USER_INFORMATION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -42,9 +45,7 @@ function createWindow() {
 
     mainWindow.webContents.on('did-finish-load', () => {
         if (!first_connection && CONNECTED_USER_FILE.cipher && CONNECTED_USER_FILE.nonce && CONNECTED_USER_FILE.user_id) {
-            const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
-            const USER_WITH_SESSION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
-            mainWindow.webContents.send('show-pop-up-valid-session', CONNECTED_USER_ID, USER_WITH_SESSION, CONNECTED_USER_FILE);
+            mainWindow.webContents.send('show-pop-up-valid-session', CONNECTED_USER_ID, USER_INFORMATION, CONNECTED_USER_FILE);
             first_connection = true;
         }
     });
@@ -95,21 +96,6 @@ ipcMain.on('register-user', (event, _new_user) => {
     }
 });
 
-ipcMain.on('get-connected-user-information', (event) => {
-    const PATH_CONNECTED_USERS_FILE = PATH.resolve(__dirname, 'src/data/connected_user.json');
-    let data_users = [];
-    try {
-        if (fs.existsSync(PATH_CONNECTED_USERS_FILE)) {
-            const FILE_DATA = fs.readFileSync(PATH_CONNECTED_USERS_FILE, 'utf8');
-            data_users = FILE_DATA.trim() ? JSON.parse(FILE_DATA) : [];
-        }
-    } catch (err) {
-        console.error('Failed to read users.json:', err);
-        return;
-    }
-    event.sender.send('received-connected-user-information', data_users);
-});
-
 ipcMain.on('get-users-for-login', (event) => {
     const PATH_USERS = PATH.resolve(__dirname, 'src/data/users.json');
     let users = [];
@@ -123,6 +109,10 @@ ipcMain.on('get-users-for-login', (event) => {
         return;
     }
     event.sender.send('received-users-information', users);
+});
+
+ipcMain.on('get-user-connected-information', (event) => {
+    event.sender.send('received-connected-user-information', USER_INFORMATION);
 });
 
 ipcMain.on('get-default-keybindings', (event) => {
