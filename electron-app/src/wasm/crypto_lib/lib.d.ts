@@ -6,6 +6,7 @@ export function generate_aes_256_gcm_key(): Uint8Array;
 export function encrypt_aes_256_gcm(_text: string, _key_bytes: Uint8Array): any;
 export function decrypt_aes_256_gcm(_nonce_b64: string, _cipher_text_b64: string, _key_bytes: Uint8Array): string;
 export function derive_key_from_password(_password: string, _salt_b64?: string | null): object;
+export function generate_recovery_key(blocks: number, block_size: number): string;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -17,6 +18,7 @@ export interface InitOutput {
   readonly encrypt_aes_256_gcm: (a: number, b: number, c: number, d: number) => [number, number, number];
   readonly decrypt_aes_256_gcm: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number, number];
   readonly derive_key_from_password: (a: number, b: number, c: number, d: number) => [number, number, number];
+  readonly generate_recovery_key: (a: number, b: number) => [number, number];
   readonly __wbindgen_exn_store: (a: number) => void;
   readonly __externref_table_alloc: () => number;
   readonly __wbindgen_export_2: WebAssembly.Table;

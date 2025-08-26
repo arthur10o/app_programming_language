@@ -76,6 +76,8 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         setTimeout(() => {
             window.location.href = '../home/index.html';
         }, 600);
+        ipcRenderer.send('get-user-information-id-user-connected');
+        update_theme();
     } catch (error) {
         ipcRenderer.send('show-popup', 'Error', 'Failed to retrieve user information. Please try again later.', 'error', [], [{ label: "Close", action: null }], 0);
     }

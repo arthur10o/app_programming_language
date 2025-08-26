@@ -7,7 +7,7 @@
                   for use with WebAssembly (wasm-bindgen).
     Author      : Arthur
     Created     : 2025-08-19
-    Last Update : 2025-08-21
+    Last Update : 2025-08-26
     ============================================================================
 */
 use wasm_bindgen::prelude::*;
@@ -29,7 +29,7 @@ pub fn hash_password(_password: &str) -> String {
      @panic If hashing fails or parameters are invalid.
      */
     let salt = SaltString::generate(&mut OsRng);
-    let params = Params::new(262144, 6, 2, Some(64)).expect("Invalid Argon2 parameters");
+    let params = Params::new(262144, 6, 2, Some(32)).expect("Invalid Argon2 parameters");
     let argon2 = Argon2::new(Algorithm::Argon2id, Version::V0x13, params);
     let password_hash = argon2.hash_password(_password.as_bytes(), &salt)
             .expect("Failed to hash password");
@@ -182,4 +182,34 @@ pub fn derive_key_from_password(_password: &str, _salt_b64: Option<String>) -> R
     js_sys::Reflect::set(&result, &"salt".into(), &salt_b64.into())?;
 
     Ok(result)
+}
+
+#[wasm_bindgen]
+pub fn generate_recovery_key(blocks: usize, block_size: usize) -> String {
+    /*
+     Generate a secure, human-readable recovery key consisting of alphanumeric blocks.
+     Useful for account recovery or secure backup authentication flows.
+
+     @param `blocks` - The number of blocks to generate (e.g. 4, 6).
+     @param `block_size` - Number of characters per block (e.g. 4, 6).
+     @return `String` - A recovery key formatted as uppercase alphanumeric characters, grouped with dashes (e.g. "J2HD-K9TZ-83LA-XQ1P").
+     
+     @note The generated key is random and should be stored securely by the user.
+     @panic This function will not panic unless system randomness (OsRng) is unavailable, which is extremely rare in production environments.
+     */
+    const CHARSET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let charset_len = CHARSET.len();
+    let mut rng = OsRng;
+    let mut key = Vec::new();
+
+    for _ in 0..blocks {
+        let mut block = String::with_capacity(block_size);
+        for _ in 0..block_size {
+            let idx = (rng.next_u32() as usize) % charset_len;
+            block.push(CHARSET[idx] as char);
+        }
+        key.push(block);
+    }
+
+    key.join("-")
 }

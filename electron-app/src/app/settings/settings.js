@@ -5,10 +5,47 @@
   Description : JavaScript file to manage the settings in A++ IDE
   Author      : Arthur
   Created     : 2025-07-27
-  Last Update : 2025-08-25
+  Last Update : 2025-08-26
   ==============================================================================
 */
 const {syntax_highlighting} = require('../../common/syntaxHighlighting.js');
+const { ipcRenderer } = require('electron');
+
+let settings = {};
+ipcRenderer.send('get-user-connected-information');
+ipcRenderer.on('received-connected-user-information', (event, _user_information) => {
+    if (!_user_information) {
+        const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
+        if (!fs.existsSync(DATA_PATH)) {
+            ipcRenderer.send('show-popup', 'Settings File Missing', 'The user settings file could not be found. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
+            return;
+        }
+
+        try {
+            const DATA = fs.readFileSync(DATA_PATH, 'utf8');
+            settings = JSON.parse(DATA).data_settings || JSON.parse(DATA);
+        } catch (error) {
+            ipcRenderer.send('show-popup', 'Settings Load Error', 'Unable to load the user settings file. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
+            return;
+        }
+    } else {
+        const prefs = _user_information.preferences;
+        settings = {
+            theme: prefs.theme,
+            'font-size': prefs.fontSize,
+            'font-family': prefs.fontFamily,
+            language: prefs.language,
+            'auto-save': prefs.autoSave,
+            'tabulation-size': prefs.tabSize,
+            autocomplete: prefs.autocomplete,
+            'show-suggestions': prefs.showSuggestions,
+            'syntax-highlighting': prefs.syntaxHighlighting,
+            'show-line-numbers': prefs.showLineNumbers
+        };
+    }
+    update_buttons();
+    updatePreview();
+});
 
 function animateValue(_element, _newValue) {
     _element.textContent = _newValue;
@@ -19,26 +56,12 @@ function animateValue(_element, _newValue) {
 }
 
 document.getElementById('theme').addEventListener('change', (event) => {
-    const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
-    if (!fs.existsSync(DATA_PATH)) {
-        ipcRenderer.send('show-popup', 'Settings File Missing', 'The user settings file could not be found. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
-        return;
-    }
-
-    let settings = {};
-
-    try {
-        const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-        settings = JSON.parse(DATA);
-    } catch (error) {
-        ipcRenderer.send('show-popup', 'Settings Load Error', 'Unable to load the user settings file. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
-        return;
-    }
-    const SELECTED_THEME = event.target.value;
-    document.getElementById('preview-area').style.background = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-background-color'];
-    document.getElementById('preview-area').style.color = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-color']
-    animateValue(document.getElementById('theme-value'), SELECTED_THEME);
-    updatePreview();
+    
+        const SELECTED_THEME = event.target.value;
+        document.getElementById('preview-area').style.background = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-background-color'];
+        document.getElementById('preview-area').style.color = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-color']
+        animateValue(document.getElementById('theme-value'), SELECTED_THEME);
+        updatePreview();
 });
 
 document.getElementById('font-size').addEventListener('change', (event) => {
@@ -78,30 +101,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function update_buttons() {
     try {
-        const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
-        const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-        const SETTINGS = JSON.parse(DATA).data_settings;
-
         const EL = (id) => document.getElementById(id);
 
-        if (EL('theme')) EL('theme').value = SETTINGS.theme;
+        if (EL('theme')) EL('theme').value = settings.theme;
         if (EL('font-size')) {
-            EL('font-size').value = SETTINGS['font-size'].size;
+            EL('font-size').value = settings['font-size'].size;
             const SIZE_VALUE = EL('font-size-value');
-            if (SIZE_VALUE) SIZE_VALUE.textContent = SETTINGS['font-size'].size;
+            if (SIZE_VALUE) SIZE_VALUE.textContent = settings['font-size'].size;
         }
-        if (EL('font-family')) EL('font-family').value = SETTINGS['font-family'];
-        if (EL('language')) EL('language').value = SETTINGS.language;
-        if (EL('auto-save')) EL('auto-save').checked = SETTINGS['auto-save'];
+        if (EL('font-family')) EL('font-family').value = settings['font-family'];
+        if (EL('language')) EL('language').value = settings.language;
+        if (EL('auto-save')) EL('auto-save').checked = settings['auto-save'];
         if (EL('tabulation-size')) {
-            EL('tabulation-size').value = SETTINGS['tabulation-size'];
+            EL('tabulation-size').value = settings['tabulation-size'];
             const TAB_SIZE_VALUE = EL('tab-size-value');
-            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = SETTINGS['tabulation-size'];
+            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = settings['tabulation-size'];
         }
-        if (EL('autocomplete')) EL('autocomplete').checked = SETTINGS.autocomplete;
-        if (EL('suggestions')) EL('suggestions').checked = SETTINGS['show-suggestions'];
-        if (EL('syntax-highlighting')) EL('syntax-highlighting').checked = SETTINGS['syntax-highlighting'];
-        if (EL('line-numbers')) EL('line-numbers').checked = SETTINGS['show-line-numbers'];
+        if (EL('autocomplete')) EL('autocomplete').checked = settings.autocomplete;
+        if (EL('suggestions')) EL('suggestions').checked = settings['show-suggestions'];
+        if (EL('syntax-highlighting')) EL('syntax-highlighting').checked = settings['syntax-highlighting'];
+        if (EL('line-numbers')) EL('line-numbers').checked = settings['show-line-numbers'];
 
     } catch (error) {
         ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while loading editor settings. Please ensure the settings file is accessible and properly formatted.', 'error', [], [{ label: "Close", action: null }], 0 );
@@ -122,10 +141,6 @@ function updatePreview() {
     const TAB_DISPLAY = TAB_CHAR.repeat(TAB_SIZE);
     const LINES = CODES_LINES.split('\n');
     const LINES_REPLACED = LINES.map(line => line.split('<&tab_char>').join(' '.repeat(TAB_SIZE)));
-
-    const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
-    const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-    const SETTINGS = JSON.parse(DATA).theme;
 
     let html = '';
     if (SHOW_LINE_NUMBERS) {
@@ -155,8 +170,8 @@ function updatePreview() {
     PREVIEW.classList.add('tab-preview');
 
     const PREVIEW_AREA = document.getElementById('preview-area');
-    PREVIEW_AREA.style.backgroundColor = SETTINGS?.[THEME]?.editor?.['.textarea-background-color'];
-    PREVIEW_AREA.style.color = SETTINGS?.[THEME]?.editor?.['.textarea-color'];
+    PREVIEW_AREA.style.backgroundColor = settings?.[THEME]?.editor?.['.textarea-background-color'];
+    PREVIEW_AREA.style.color = settings?.[THEME]?.editor?.['.textarea-color'];
 
     if (SYNTAX_HIGHLIGHTING) {
         syntax_highlighting();
@@ -182,7 +197,6 @@ function saveSettings(event) {
         'show-line-numbers': document.getElementById('line-numbers').checked
     };
     try {
-        let settings = {};
         if (fs.existsSync(DATA_PATH)) {
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
             settings = JSON.parse(DATA);

@@ -17,11 +17,11 @@ let remove_path = false;
 let dont_show_again = false;
 let first_connection = false;
 
-const CONNECTED_USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/connected_user.json'), {mode: 0o600}));
-const USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/users.json')));
+let CONNECTED_USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/connected_user.json'), {mode: 0o600}));
+let USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/users.json')));
 
-const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
-const USER_INFORMATION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
+let CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
+let USER_INFORMATION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
 let dont_show_message_behavior_close_file = USER_INFORMATION?.["don't_show_message_behavior_close_file"];
 let dont_show_message_behavior_new_file = USER_INFORMATION?.["don't_show_message_behavior_new_file"];
 
@@ -50,6 +50,7 @@ function createWindow() {
             mainWindow.webContents.send('show-pop-up-valid-session', CONNECTED_USER_ID, USER_INFORMATION, CONNECTED_USER_FILE);
             first_connection = true;
         }
+        first_connection = true;
     });
 }
 
@@ -69,6 +70,14 @@ app.on('activate', () => {
 
 ipcMain.on('quit-app', () => {
     app.quit();
+});
+
+ipcMain.on('get-user-information-id-user-connected', (event) => {
+    CONNECTED_USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/connected_user.json'), {mode: 0o600}));
+    USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/users.json')));
+
+    CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
+    USER_INFORMATION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
 });
 
 ipcMain.on('show-popup', (event, title, message, type, inputs, buttons, autoClose) => {
