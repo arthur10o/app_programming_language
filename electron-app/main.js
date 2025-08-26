@@ -22,6 +22,8 @@ const USER_FILE = JSON.parse(fs.readFileSync(PATH.resolve(__dirname, 'src/data/u
 
 const CONNECTED_USER_ID = CONNECTED_USER_FILE.user_id;
 const USER_INFORMATION = USER_FILE.find(user => user.user_id == CONNECTED_USER_ID);
+let dont_show_message_behavior_close_file = USER_INFORMATION?.["don't_show_message_behavior_close_file"];
+let dont_show_message_behavior_new_file = USER_INFORMATION?.["don't_show_message_behavior_new_file"];
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -192,26 +194,55 @@ ipcMain.on('load-file', async (event) => {
 });
 
 ipcMain.on('new-file', async (event) => {
-    if (file_state[current_file_path] == false) {
-        const CONFIRM = await dialog.showMessageBox({
-            type: 'question',
-            buttons: ['Save', 'Do not save', 'Cancel'],
-            defaultId: '1',
-            cancelId: '1',
-            title: 'Create a new file',
-            message: 'The current file contains unsaved changes. Do you want to save the changes before creating a new file ?',
-            checkboxLabel: "Do not show this message again",
-            checkboxChecked: dont_show_again,
-        });
+    if (dont_show_message_behavior_new_file == null) {
+        if (file_state[current_file_path] == false) {
+            const CONFIRM = await dialog.showMessageBox({
+                type: 'question',
+                buttons: ['Save', 'Do not save', 'Cancel'],
+                defaultId: '1',
+                cancelId: '1',
+                title: 'Create a new file',
+                message: 'The current file contains unsaved changes. Do you want to save the changes before creating a new file ?',
+                checkboxLabel: "Do not show this message again",
+                checkboxChecked: dont_show_again,
+            });
 
-        if (CONFIRM.response == 0) {                // Save
-            event.sender.send('save code');
-            event.sender.send('clear-editor');
-            remove_path = true;
-        } else if (CONFIRM.response == 1) {         // Do not save
+            if (CONFIRM.checkboxChecked === true && (CONFIRM.response === 0 || CONFIRM.response === 1)) {
+                const PATH_USERS_FILE = PATH.resolve(__dirname, 'src/data/users.json');
+                let users = [];
+                try {
+                    const data = fs.readFileSync(PATH_USERS_FILE, 'utf8');
+                    users = data.trim() ? JSON.parse(data) : [];
+                    const userIndex = users.findIndex(u => u.user_id === CONNECTED_USER_ID);
+                    if (userIndex !== -1) {
+                        users[userIndex]["don't_show_message_behavior_new_file"] = (CONFIRM.response === 0) ? 'save' : 'dont-save';
+                        fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+                        dont_show_message_behavior_new_file = (CONFIRM.response === 0) ? 'save' : 'dont-save';
+                    }
+                } catch (err) {
+                    console.error('Error updating user preferences:', err);
+                }
+            }
+
+            if (CONFIRM.response == 0) {                // Save
+                event.sender.send('save code');
+                event.sender.send('clear-editor');
+                remove_path = true;
+            } else if (CONFIRM.response == 1) {         // Do not save
+                current_file_path = null;
+                event.sender.send('clear-editor');
+            }
+        } else {
             current_file_path = null;
-            event.sender.send('clear-editor');
+            event.sender.send('clear-editor')
         }
+    } else if (dont_show_message_behavior_new_file == 'save') {
+        event.sender.send('save code');
+        event.sender.send('clear-editor');
+        remove_path = true;
+    } else if (dont_show_message_behavior_new_file == 'dont-save') {
+        current_file_path = null;
+        event.sender.send('clear-editor');
     } else {
         current_file_path = null;
         event.sender.send('clear-editor')
@@ -219,30 +250,57 @@ ipcMain.on('new-file', async (event) => {
 });
 
 ipcMain.on('close-file', async (event) => {
-    if (file_state[current_file_path] == false) {
-        const CONFIRM = await dialog.showMessageBox({
-            type: 'question',
-            buttons: ['Save', 'Do not save', 'Cancel'],
-            defaultId: '1',
-            cancelId: '1',
-            title: 'File not saved',
-            message: 'You have unsaved changes in the current file. Would you like to save them before closing ?',
-            checkboxLabel: "Do not show this message again",
-            checkboxChecked: dont_show_again,
-        });
+    if (dont_show_message_behavior_close_file == null) {
+        if (file_state[current_file_path] == false) {
+            const CONFIRM = await dialog.showMessageBox({
+                type: 'question',
+                buttons: ['Save', 'Do not save', 'Cancel'],
+                defaultId: '1',
+                cancelId: '1',
+                title: 'File not saved',
+                message: 'You have unsaved changes in the current file. Would you like to save them before closing ?',
+                checkboxLabel: "Do not show this message again",
+                checkboxChecked: dont_show_again,
+            });
 
-        if (CONFIRM.response == 0) {            // Save
-            event.sender.send('save code');
-            event.sender.send('clear-editor');
-            remove_path = null;
-        } else if (CONFIRM.response == 1) {     // Do not save
+            if (CONFIRM.checkboxChecked === true && (CONFIRM.response === 0 || CONFIRM.response === 1)) {
+                const PATH_USERS_FILE = PATH.resolve(__dirname, 'src/data/users.json');
+                let users = [];
+                try {
+                    const data = fs.readFileSync(PATH_USERS_FILE, 'utf8');
+                    users = data.trim() ? JSON.parse(data) : [];
+                    const userIndex = users.findIndex(u => u.user_id === CONNECTED_USER_ID);
+                    if (userIndex !== -1) {
+                        users[userIndex]["don't_show_message_behavior_close_file"] = (CONFIRM.response === 0) ? 'save' : 'dont-save';
+                        fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+                        dont_show_message_behavior_close_file = (CONFIRM.response === 0) ? 'save' : 'dont-save';
+                    }
+                } catch (err) {
+                    console.error('Error updating user preferences:', err);
+                }
+            }
+
+            if (CONFIRM.response == 0) {            // Save
+                event.sender.send('save code');
+                event.sender.send('clear-editor');
+                remove_path = null;
+            } else if (CONFIRM.response == 1) {     // Do not save
+                current_file_path = null;
+                event.sender.send('clear-editor');
+            }
+        } else {
             current_file_path = null;
-            event.sender.send('clear-editor');
+            event.sender.send('clear-editor')
         }
+    } else if (dont_show_message_behavior_close_file == 'save') {
+        event.sender.send('save code');
+        event.sender.send('clear-editor');
+        remove_path = null;
+    } else if (dont_show_message_behavior_close_file == 'dont-save') {
+        current_file_path = null;
+        event.sender.send('clear-editor');
     } else {
         current_file_path = null;
-        event.sender.send('clear-editor')
+        event.sender.send('clear-editor');
     }
 });
-
-// [TODO] "Ne plus afficher ce message" à ajouter dans les settings user

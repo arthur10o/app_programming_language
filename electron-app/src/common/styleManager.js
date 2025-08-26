@@ -193,7 +193,7 @@ function update_theme() {
 
             const toggle_confirm_password_ELEMENT = document.getElementById('toggle-confirm-password-id');
 
-        if (toggle_confirm_password_ELEMENT && BASE_COLOR) {
+            if (toggle_confirm_password_ELEMENT && BASE_COLOR) {
                 toggle_confirm_password_ELEMENT.style.color = BASE_COLOR;
                 toggle_confirm_password_ELEMENT.addEventListener('mouseenter', () => {
                     toggle_confirm_password_ELEMENT.style.color = HOVER_COLOR || BASE_COLOR;
@@ -202,13 +202,6 @@ function update_theme() {
                     toggle_password_ELEMENT.style.color = BASE_COLOR;
                 });
             }
-
-            const loading_spinner_ELEMENT = document.getElementById('loading-spinner');
-            loading_spinner_ELEMENT.style.background = settings.theme?.[current_theme]?.login_signup?.['#loading-spinner-background'];
-
-            const spinner_ELEMENT = loading_spinner_ELEMENT.querySelector('.spinner');
-            spinner_ELEMENT.style.border = settings.theme?.[current_theme]?.login_signup?.['.spinner-border'];
-            spinner_ELEMENT.style.borderTop = settings.theme?.[current_theme]?.login_signup?.['.spinner-border-top'];
 
             const error_message_ELEMENT = document.getElementsByClassName('error-message');
             for (let i = 0; i < error_message_ELEMENT.length; i++) {

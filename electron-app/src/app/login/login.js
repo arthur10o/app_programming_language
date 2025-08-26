@@ -94,34 +94,37 @@ function get_users() {
 async function find_user_by_email(_users, _email, _password) {
     for (const USER of _users) {
         const IS_VALID_PASSWORD = await check_password(USER.password, _password);
-        if (IS_VALID_PASSWORD) {
-            try {
-                const DERIVED_KEY_OBJECT = await derive_key_from_password(_password, USER.aes_salt);
-                const DERIVED_KEY_BYTES = base64_to_bytes(DERIVED_KEY_OBJECT.key);
+        if (!IS_VALID_PASSWORD) continue;
 
-                const AES_KEY_ENCRYPTED_NONCE = USER.aes_key_encrypted.nonce;
-                const AES_KEY_ENCRYPTED_CIPHER = USER.aes_key_encrypted.cipher;
-                const AES_KEY_BASE64 = await decrypt_aes_256_gcm(AES_KEY_ENCRYPTED_NONCE, AES_KEY_ENCRYPTED_CIPHER, DERIVED_KEY_BYTES);
-                const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
+        try {
+            const DERIVED_KEY_OBJECT = await derive_key_from_password(_password, USER.aes_salt);
+            const DERIVED_KEY_BYTES = base64_to_bytes(DERIVED_KEY_OBJECT.key);
 
-                if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
-                    ipcRenderer.send('show-popup', 'Decryption Error', 'Unable to validate encryption key. Please verify your credentials.', 'error', [], [{ label: "Close", action: null }], 0);
-                    return;
-                }
+            const AES_KEY_BASE64 = await decrypt_aes_256_gcm(
+                USER.aes_key_encrypted.nonce,
+                USER.aes_key_encrypted.cipher,
+                DERIVED_KEY_BYTES
+            );
+            const AES_KEY_BYTES = base64_to_bytes(AES_KEY_BASE64);
 
-                const EMAIL_DECRYPTED = await decrypt_aes_256_gcm(USER.email.nonce, USER.email.cipher, AES_KEY_BYTES);
-                if (EMAIL_DECRYPTED == _email) {
-                    return  {user_id: USER.user_id, key_bytes: AES_KEY_BYTES};
-                } else {
-                    return null;
-                }
-            } catch (e) {
-                ipcRenderer.send('show-popup', 'Decryption Error', 'An error occurred while decrypting user data.', 'error', [], [{ label: "Close", action: null }], 0);
+            if (!(AES_KEY_BYTES instanceof Uint8Array) || AES_KEY_BYTES.length !== 32) {
+                continue;
             }
-        } else {
-            return null;
+
+            const EMAIL_DECRYPTED = await decrypt_aes_256_gcm(
+                USER.email.nonce,
+                USER.email.cipher,
+                AES_KEY_BYTES
+            );
+
+            if (EMAIL_DECRYPTED === _email) {
+                return { user_id: USER.user_id, key_bytes: AES_KEY_BYTES };
+            }
+        } catch (e) {
+            continue;
         }
     }
+    return null;
 }
 
 function base64_to_bytes(_base64) {

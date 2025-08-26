@@ -198,8 +198,9 @@ async function registerUser(_username, _email, _password, _remember_me) {
                 "aes_key_encrypted": { "cipher": CIPHER_AES_KEY, "nonce": NONCE_AES_KEY },
                 "aes_salt": SALT_DERIVED,
                 "password": PASSWORD_HASH,
-                "last_project_path": "",
                 "profil_picture": "",
+                "don't_show_message_behavior_close_file": null,
+                "don't_show_message_behavior_new_file": null,
                 "preferences": {
                     "theme": "dark",
                     "fontSize": { size: 14, unit: "px" },
