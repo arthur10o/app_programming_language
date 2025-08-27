@@ -103,23 +103,23 @@ function update_buttons() {
         const EL = (id) => document.getElementById(id);
 
         if (EL('theme')) EL('theme').value = settings.theme;
-        if (EL('fontSize')) {
-            EL('fontSize').value = settings['fontSize'].size;
+        if (EL('font-size')) {
+            EL('font-size').value = settings.fontSize.size;
             const SIZE_VALUE = EL('font-size-value');
-            if (SIZE_VALUE) SIZE_VALUE.textContent = settings['fontSize'].size;
+            if (SIZE_VALUE) SIZE_VALUE.textContent = settings.fontSize.size;
         }
-        if (EL('fontFamily')) EL('fontFamily').value = settings['fontFamily'];
+        if (EL('font-family')) EL('font-family').value = settings.fontFamily;
         if (EL('language')) EL('language').value = settings.language;
-        if (EL('autoSave')) EL('autoSave').checked = settings['autoSave'];
-        if (EL('tabSize')) {
-            EL('tabSize').value = settings['tabSize'];
+        if (EL('auto-save')) EL('auto-save').checked = settings.autoSave;
+        if (EL('tabulation-size')) {
+            EL('tabulation-size').value = settings.tabSize;
             const TAB_SIZE_VALUE = EL('tab-size-value');
-            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = settings['tabSize'];
+            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = settings.tabSize;
         }
         if (EL('autocomplete')) EL('autocomplete').checked = settings.autocomplete;
-        if (EL('showSuggestions')) EL('showSuggestions').checked = settings['showSuggestions'];
-        if (EL('syntaxHighlighting')) EL('syntaxHighlighting').checked = settings['syntaxHighlighting'];
-        if (EL('showLineNumbers')) EL('showLineNumbers').checked = settings['showLineNumbers'];
+        if (EL('suggestions')) EL('suggestions').checked = settings.showSuggestions;
+        if (EL('syntax-highlighting')) EL('syntax-highlighting').checked = settings.syntaxHighlighting;
+        if (EL('line-numbers')) EL('line-numbers').checked = settings.showLineNumbers;
 
     } catch (error) {
         ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while loading editor settings. Please ensure the settings file is accessible and properly formatted.', 'error', [], [{ label: "Close", action: null }], 0 );
@@ -208,8 +208,7 @@ function resetSettings(event) {
     const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
     if (event) event.preventDefault();
     try {
-        let settings = {};
-        let default_settings = {};
+        default_settings = {};
         if (fs.existsSync(DATA_PATH)) {
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
             default_settings = JSON.parse(DATA).default_data_settings;
@@ -217,7 +216,7 @@ function resetSettings(event) {
             ipcRenderer.send('show-popup', 'Default Settings Not Found', 'Unable to locate default settings. Please save your current preferences before attempting a reset.', 'warning', [], [{ label: "Close", action: null }], 0);
             return;
         }
-        settings = default_settings;
+        Object.assign(settings, default_settings);
         ipcRenderer.send('save-settings-user-connected', settings);
         ipcRenderer.send('show-popup', 'Settings Reset', 'Your settings have been successfully reset to default.', 'success', [], [{ label: "Close", action: null }], 0);
         update_buttons();
