@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-26
+  Last Update : 2025-08-28
   ==============================================================================
 */
 const fs = require('fs');
@@ -41,6 +41,8 @@ function update_theme() {
         }
 
         let current_theme = user_settings?.preferences?.['theme'] || 'dark';
+        let font_size_size = user_settings?.preferences?.fontSize?.['size'];
+        let font_size_unit = user_settings?.preferences?.fontSize?.['unit'];
         if (!current_theme) {
             ipcRenderer.send('show-popup', 'Theme Load Error', `The theme setting could not be found in your configuration file.\n\nPlease check your settings or reset them to default`, 'error', [], [{ label: "Close", action: null }], 0);
         }
@@ -81,6 +83,9 @@ function update_theme() {
                 a_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['hyperlinks-color'];
             });
         }
+
+        const html_ELEMENT = document.documentElement;
+        html_ELEMENT.style.fontSize = `${font_size_size}${font_size_unit}`;
 
                                         // Update login/signup css
         if (document.title == 'A++ IDE - Sign Up' || document.title == 'A++ IDE - Login') {

@@ -6,7 +6,7 @@
                 - Functionality to handle user registration
   Author      : Arthur
   Created     : 2025-08-19
-  Last Update : 2025-08-27
+  Last Update : 2025-08-28
   ==============================================================================
 */
 import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password} from "../../wasm/crypto_lib/lib.js";
@@ -203,7 +203,7 @@ async function registerUser(_username, _email, _password, _remember_me) {
                 "don't_show_message_behavior_new_file": null,
                 "preferences": {
                     "theme": "dark",
-                    "fontSize": { size: 14, unit: "px" },
+                    "fontSize": { size: 16, unit: "px" },
                     "fontFamily": "Segoe UI",
                     "language": "en",
                     "autoSave": false,
