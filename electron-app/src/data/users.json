@@ -21,7 +21,7 @@
     "preferences": {
       "theme": "dark",
       "fontSize": {
-        "size": 14,
+        "size": 16,
         "unit": "px"
       },
       "fontFamily": "Segoe UI",

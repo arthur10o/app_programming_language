@@ -5,13 +5,17 @@
     Description : Styles sheet for all pages on the app
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-25
+    Last Update : 2025-08-28
     ==============================================================================
 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
 }
 
 body {
