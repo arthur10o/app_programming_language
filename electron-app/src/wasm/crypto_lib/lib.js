@@ -216,24 +216,6 @@ export function derive_key_from_password(_password, _salt_b64) {
     return takeFromExternrefTable0(ret[0]);
 }
 
-/**
- * @param {number} blocks
- * @param {number} block_size
- * @returns {string}
- */
-export function generate_recovery_key(blocks, block_size) {
-    let deferred1_0;
-    let deferred1_1;
-    try {
-        const ret = wasm.generate_recovery_key(blocks, block_size);
-        deferred1_0 = ret[0];
-        deferred1_1 = ret[1];
-        return getStringFromWasm0(ret[0], ret[1]);
-    } finally {
-        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
-    }
-}
-
 async function __wbg_load(module, imports) {
     if (typeof Response === 'function' && module instanceof Response) {
         if (typeof WebAssembly.instantiateStreaming === 'function') {

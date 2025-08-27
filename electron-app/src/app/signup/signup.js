@@ -6,10 +6,10 @@
                 - Functionality to handle user registration
   Author      : Arthur
   Created     : 2025-08-19
-  Last Update : 2025-08-26
+  Last Update : 2025-08-27
   ==============================================================================
 */
-import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password, generate_recovery_key } from "../../wasm/crypto_lib/lib.js";
+import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password} from "../../wasm/crypto_lib/lib.js";
 const { ipcRenderer } = require('electron');
 const crypto = require('crypto');
 
@@ -190,9 +190,6 @@ async function registerUser(_username, _email, _password, _remember_me) {
         ipcRenderer.on('get-default-keybindings-reply', async (event, _keybindingsData) => {
             keybindings = typeof _keybindingsData === 'string' ? JSON.parse(_keybindingsData) : _keybindingsData;
             const USER_ID = crypto.randomUUID();
-            const RECOVERY_KEY = generate_recovery_key(8, 8);
-            const HASHED_RECOVERY_KEY = hash_password(RECOVERY_KEY);
-            // ipcRenderer.send('show-popup', 'Your recovery key', `<p><strong>Recovery key:</strong></p>\n<pre id="recovery-key">${RECOVERY_KEY}</pre>\n<p>Copy this key and keep it in a safe place. You will need it to regain access to your account if you lose your password.</p>`, 'info', [], [{ label: "Close", action: null }, { label: "Copy", action: () => copy() }], 0);
 
             let new_user = {
                 "user_id": USER_ID,
@@ -201,7 +198,6 @@ async function registerUser(_username, _email, _password, _remember_me) {
                 "aes_key_encrypted": { "cipher": CIPHER_AES_KEY, "nonce": NONCE_AES_KEY },
                 "aes_salt": SALT_DERIVED,
                 "password": PASSWORD_HASH,
-                "recovery_key": HASHED_RECOVERY_KEY,
                 "profil_picture": "",
                 "don't_show_message_behavior_close_file": null,
                 "don't_show_message_behavior_new_file": null,

@@ -5,20 +5,9 @@
     Description : Styles sheet for the login component of the A++ IDE.
     Author      : Arthur
     Created     : 2025-08-15
-    Last Update : 2025-08-19
+    Last Update : 2025-08-27
     ==============================================================================
 */
-.forgot-password {
-    font-size: 0.95rem;
-    text-align: center;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
-
 footer {
     margin-top: 40px;
     font-size: 0.85rem;

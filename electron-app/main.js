@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-26
+    Last Update : 2025-08-27
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -160,7 +160,7 @@ ipcMain.on('save-current-file', async (event, _code) => {
             defaultPath: 'untitled.a2plus',
             filters: [
                 { name: 'File A++', extensions: ['a2plus'] },
-                { name: 'All file', extensions: ['*'] }
+                { name: 'All files', extensions: ['*'] }
             ]
         });
 
@@ -186,7 +186,7 @@ ipcMain.on('load-file', async (event) => {
         properties: ['openFile'],
         filters: [
             { name: 'File A++', extensions: ['a2plus'] },
-            { name: 'All file', extensions: ['*'] }
+            { name: 'All files', extensions: ['*'] }
         ]
     });
     if (filePaths.length > 0 && !canceled) {
