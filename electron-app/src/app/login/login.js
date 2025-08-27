@@ -5,13 +5,14 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-08-26
+  Last Update : 2025-08-27
   ==============================================================================
 */
 const crypto = require('crypto');
 import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm, encrypt_aes_256_gcm } from "../../wasm/crypto_lib/lib.js";
 
 let wasmInitialized = false;
+let number_of_connection_attempts = 0;
 
 (async () => {
     if (!wasmInitialized) {
@@ -48,7 +49,8 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         const USER_ID = USER_FIND.user_id;
         const KEY_BYTES = USER_FIND.key_bytes;
         if (!USER_FIND || !USER_ID) {
-            ipcRenderer.send('show-popup', 'Error', 'Authentication failed due to invalid credentials or decryption error.', 'error', [], [{ label: "Close", action: null }], 0);
+            document.getElementById('loader').style.display = 'none';
+            await handle_failed_login();
             return;
         }
 
@@ -78,11 +80,41 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         }, 600);
         ipcRenderer.send('get-user-information-id-user-connected');
         update_theme();
+        number_of_connection_attempts = 0;
     } catch (error) {
-        ipcRenderer.send('show-popup', 'Error', 'Failed to retrieve user information. Please try again later.', 'error', [], [{ label: "Close", action: null }], 0);
+        document.getElementById('loader').style.display = 'none';
+        await handle_failed_login("An unexpected error occurred. Please try again.");
     }
     document.getElementById('loader').style.display = 'none';
 });
+
+async function handle_failed_login(customMessage = null) {
+    number_of_connection_attempts += 1;
+    const DELAY = calculate_backoff_delay(number_of_connection_attempts);
+    if (DELAY >= 1000) {
+        ipcRenderer.send(
+            'show-popup',
+            'Info',
+            `Too many failed attempts. Waiting ${Math.round(DELAY / 1000)} seconds...`,
+            'info',
+            [],
+            [],
+            DELAY
+        );
+
+        await new Promise(resolve => setTimeout(resolve, DELAY));
+    }
+
+    ipcRenderer.send(
+        'show-popup',
+        'Error',
+        customMessage || 'Authentication failed. Please check your credentials.',
+        'error',
+        [],
+        [{ label: "Close", action: null }],
+        0
+    );
+}
 
 function get_users() {
     return new Promise((resolve, reject) => {
@@ -142,4 +174,15 @@ function base64_to_bytes(_base64) {
 async function check_password(_hashed_password, _password) {
     const IS_VALID_PASSWORD = await verify_password(_hashed_password, _password);
     return IS_VALID_PASSWORD;
+}
+
+function secure_random_float() {
+    const BUF = crypto.randomBytes(4);
+    return BUF.readUInt32BE() / 0xFFFFFFFF;
+}
+
+function calculate_backoff_delay(attempt) {
+    const base = 2 ** attempt;
+    const random_delay = secure_random_float() * base;
+    return Math.floor(random_delay * 1000);
 }

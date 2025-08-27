@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-27
+    Last Update : 2025-08-28
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -146,6 +146,28 @@ ipcMain.on('get-default-keybindings', (event) => {
 ipcMain.on('code-change', (event) => {
     if (current_file_path) {
         file_state[current_file_path] = false;
+    }
+});
+
+ipcMain.on('save-settings-user-connected', (event, _settings) => {
+    const PATH_USERS_FILE = PATH.resolve(__dirname, 'src/data/users.json');
+    try {
+        let users = [];
+        if (fs.existsSync(PATH_USERS_FILE)) {
+            const data = fs.readFileSync(PATH_USERS_FILE, 'utf8');
+            users = data.trim() ? JSON.parse(data) : [];
+        }
+
+        const userIndex = users.findIndex(u => u.user_id === CONNECTED_USER_ID);
+        if (userIndex !== -1) {
+            users[userIndex].preferences = _settings;
+            fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+            USER_INFORMATION = users[userIndex];
+        } else {
+            console.warn('User not found while saving settings.');
+        }
+    } catch (err) {
+        console.error('Failed to save user settings:', err);
     }
 });
 

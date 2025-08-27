@@ -1,18 +1,18 @@
 {
     "default_data_settings": {
         "theme": "dark",
-        "font-size": {
+        "fontSize": {
             "size": 14,
             "unit": "px"
         },
-        "font-family": "Segoe UI",
+        "fontFamily": "Segoe UI",
         "language": "en",
-        "auto-save": false,
-        "tabulation-size": 4,
+        "autoSave": false,
+        "tabSize": 4,
         "autocomplete": true,
-        "show-suggestions": true,
-        "syntax-highlighting": true,
-        "show-line-numbers": true
+        "showSuggestions": true,
+        "syntaxHighlighting": true,
+        "showLineNumbers": true
     },
     "theme": {
         "dark": {

@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the settings in A++ IDE
   Author      : Arthur
   Created     : 2025-07-27
-  Last Update : 2025-08-26
+  Last Update : 2025-08-28
   ==============================================================================
 */
 const {syntax_highlighting} = require('../../common/syntaxHighlighting.js');
@@ -31,16 +31,16 @@ ipcRenderer.on('received-connected-user-information', (event, _user_information)
     } else {
         const prefs = _user_information.preferences;
         settings = {
-            theme: prefs.theme,
-            'font-size': prefs.fontSize,
-            'font-family': prefs.fontFamily,
-            language: prefs.language,
-            'auto-save': prefs.autoSave,
-            'tabulation-size': prefs.tabSize,
-            autocomplete: prefs.autocomplete,
-            'show-suggestions': prefs.showSuggestions,
-            'syntax-highlighting': prefs.syntaxHighlighting,
-            'show-line-numbers': prefs.showLineNumbers
+            "theme": prefs.theme,
+            "fontSize": prefs.fontSize,
+            "fontFamily": prefs.fontFamily,
+            "language": prefs.language,
+            "autoSave": prefs.autoSave,
+            "tabSize": prefs.tabSize,
+            "autocomplete": prefs.autocomplete,
+            "showSuggestions": prefs.showSuggestions,
+            "syntaxHighlighting": prefs.syntaxHighlighting,
+            "showLineNumbers": prefs.showLineNumbers
         };
     }
     update_buttons();
@@ -56,12 +56,11 @@ function animateValue(_element, _newValue) {
 }
 
 document.getElementById('theme').addEventListener('change', (event) => {
-    
-        const SELECTED_THEME = event.target.value;
-        document.getElementById('preview-area').style.background = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-background-color'];
-        document.getElementById('preview-area').style.color = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-color']
-        animateValue(document.getElementById('theme-value'), SELECTED_THEME);
-        updatePreview();
+    const SELECTED_THEME = event.target.value;
+    document.getElementById('preview-area').style.background = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-background-color'];
+    document.getElementById('preview-area').style.color = settings.theme?.[SELECTED_THEME]?.editor?.['.textarea-color']
+    animateValue(document.getElementById('theme-value'), SELECTED_THEME);
+    updatePreview();
 });
 
 document.getElementById('font-size').addEventListener('change', (event) => {
@@ -104,23 +103,23 @@ function update_buttons() {
         const EL = (id) => document.getElementById(id);
 
         if (EL('theme')) EL('theme').value = settings.theme;
-        if (EL('font-size')) {
-            EL('font-size').value = settings['font-size'].size;
+        if (EL('fontSize')) {
+            EL('fontSize').value = settings['fontSize'].size;
             const SIZE_VALUE = EL('font-size-value');
-            if (SIZE_VALUE) SIZE_VALUE.textContent = settings['font-size'].size;
+            if (SIZE_VALUE) SIZE_VALUE.textContent = settings['fontSize'].size;
         }
-        if (EL('font-family')) EL('font-family').value = settings['font-family'];
+        if (EL('fontFamily')) EL('fontFamily').value = settings['fontFamily'];
         if (EL('language')) EL('language').value = settings.language;
-        if (EL('auto-save')) EL('auto-save').checked = settings['auto-save'];
-        if (EL('tabulation-size')) {
-            EL('tabulation-size').value = settings['tabulation-size'];
+        if (EL('autoSave')) EL('autoSave').checked = settings['autoSave'];
+        if (EL('tabSize')) {
+            EL('tabSize').value = settings['tabSize'];
             const TAB_SIZE_VALUE = EL('tab-size-value');
-            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = settings['tabulation-size'];
+            if (TAB_SIZE_VALUE) TAB_SIZE_VALUE.textContent = settings['tabSize'];
         }
         if (EL('autocomplete')) EL('autocomplete').checked = settings.autocomplete;
-        if (EL('suggestions')) EL('suggestions').checked = settings['show-suggestions'];
-        if (EL('syntax-highlighting')) EL('syntax-highlighting').checked = settings['syntax-highlighting'];
-        if (EL('line-numbers')) EL('line-numbers').checked = settings['show-line-numbers'];
+        if (EL('showSuggestions')) EL('showSuggestions').checked = settings['showSuggestions'];
+        if (EL('syntaxHighlighting')) EL('syntaxHighlighting').checked = settings['syntaxHighlighting'];
+        if (EL('showLineNumbers')) EL('showLineNumbers').checked = settings['showLineNumbers'];
 
     } catch (error) {
         ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while loading editor settings. Please ensure the settings file is accessible and properly formatted.', 'error', [], [{ label: "Close", action: null }], 0 );
@@ -179,35 +178,24 @@ function updatePreview() {
 }
 
 function saveSettings(event) {
-    const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
     if (event) event.preventDefault();
     const DATA_SETTINGS = {
         'theme': document.getElementById('theme').value,
-        'font-size': {
+        'fontSize': {
             'size': Number(document.getElementById('font-size').value),
             'unit': 'px'
         },
-        'font-family': document.getElementById('font-family').value,
+        'fontFamily': document.getElementById('font-family').value,
         'language': document.getElementById('language').value,
-        'auto-save': document.getElementById('auto-save').checked,
-        'tabulation-size': Number(document.getElementById('tabulation-size').value),
+        'autoSave': document.getElementById('auto-save').checked,
+        'tabSize': Number(document.getElementById('tabulation-size').value),
         'autocomplete': document.getElementById('autocomplete').checked,
-        'show-suggestions': document.getElementById('suggestions').checked,
-        'syntax-highlighting': document.getElementById('syntax-highlighting').checked,
-        'show-line-numbers': document.getElementById('line-numbers').checked
-    };
+        'showSuggestions': document.getElementById('suggestions').checked,
+        'syntaxHighlighting': document.getElementById('syntax-highlighting').checked,
+        'showLineNumbers': document.getElementById('line-numbers').checked
+    }
     try {
-        if (fs.existsSync(DATA_PATH)) {
-            const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-            settings = JSON.parse(DATA);
-        } else {
-            settings = {
-                default_data_settings: DATA_SETTINGS,
-                data_settings: DATA_SETTINGS
-            };
-        }
-        settings.data_settings = DATA_SETTINGS;
-        fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
+        ipcRenderer.send('save-settings-user-connected', DATA_SETTINGS);
         ipcRenderer.send('show-popup', 'Settings Saved', 'Your preferences have been successfully saved.', 'success', [], [{ label: "Close", action: null }], 0);
         update_buttons();
     } catch (error) {
@@ -224,14 +212,13 @@ function resetSettings(event) {
         let default_settings = {};
         if (fs.existsSync(DATA_PATH)) {
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-            settings = JSON.parse(DATA);
-            default_settings = settings.default_data_settings;
+            default_settings = JSON.parse(DATA).default_data_settings;
         } else {
             ipcRenderer.send('show-popup', 'Default Settings Not Found', 'Unable to locate default settings. Please save your current preferences before attempting a reset.', 'warning', [], [{ label: "Close", action: null }], 0);
             return;
         }
-        settings.data_settings = default_settings;
-        fs.writeFileSync(DATA_PATH, JSON.stringify(settings, null, 4), 'utf8');
+        settings = default_settings;
+        ipcRenderer.send('save-settings-user-connected', settings);
         ipcRenderer.send('show-popup', 'Settings Reset', 'Your settings have been successfully reset to default.', 'success', [], [{ label: "Close", action: null }], 0);
         update_buttons();
         updatePreview();
