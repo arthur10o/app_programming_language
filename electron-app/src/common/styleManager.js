@@ -43,6 +43,8 @@ function update_theme() {
         let current_theme = user_settings?.preferences?.['theme'] || 'dark';
         let font_size_size = user_settings?.preferences?.fontSize?.['size'];
         let font_size_unit = user_settings?.preferences?.fontSize?.['unit'];
+        let font_family = user_settings?.preferences?.['fontFamily'];
+        
         if (!current_theme) {
             ipcRenderer.send('show-popup', 'Theme Load Error', `The theme setting could not be found in your configuration file.\n\nPlease check your settings or reset them to default`, 'error', [], [{ label: "Close", action: null }], 0);
         }
@@ -86,6 +88,8 @@ function update_theme() {
 
         const html_ELEMENT = document.documentElement;
         html_ELEMENT.style.fontSize = `${font_size_size}${font_size_unit}`;
+
+        document.body.style.fontFamily = font_family;
 
                                         // Update login/signup css
         if (document.title == 'A++ IDE - Sign Up' || document.title == 'A++ IDE - Login') {
