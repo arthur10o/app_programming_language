@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the renderer in A++ IDE
   Author      : Arthur
   Created     : 2025-08-13
-  Last Update : 2025-08-25
+  Last Update : 2025-08-29
   ==============================================================================
 */
 import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } from "../wasm/crypto_lib/lib.js";
@@ -13,6 +13,7 @@ import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } 
 const { shell, ipcRenderer } = require('electron');
 
 let wasmInitialized = false;
+let settings = {};
 
 (async () => {
     if (!wasmInitialized) {
@@ -20,6 +21,15 @@ let wasmInitialized = false;
         wasmInitialized = true;
     }
 })();
+
+document.addEventListener('DOMContentLoaded', async () => {
+  ipcRenderer.send('get-user-connected-information');
+  ipcRenderer.once('received-connected-user-information', async (event, _user_settings) => {
+    settings = _user_settings;
+    await load_translation(settings?.preferences?.['language'] || 'en');
+    update_theme();
+  });
+});
 
 document.addEventListener('click', (event) => {
   const TARGET = event.target;
@@ -362,3 +372,28 @@ function base64_to_bytes(_base64) {
     }
     return BYTES;
 }
+
+async function load_translation(_lang) {
+  try {
+    const RESPONSE = await fetch(`../../data/${_lang}.json`);
+    const TRANSLATION = await RESPONSE.json();
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+      const KEY = element.getAttribute('data-i18n');
+      if (TRANSLATION[KEY]) {
+        element.innerText = TRANSLATION[KEY];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+      const KEY = element.getAttribute('data-i18n-placeholder');
+      if (TRANSLATION[KEY]) {
+        element.placeholder = TRANSLATION[KEY];
+      }
+    });
+  } catch (err) {
+    console.error(`Translation loading failed for language "${_lang}"`, err);
+  }
+}
+
+module.exports = { load_translation };

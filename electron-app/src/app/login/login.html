@@ -5,7 +5,7 @@
   Description : HTML file for the A++ IDE login
   Author      : Arthur
   Created     : 2025-08-15
-  Last Update : 2025-08-27
+  Last Update : 2025-08-29
   ==============================================================================
 -->
 <!DOCTYPE html>
@@ -13,28 +13,28 @@
     <head>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>A++ IDE - Login</title>
+        <title data-i18n="title_login"></title>
         <link rel='stylesheet' href='login.css'>
         <link rel='stylesheet' href='../../common/styles.css'>
     </head>
     <body>
         <div id="loader" style="display:none;">
             <div class="spinner"></div>
-            <span>Loading...</span>
+            <span data-i18n="loader_text"></span>
         </div>
         <div class="container">
             <div class="login-container">
-                <h1 id="h1">Login</h1>
+                <h1 data-i18n="h1_login" id="h1"></h1>
                 <form id="login-form">
                     <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Enter your email address" autocomplete="email" required>
+                        <label data-i18n="label_email" for="email"></label>
+                        <input data-i18n-placeholder="placeholder_email" type="email" id="email" autocomplete="email" required>
                         <span id="email-error" class="error-message" aria-live="polite"></span>
                     </div>
                     <div class="input-group">
-                        <label for="password">Password</label>
+                        <label data-i18n="label_password" for="password"></label>
                         <div class="password-wrapper">
-                            <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+                            <input data-i18n-placeholder="placeholder_password" type="password" id="password" autocomplete="current-password" required>
                             <button type="button" id="toggle-password-id" class="toggle-password" aria-label="Show password">
                                 <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 4.5C7 4.5 2.73 8.11 1 12c1.73 3.89 6 7.5 11 7.5s9.27-3.61 11-7.5c-1.73-3.89-6-7.5-11-7.5zm0 13c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5 17.5 8.97 17.5 12 15.03 17.5 12 17.5zm0-9a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
@@ -44,19 +44,22 @@
                         <span id="password-error" class="error-message" aria-live="polite"></span>
                     </div>
                     <div class="input-group">
-                        <label>
+                        <label for="remember">
                             <input type="checkbox" id="remember">
-                            Remember me
+                            <span data-i18n="remember_checkbox"></span>
                         </label>
                     </div>
-                    <button class="button" id="login-button" type="submit">Login</button>
+                    <button data-i18n="button_submit_login" class="button" id="login-button" type="submit"></button>
                     <div class="sign-up-link">
-                        <p>Don't have an account? <a href="../signup/signup.html">Sign up here</a></p>
+                        <p>
+                            <span data-i18n="p_signup_link"></span>
+                            <a data-i18n="a_signup_link" href="../signup/signup.html"></a>
+                        </p>
                     </div>
                 </form>
             </div>
             <footer>
-                <p><a href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'>&copy; 2025 A++ IDE. All rights reserved.</a></p>
+                <p><a data-i18n="copyright" href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'></a></p>
             </footer>
         </div>
         <script type="module" src="login.js"></script>

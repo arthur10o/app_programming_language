@@ -6,7 +6,7 @@
                 - Main user interface for code editing
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-25
+    Last Update : 2025-08-29
     ==============================================================================
 -->
 <!DOCTYPE html>
@@ -14,36 +14,36 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>A++ IDE - Editor</title>
+    <title data-i18n="title_editor"></title>
     <link rel='stylesheet' href='editor.css'>
     <link rel='stylesheet' href='../../common/styles.css'>
 </head>
 <body>
     <div id="loader" style="display:none;">
         <div class="spinner"></div>
-        <span>Loading...</span>
+        <span data-i18n="loader_text"></span>
     </div>
     <div class='container editor-container'>
         <header>
-            <h1>Code editor</h1>
-            <p>Write your code here, quickly and fluidly.</p>
+            <h1 data-i18n="h1_editor"></h1>
+            <p data-i18n="p_header_editor"></p>
         </header>
         <br>
         <main>
             <div class='editor'>
-                <div contenteditable='true' class='textarea' id='code-editor' placeholder='Start coding here...' spellcheck="false"></div>
+                <div contenteditable='true' class='textarea' id='code-editor' data-i18n-placeholder="placeholder_textarea_editor" spellcheck="false"></div>
             </div>
             <div class='action-buttons'>
-                <button class='button' id='run-code' onclick='//ADD RUN FUNCTION !!!!!'>Run</button>
-                <button class='button' id='save-code'>Save</button>
-                <button class='button' id='load-code'>Load</button>
-                <button class='button' id='console-output' onclick='window.location.href = "../console/console.html";'>Console</button>
-                <button class='button' id='settings' onclick='window.location.href = "../settings/settings.html";'>Settings</button>
-                <button class='button' id='back-home' onclick='window.location.href = "../home/index.html";'>Back to Home</button>
+                <button data-i18n="run_button_editor" class='button' id='run-code' onclick='//ADD RUN FUNCTION !!!!!'></button>
+                <button data-i18n="save_button" class='button' id='save-code'></button>
+                <button data-i18n="load_button_editor" class='button' id='load-code'></button>
+                <button data-i18n="go_to_console_button" class='button' id='console-output' onclick='window.location.href = "../console/console.html";'></button>
+                <button data-i18n="go_to_settings_button" class='button' id='settings' onclick='window.location.href = "../settings/settings.html";'></button>
+                <button data-i18n="go_to_home_button" class='button' id='back-home' onclick='window.location.href = "../home/index.html";'></button>
             </div>
         </main>
         <footer>
-            <p><a href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'>&copy; 2025 A++ IDE. All rights reserved.</a></p>
+            <p><a data-i18n="copyright" href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'></a></p>
         </footer>
     </div>
     <script src='editor.js'></script>
