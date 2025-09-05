@@ -6,7 +6,7 @@
                 - Functionality to handle user registration
   Author      : Arthur
   Created     : 2025-08-19
-  Last Update : 2025-08-28
+  Last Update : 2025-09-05
   ==============================================================================
 */
 import init, { hash_password, encrypt_aes_256_gcm, generate_aes_256_gcm_key, derive_key_from_password} from "../../wasm/crypto_lib/lib.js";
@@ -251,7 +251,7 @@ async function registerUser(_username, _email, _password, _remember_me) {
             update_theme();
         });
     } catch (error) {
-        ipcRenderer.send('show-popup', 'Registration Error', 'An unexpected error occurred while finalizing registration. Please try again.', 'error', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'registration_error', 'registration_error_message', 'error', [], [{ label: "close_button", action: null }], 0);
         document.getElementById("registration-error").textContent = "An error occurred during registration. Please try again.";
     }
 }

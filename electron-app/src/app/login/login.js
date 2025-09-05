@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-08-27
+  Last Update : 2025-09-05
   ==============================================================================
 */
 const crypto = require('crypto');
@@ -83,7 +83,7 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         number_of_connection_attempts = 0;
     } catch (error) {
         document.getElementById('loader').style.display = 'none';
-        await handle_failed_login("An unexpected error occurred. Please try again.");
+        await handle_failed_login('unexpected_error_occurred');
     }
     document.getElementById('loader').style.display = 'none';
 });
@@ -94,7 +94,7 @@ async function handle_failed_login(customMessage = null) {
     if (DELAY >= 1000) {
         ipcRenderer.send(
             'show-popup',
-            'Info',
+            'info',
             `Too many failed attempts. Waiting ${Math.round(DELAY / 1000)} seconds...`,
             'info',
             [],
@@ -107,11 +107,11 @@ async function handle_failed_login(customMessage = null) {
 
     ipcRenderer.send(
         'show-popup',
-        'Error',
-        customMessage || 'Authentication failed. Please check your credentials.',
+        'error',
+        customMessage || 'authentification_failed',
         'error',
         [],
-        [{ label: "Close", action: null }],
+        [{ label: 'close_button', action: null }],
         0
     );
 }

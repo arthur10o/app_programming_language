@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-28
+  Last Update : 2025-09-05
   ==============================================================================
 */
 const fs = require('fs');
@@ -20,7 +20,7 @@ function update_theme() {
     const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
 
     if (!fs.existsSync(DATA_PATH)) {
-        ipcRenderer.send('show-popup', 'Settings Load Error', `The settings file does not exist at:\n${DATA_PATH}`, 'error', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'settings_load_error', 'unable_load_user_settings_file', 'error', [], [{ label: "close_button", action: null }], 0);
         return;
     }
 
@@ -36,7 +36,7 @@ function update_theme() {
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
             settings = JSON.parse(DATA);
         } catch (error) {
-            ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while reading or parsing the settings file.\n\n' + 'This may be due to invalid JSON format.\n\n' + `Error message:\n${error.message}`, 'error', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'settings_load_error', 'error_when_reading_json_file', 'error', [], [{ label: "close_button", action: null }], 0);
             return;
         }
 
@@ -46,7 +46,7 @@ function update_theme() {
         let font_family = user_settings?.preferences?.['fontFamily'];
         
         if (!current_theme) {
-            ipcRenderer.send('show-popup', 'Theme Load Error', `The theme setting could not be found in your configuration file.\n\nPlease check your settings or reset them to default`, 'error', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'theme_load_error', 'theme_settings_could_not_be_found', 'error', [], [{ label: "close_button", action: null }], 0);
         }
 
                                         // Update common CSS

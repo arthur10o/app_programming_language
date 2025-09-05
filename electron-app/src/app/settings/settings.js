@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the settings in A++ IDE
   Author      : Arthur
   Created     : 2025-07-27
-  Last Update : 2025-08-28
+  Last Update : 2025-09-05
   ==============================================================================
 */
 const {syntax_highlighting} = require('../../common/syntaxHighlighting.js');
@@ -17,7 +17,7 @@ ipcRenderer.on('received-connected-user-information', (event, _user_information)
     if (!_user_information) {
         const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
         if (!fs.existsSync(DATA_PATH)) {
-            ipcRenderer.send('show-popup', 'Settings File Missing', 'The user settings file could not be found. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'settings_file_missign', 'user_settings_file_could_not_be_found', 'error', [], [{ label: "close_button", action: null }], 0);
             return;
         }
 
@@ -25,7 +25,7 @@ ipcRenderer.on('received-connected-user-information', (event, _user_information)
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
             settings = JSON.parse(DATA).data_settings || JSON.parse(DATA);
         } catch (error) {
-            ipcRenderer.send('show-popup', 'Settings Load Error', 'Unable to load the user settings file. Please ensure the application is properly installed or try restarting it.', 'error', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'settings_load_error', 'unable_load_user_settings_file', 'error', [], [{ label: "close_button", action: null }], 0);
             return;
         }
     } else {
@@ -122,7 +122,7 @@ function update_buttons() {
         if (EL('line-numbers')) EL('line-numbers').checked = settings.showLineNumbers;
 
     } catch (error) {
-        ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while loading editor settings. Please ensure the settings file is accessible and properly formatted.', 'error', [], [{ label: "Close", action: null }], 0 );
+        ipcRenderer.send('show-popup', 'settings_load_error', 'error_ocurred_while_loading_editor_settings', 'error', [], [{ label: "close_button", action: null }], 0 );
     }
 }
 
@@ -135,7 +135,7 @@ function updatePreview() {
     const SYNTAX_HIGHLIGHTING = document.getElementById('syntax-highlighting').checked;
 
     const CODES_LINES =
-        '// Ceci est un commentaire\n/*Ceci est un\n<&tab_char>commentaire multiligne */\n\nfn afficherMessage() {\n<&tab_char>const str message = \'HELLO, "WORD" !\';\n<&tab_char>let int compteur = 0;\n<&tab_char>for (let int i = 0; i < 10; i++) {\n<&tab_char><&tab_char>if (i % 2 === 0) {\n<&tab_char><&tab_char><&tab_char>log(message + \' \' + i);\n<&tab_char><&tab_char>} else {\n<&tab_char><&tab_char><&tab_char>// Nombre impair\n<&tab_char><&tab_char><&tab_char><&tab_char>log(\'Impair : \' + i);\n<&tab_char><&tab_char>}\n<&tab_char>}\n}\n\nconst float pi = 3.14159;\ntry {\n<&tab_char>operation();\n} catch (e) {\n<&tab_char>log("Erreur : " + e);\n} finally {\n<&tab_char>return;\n}';
+        '// This is a comment\n/*This is a\n<&tab_char>multi-line comment */\n\nfn display_message() {\n<&tab_char>const str message = \'HELLO, WORD !\';\n<&tab_char>let int counter = 0;\n<&tab_char>for (let int i = 0; i < 10; i++) {\n<&tab_char><&tab_char>if (i % 2 === 0) {\n<&tab_char><&tab_char><&tab_char>log(message + \' \' + i);\n<&tab_char><&tab_char>} else {\n<&tab_char><&tab_char><&tab_char>// Odd number\n<&tab_char><&tab_char><&tab_char><&tab_char>log(\'Odd : \' + i);\n<&tab_char><&tab_char>}\n<&tab_char>}\n}\n\nconst float pi = 3.14159;\ntry {\n<&tab_char>operation();\n} catch (e) {\n<&tab_char>log("Error : " + e);\n} finally {\n<&tab_char>return;\n}';
     const TAB_CHAR = '\t';
     const TAB_DISPLAY = TAB_CHAR.repeat(TAB_SIZE);
     const LINES = CODES_LINES.split('\n');
@@ -196,10 +196,10 @@ function saveSettings(event) {
     }
     try {
         ipcRenderer.send('save-settings-user-connected', DATA_SETTINGS);
-        ipcRenderer.send('show-popup', 'Settings Saved', 'Your preferences have been successfully saved.', 'success', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'settings_saved', 'preference_saved', 'success', [], [{ label: 'close_button', action: null }], 0);
         update_buttons();
     } catch (error) {
-        ipcRenderer.send('show-popup', 'Settings Save Error', 'An error occurred while saving your preferences. Please try again.', 'error', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'settings_saved_error', 'error_occurred_while_saving_preferences', 'error', [], [{ label: "close_button", action: null }], 0);
     }
     update_theme();
 }
@@ -213,16 +213,16 @@ function resetSettings(event) {
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
             default_settings = JSON.parse(DATA).default_data_settings;
         } else {
-            ipcRenderer.send('show-popup', 'Default Settings Not Found', 'Unable to locate default settings. Please save your current preferences before attempting a reset.', 'warning', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'default_settings_not_found', 'default_settings_not_found_message', 'warning', [], [{ label: "close_button", action: null }], 0);
             return;
         }
         Object.assign(settings, default_settings);
         ipcRenderer.send('save-settings-user-connected', settings);
-        ipcRenderer.send('show-popup', 'Settings Reset', 'Your settings have been successfully reset to default.', 'success', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'settings_reset', 'settings_reset_message', 'success', [], [{ label: "close_button", action: null }], 0);
         update_buttons();
         updatePreview();
     } catch (error) {
-        ipcRenderer.send('show-popup', 'Reset Failed', 'An error occurred while resetting your settings. Please try again.', 'error', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'reset_settings_failed', 'reset_settings_message_failed', 'error', [], [{ label: "close_button", action: null }], 0);
     }
     update_theme();
 }
