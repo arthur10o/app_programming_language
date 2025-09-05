@@ -5,7 +5,7 @@
 ### 1.1 General Features
 - [x] User Interface (UI) Design
 - [x] Light and Dark Mode Integration
-- [ ] Language Selection Functionality
+- [x] Language Selection Functionality
 - [ ] GitHub Integration (via Git)
 - [ ] Customizable Keyboard Shortcuts
 - [ ] User Login System (to save individual settings and preferences)
