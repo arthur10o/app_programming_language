@@ -17,9 +17,9 @@
 - [ ] Creating a header file
 - [ ] Creating a custom file editor (file explorer + visual editor)
 - [ ] Added A++ logo in File Explorer for specific files
-- [ ]  Digital signature of IDE binaries
-- [ ]  Verification hash during updates (anti-tampering)
-- [ ]  Redundancy & automatic backup of user projects
+- [ ] Digital signature of IDE binaries
+- [ ] Verification hash during updates (anti-tampering)
+- [ ] Redundancy & automatic backup of user projects
 
 ### 1.2 Code Editor
 - [ ] Code Auto-Completion
