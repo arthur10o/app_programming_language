@@ -28,7 +28,8 @@
 - [x] Save code to files
 - [x] Load code to files
 - [ ] “Run” Button Linked to the Parser
-- [ ] Auto-Save Functionality
+- [x] Auto-Save Functionality
+- [ ] Feature to display suggestions
 - [ ] Line Numbering
 - [ ] Advanced error handling
 - [ ] Automatic code refactoring using artificial intelligence (AI-powered refactoring)
