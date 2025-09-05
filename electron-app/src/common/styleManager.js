@@ -92,7 +92,7 @@ function update_theme() {
         document.body.style.fontFamily = font_family;
 
                                         // Update login/signup css
-        if (document.title == 'A++ IDE - Sign Up' || document.title == 'A++ IDE - Login') {
+        if (document.title == 'A++ IDE - Sign Up' || document.title == 'A++ IDE - Login' || document.title == 'A++ IDE - Connexion' || document.title == 'A++ IDE - Inscription' || document.title == 'A++ IDE - Iniciar sesión' || document.title == 'A++ IDE - Registrarse') {
             const login_container_ELEMENT = document.getElementsByClassName('login-container');
             for (let i = 0; i < login_container_ELEMENT.length; i++) {
                 login_container_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.login_signup?.['.login-container-background-color'];
@@ -250,7 +250,7 @@ function update_theme() {
         }
 
                                         // Update index CSS
-        if (document.title == 'A++ IDE - Home') {
+        if (document.title == 'A++ IDE - Home' || document.title == 'A++ IDE - Accueil' || document.title == 'A++ IDE - Inicio') {
             const h1_ELEMENT = document.getElementsByTagName('h1');
             for (let i = 0; i < h1_ELEMENT.length; i++) {
                 h1_ELEMENT[i].style.color = settings.theme?.[current_theme]?.home?.['h1-color'];
@@ -270,7 +270,7 @@ function update_theme() {
         }
 
                                         // Update console CSS
-        if (document.title == 'A++ IDE - Console') {
+        if (document.title == 'A++ IDE - Console' || document.title == 'A++ IDE - Consola') {
             const console_ELEMENT = document.getElementsByClassName('console');
             for (let i = 0; i < console_ELEMENT.length; i++) {
                 console_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.console?.['.console-background-color'];
@@ -285,7 +285,7 @@ function update_theme() {
         }
 
                                         // Update editor CSS
-        if (document.title == 'A++ IDE - Editor') {
+        if (document.title == 'A++ IDE - Editor' || document.title == 'A++ IDE - Éditeur') {
             const editor_ELEMENT = document.getElementsByClassName('editor');
             for (let i = 0; i < editor_ELEMENT.length; i++) {
                 editor_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.editor?.['.editor-background-color'];
@@ -311,7 +311,7 @@ function update_theme() {
         }
 
                                         // Update settings CSS
-        if (document.title == 'A++ IDE - Settings') {
+        if (document.title == 'A++ IDE - Settings' || document.title == 'A++ IDE - Paramètres' || document.title == 'A++ IDE - Configuración') {
             const settings_ELEMENT = document.getElementsByClassName('settings');
             for (let i = 0; i < settings_ELEMENT.length; i++) {
                 settings_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.settings?.['.settings-background-color'];
