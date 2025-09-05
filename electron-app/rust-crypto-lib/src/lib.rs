@@ -7,7 +7,7 @@
                   for use with WebAssembly (wasm-bindgen).
     Author      : Arthur
     Created     : 2025-08-19
-    Last Update : 2025-08-27
+    Last Update : 2025-09-01
     ============================================================================
 */
 use wasm_bindgen::prelude::*;
@@ -29,7 +29,7 @@ pub fn hash_password(_password: &str) -> String {
      @panic If hashing fails or parameters are invalid.
      */
     let salt = SaltString::generate(&mut OsRng);
-    let params = Params::new(262144, 6, 2, Some(32)).expect("Invalid Argon2 parameters");
+    let params = Params::new(1_048_576, 50, 16, Some(512)).expect("Invalid Argon2 parameters");
     let argon2 = Argon2::new(Algorithm::Argon2id, Version::V0x13, params);
     let password_hash = argon2.hash_password(_password.as_bytes(), &salt)
             .expect("Failed to hash password");
@@ -167,7 +167,7 @@ pub fn derive_key_from_password(_password: &str, _salt_b64: Option<String>) -> R
         }
     };
 
-    let params = Params::new(262144, 6, 2, Some(32)).expect("Invalid Argon2 parameters");
+    let params = Params::new(1_048_576, 50, 16, Some(512)).expect("Invalid Argon2 parameters");
     let argon2 = Argon2::new(Algorithm::Argon2id, Version::V0x13, params);
     let mut key = [0u8; 32];
 

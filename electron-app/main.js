@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-28
+    Last Update : 2025-09-05
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -101,7 +101,6 @@ ipcMain.on('register-user', (event, _new_user) => {
 
     try {
         fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(data_users, null, 2));
-        console.log("User registered successfully.");
     } catch (err) {
         console.error('Failed to write to users.json:', err);
     }
