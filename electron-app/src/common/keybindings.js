@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-09-05
+  Last Update : 2025-09-06
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -52,16 +52,16 @@ function generate_key(_keydown) {
 async function handle_shortcut(_ACTION) {
     if (_ACTION == 'close ide') {
         ipcRenderer.send('quit-app');
-    } else if (_ACTION == 'open file' && document.title == 'A++ IDE - Editor') {
+    } else if (_ACTION == 'open file' && (document.title == 'A++ IDE - Editor' || document.title == 'A++ IDE - Éditeur')) {
         const BUTTON_LOAD_CODE = document.getElementById('load-code');
         BUTTON_LOAD_CODE.click();
-    } else if (_ACTION == 'save file' && document.title == 'A++ IDE - Editor') {
+    } else if (_ACTION == 'save file' && (document.title == 'A++ IDE - Editor' || document.title == 'A++ IDE - Éditeur')) {
         document.getElementById('save-code').click();
-    } else if (_ACTION == 'save file' && document.title == 'A++ IDE - Settings') {
+    } else if (_ACTION == 'save file' && (document.title == 'A++ IDE - Settings' || document.title == 'A++ IDE - Paramètres' || document.title == 'A++ IDE - Configuración')) {
         document.getElementById('save-settings').click();
-    } else if (_ACTION == 'new file' && document.title == 'A++ IDE - Editor') {
+    } else if (_ACTION == 'new file' && (document.title == 'A++ IDE - Editor' || document.title == 'A++ IDE - Éditeur')) {
         ipcRenderer.send('new-file');
-    } else if (_ACTION == 'close file' && document.title == 'A++ IDE - Editor') {
+    } else if (_ACTION == 'close file' && (document.title == 'A++ IDE - Editor' || document.title == 'A++ IDE - Éditeur')) {
         ipcRenderer.send('close-file');
     }
 }
