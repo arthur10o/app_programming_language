@@ -10,7 +10,7 @@
                 - IPC event management for interaction with the backend
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-09-20
+  Last Update : 2025-09-27
   ==============================================================================
 */
 let user_settings = {};
@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         if (e.key === 'Enter') {
             e.preventDefault();
-            document.execCommand('insertText', false, '\n');
+            document.execCommand('insertLineBreak');
         }
         setTimeout(updateLineNumbers, 0);
     });
