@@ -8,7 +8,7 @@
 - [x] Language Selection Functionality
 - [ ] GitHub Integration (via Git)
 - [ ] Customizable Keyboard Shortcuts
-- [ ] User Login System (to save individual settings and preferences)
+- [x] User Login System (to save individual settings and preferences)
 - [ ] Profile management
 - [x] License Path Added to Credits
 - [ ] Possibility of creating graphical interfaces
@@ -29,7 +29,7 @@
 - [ ] “Run” Button Linked to the Parser
 - [x] Auto-Save Functionality
 - [ ] Feature to display suggestions
-- [ ] Line Numbering
+- [x] Line Numbering
 - [ ] Advanced error handling
 - [ ] Automatic code refactoring using artificial intelligence (AI-powered refactoring)
 - [ ] Documentation generated automatically from code (docstring + schema type)
@@ -47,10 +47,10 @@
 - [x] Save Settings
 - [x] Reset Settings
 - [x] Toggle Light/Dark Mode
-- [ ] Font Size Customization
-- [ ] Font Style Customization
-- [ ] Language Selection
-- [ ] Tab Size Configuration
+- [x] Font Size Customization
+- [x] Font Style Customization
+- [x] Language Selection
+- [x] Tab Size Configuration
 - [ ] Added plugin system for language
 - [ ] Added Hot Reload / Live coding
 - [ ] Enabling/disabling built-in AI features (refacto, doc, bots)
