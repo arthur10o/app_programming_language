@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the home in A++ IDE
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-09-27
+  Last Update : 2025-09-28
   ==============================================================================
 */
 document.addEventListener('DOMContentLoaded', () => {
