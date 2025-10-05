@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-09-05
+    Last Update : 2025-10-05
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -65,6 +65,13 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
+    }
+});
+
+ipcMain.on('toggle-fullscreen', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win) {
+        win.setFullScreen(!win.isFullScreen());
     }
 });
 

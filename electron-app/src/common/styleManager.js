@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-09-05
+  Last Update : 2025-10-05
   ==============================================================================
 */
 const fs = require('fs');
@@ -83,6 +83,92 @@ function update_theme() {
             });
             a_ELEMENT[i].addEventListener('mouseout', () => {
                 a_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['hyperlinks-color'];
+            });
+        }
+
+        const SPINNER_ELEMENT = document.getElementsByClassName('spinner');
+        for (let i = 0; i < SPINNER_ELEMENT.length; i++) {
+            SPINNER_ELEMENT[i].style.borderTop = settings.theme?.[current_theme]?.common_css?.['.spinner-border-top'];
+            SPINNER_ELEMENT[i].style.borderColor = settings.theme?.[current_theme]?.common_css?.['.spinner-border'];
+        }
+
+        const LOADER_ELEMENT = document.getElementById('loader');
+        if (LOADER_ELEMENT) {
+            LOADER_ELEMENT.style.background = settings.theme?.[current_theme]?.common_css?.['#loader-background'];
+            LOADER_ELEMENT.getElementsByTagName('span')[0].style.color = settings.theme?.[current_theme]?.common_css?.['#loader-span-color'];
+        }
+
+        const SEARCH_REPLACE_PANEL_ELEMENT = document.getElementsByClassName('search-replace-panel');
+        for (let i = 0; i < SEARCH_REPLACE_PANEL_ELEMENT.length; i++) {
+            SEARCH_REPLACE_PANEL_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.search-replace-panel-background-color'];
+            SEARCH_REPLACE_PANEL_ELEMENT[i].style.border = settings.theme?.[current_theme]?.common_css?.['.search-replace-panel-border'];
+            SEARCH_REPLACE_PANEL_ELEMENT[i].style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.search-replace-panel-box-shadow'];
+        }
+
+        const SEARCH_HEADER_INPUT_ELEMENT = document.getElementById('searchInput');
+        if (SEARCH_HEADER_INPUT_ELEMENT) {
+            SEARCH_HEADER_INPUT_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.search-header-input-background-color'];
+            SEARCH_HEADER_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.search-header-input-border'];
+            SEARCH_HEADER_INPUT_ELEMENT.style.color = settings.theme?.[current_theme]?.common_css?.['.search-header-input-color'];
+            SEARCH_HEADER_INPUT_ELEMENT.addEventListener('focus', () => {
+                SEARCH_HEADER_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.search-header-input:focus-border'];
+                SEARCH_HEADER_INPUT_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.search-header-input:focus-box-shadow'];
+            });
+            SEARCH_HEADER_INPUT_ELEMENT.addEventListener('blur', () => {
+                SEARCH_HEADER_INPUT_ELEMENT.style.border = '';
+                SEARCH_HEADER_INPUT_ELEMENT.style.boxShadow = '';
+            });
+        }
+
+        const SEARCH_REPLACE_INPUT_ELEMENT = document.getElementById('replaceInput');
+        if (SEARCH_REPLACE_INPUT_ELEMENT) {
+            SEARCH_REPLACE_INPUT_ELEMENT.addEventListener('focus', () => {
+                SEARCH_REPLACE_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.search-replace-input:focus-border'];
+                SEARCH_REPLACE_INPUT_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.search-replace-input:focus-box-shadow'];
+            });
+            SEARCH_REPLACE_INPUT_ELEMENT.addEventListener('blur', () => {
+                SEARCH_REPLACE_INPUT_ELEMENT.style.border = '';
+                SEARCH_REPLACE_INPUT_ELEMENT.style.boxShadow = '';
+            });
+        }
+
+        const CLOSE_BUTTON_ELEMENT = document.getElementsByClassName('close-btn');
+        for (let i = 0; i < CLOSE_BUTTON_ELEMENT.length; i++) {
+            CLOSE_BUTTON_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.close-button-color'];
+            CLOSE_BUTTON_ELEMENT[i].addEventListener('mouseenter', () => {
+                CLOSE_BUTTON_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.close-button-hover-color'];
+            });
+            CLOSE_BUTTON_ELEMENT[i].addEventListener('mouseout', () => {
+                CLOSE_BUTTON_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.close-button-color'];
+            });
+        }
+
+        const REPLACE_INPUT_ELEMENT = document.getElementById('replaceInput');
+        if (REPLACE_INPUT_ELEMENT) {
+            REPLACE_INPUT_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.replace-row-input-background-color'];
+            REPLACE_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.replace-row-input-border'];
+            REPLACE_INPUT_ELEMENT.style.color = settings.theme?.[current_theme]?.common_css?.['.search-replace-input-color'];
+        }
+
+        const REPLACE_ROW_ELEMENT = document.getElementsByClassName('replace-row');
+        for (let i = 0; i < REPLACE_ROW_ELEMENT.length; i++) {
+            REPLACE_ROW_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.replace-row-color'];
+        }
+
+        const ACTIONS_BUTTON_ELEMENT = document.getElementById('replaceAllBtn');
+        if (ACTIONS_BUTTON_ELEMENT) {
+            ACTIONS_BUTTON_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+            ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            ACTIONS_BUTTON_ELEMENT.addEventListener('mouseenter', () => {
+                ACTIONS_BUTTON_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-background-color'];
+                ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-box-shadow'];
+            });
+            ACTIONS_BUTTON_ELEMENT.addEventListener('mouseout', () => {
+                ACTIONS_BUTTON_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+                ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            });
+            ACTIONS_BUTTON_ELEMENT.addEventListener('active', () => {
+                ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
             });
         }
 

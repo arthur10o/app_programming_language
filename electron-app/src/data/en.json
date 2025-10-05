@@ -49,6 +49,7 @@
     "label_show_suggestion": "Show Suggestions",
     "label_syntax_highlighting": "Syntax Highlighting",
     "label_show_line_numbers": "Show Line Numbers",
+    "label_replace": "Replace:",
 
     "option_dark": "Dark",
     "option_light": "Light",
@@ -72,6 +73,7 @@
     "submit_button": "Submit",
     "close_button": "Close",
     "logout_button": "Logout",
+    "button_replace_all": "Replace All",
 
     "go_to_settings_button": "Open Settings",
     "go_to_editor_button": "Open Editor",
@@ -85,6 +87,8 @@
     "placeholder_password": "Enter your password",
     "placeholder_username": "Enter your username",
     "placeholder_confirm_password": "Confirm your password",
+    "placeholder_search": "Search...",
+    "placeholder_replace": "Replace...",
 
     "session_verification_failed": "Session Verification Failed",
     "user_session_mismatch": "User session mismatch detected. Please restart the application.",

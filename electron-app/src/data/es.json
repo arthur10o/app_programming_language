@@ -49,6 +49,7 @@
     "label_show_suggestion": "Mostrar sugerencias",
     "label_syntax_highlighting": "Resaltado de sintaxis",
     "label_show_line_numbers": "Mostrar números de línea",
+    "label_replace": "Reemplazar:",
 
     "option_dark": "Oscuro",
     "option_light": "Claro",
@@ -72,6 +73,7 @@
     "submit_button": "Enviar",
     "close_button": "Cerrar",
     "logout_button": "Desconexión",
+    "button_replace_all": "Reemplazar todo",
 
     "go_to_settings_button": "Abrir configuración",
     "go_to_editor_button": "Abrir editor",
@@ -85,6 +87,8 @@
     "placeholder_password": "Ingresa tu contraseña",
     "placeholder_username": "Ingresa tu nombre de usuario",
     "placeholder_confirm_password": "Confirma tu contraseña",
+    "placeholder_search": "Buscar...",
+    "placeholder_replace": "Reemplazar...",
 
     "session_verification_failed": "Fallo en la verificación de la sesión",
     "user_session_mismatch": "Se detectó una incongruencia en la sesión del usuario. Por favor, reinicia la aplicación.",
