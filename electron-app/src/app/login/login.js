@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the login in A++ IDE
   Author      : Arthur
   Created     : 2025-08-16
-  Last Update : 2025-09-05
+  Last Update : 2025-10-05
   ==============================================================================
 */
 const crypto = require('crypto');
@@ -22,6 +22,7 @@ let number_of_connection_attempts = 0;
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+    ipcRenderer.send('save-session', {});
     document.getElementById('email').focus();
 });
 

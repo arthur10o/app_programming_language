@@ -71,6 +71,7 @@
     "quit_button": "Quitter",
     "submit_button": "Soumettre",
     "close_button": "Fermer",
+    "logout_button": "Déconnexion",
 
     "go_to_settings_button": "Ouvrir les paramètres",
     "go_to_editor_button": "Ouvrir l'éditeur",
