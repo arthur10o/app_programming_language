@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-09-28
+  Last Update : 2025-10-04
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -239,10 +239,12 @@ async function handle_shortcut(_ACTION) {
         await comment_line();
     } else if (_ACTION == 'remove line') {
         await delete_current_line();
+    } else if (_ACTION == 'duplication down' || _ACTION == 'duplication up') {
+        await duplicate_line(_ACTION == 'duplication down' ? 'down' : 'up');
     } else {
         return;
     }
-    
+
     const CODE_EDITOR = document.getElementById('code-editor');
     if (CODE_EDITOR) {
         const event = new Event('input', { bubbles: true });

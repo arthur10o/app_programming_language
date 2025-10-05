@@ -71,6 +71,7 @@
     "quit_button": "Quit",
     "submit_button": "Submit",
     "close_button": "Close",
+    "logout_button": "Logout",
 
     "go_to_settings_button": "Open Settings",
     "go_to_editor_button": "Open Editor",
