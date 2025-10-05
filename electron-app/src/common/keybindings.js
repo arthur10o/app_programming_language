@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-10-04
+  Last Update : 2025-10-05
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -239,8 +239,33 @@ async function handle_shortcut(_ACTION) {
         await comment_line();
     } else if (_ACTION == 'remove line') {
         await delete_current_line();
-    } else if (_ACTION == 'duplication down' || _ACTION == 'duplication up') {
-        await duplicate_line(_ACTION == 'duplication down' ? 'down' : 'up');
+    } else if (_ACTION == 'toggle terminal' || _ACTION == 'toggle terminal (alternative)') {
+        const FORBIDEN_PAGES = [
+            'A++ IDE - Console',
+            'A++ IDE - Consola',
+            'A++ IDE - Login',
+            'A++ IDE - Iniciar sesión',
+            'A++ IDE - Connexion',
+            'A++ IDE - Sign Up',
+            'A++ IDE - Registrarse',
+            'A++ IDE - Inscription'
+        ]
+        const CURRENT_FILE = document.title || '';
+        if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
+        if (document.querySelector('.popup-overlay')) return;
+        window.location.href = '../console/console.html';
+    } else if (_ACTION == 'log out') {
+        const FORBIDEN_PAGES = [
+            'A++ IDE - Login',
+            'A++ IDE - Iniciar sesión',
+            'A++ IDE - Connexion',
+            'A++ IDE - Sign Up',
+            'A++ IDE - Registrarse',
+            'A++ IDE - Inscription'
+        ]
+        const CURRENT_FILE = document.title || '';
+        if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
+        window.location.href = '../login/login.html';
     } else {
         return;
     }
