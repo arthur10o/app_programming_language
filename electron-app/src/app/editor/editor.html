@@ -6,7 +6,7 @@
                 - Main user interface for code editing
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-29
+    Last Update : 2025-10-05
     ==============================================================================
 -->
 <!DOCTYPE html>
@@ -24,6 +24,19 @@
         <span data-i18n="loader_text"></span>
     </div>
     <div class='container editor-container'>
+        <div class="search-replace-panel" id="searchReplacePanel">
+            <div class="search-header">
+                <input type="text" id="searchInput" data-i18n-placeholder="placeholder_search"/>
+                <button class="close-btn" onclick="document.getElementById('searchReplacePanel').style.display='none'">✕</button>
+            </div>
+            <div class="replace-row">
+                <label for="replaceInput" data-i18n="label_replace"></label>
+                <input type="text" id="replaceInput" data-i18n-placeholder="placeholder_replace"/>
+            </div>
+            <div class="actions">
+                <button id="replaceAllBtn" data-i18n="button_replace_all"></button>
+            </div>
+        </div>
         <header>
             <h1 data-i18n="h1_editor"></h1>
             <p data-i18n="p_header_editor"></p>

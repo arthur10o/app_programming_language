@@ -13,6 +13,8 @@ const { ipcRenderer } = require('electron');
 
 let keybindings = {};
 let pressed_keys = [];
+let show_popup_find_replace = false;
+let is_replace_mode = false;
 
 window.addEventListener('load', () => {
     const DATA_PATH = path.resolve(__dirname, '../../data/keybindings.json');
@@ -221,6 +223,20 @@ async function delete_current_line() {
     setCaretPosition(CODE_EDITOR, new_caret, new_caret);
 }
 
+function toggle_replace_find_mode(_action) {
+    const ROWS = Array.from(document.getElementsByClassName('replace-row'));
+    const ACTIONS = Array.from(document.getElementsByClassName('actions'));
+    if (_action == 'find') {
+        ROWS.forEach(row => { row.style.display = 'none'; });
+        ACTIONS.forEach(row => { row.style.display = 'none'; });
+        is_replace_mode = false;
+    } else {
+        ROWS.forEach(row => { row.style.display = 'flex'; });
+        ACTIONS.forEach(row => { row.style.display = 'flex'; });
+        is_replace_mode = true;
+    }
+}
+
 async function handle_shortcut(_ACTION) {
     if (_ACTION == 'close ide') {
         ipcRenderer.send('quit-app');
@@ -254,7 +270,7 @@ async function handle_shortcut(_ACTION) {
         if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
         if (document.querySelector('.popup-overlay')) return;
         window.location.href = '../console/console.html';
-    } else if (_ACTION == 'log out') {
+    } else if (_ACTION == 'log out' || _ACTION == 'change account') {
         const FORBIDEN_PAGES = [
             'A++ IDE - Login',
             'A++ IDE - Iniciar sesión',
@@ -266,6 +282,28 @@ async function handle_shortcut(_ACTION) {
         const CURRENT_FILE = document.title || '';
         if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
         window.location.href = '../login/login.html';
+    } else if (_ACTION == 'full screen') {
+        ipcRenderer.send('toggle-fullscreen');
+    } else if (_ACTION == 'find' || _ACTION == 'replace') {
+        const AUTORIZED_PAGES = [
+            'A++ IDE - Console',
+            'A++ IDE - Consola',
+            'A++ IDE - Editor',
+            'A++ IDE - Éditeur'
+        ]
+        if (!AUTORIZED_PAGES.includes(document.title)) return;
+        if (show_popup_find_replace) {
+            if ((_ACTION === 'find' && !is_replace_mode) || (_ACTION === 'replace' && is_replace_mode)) {
+                document.getElementById('searchReplacePanel').style.display = 'none';
+                show_popup_find_replace = false;
+            } else {
+                toggle_replace_find_mode(_ACTION);
+            }
+        } else {
+            document.getElementById('searchReplacePanel').style.display = 'block';
+            toggle_replace_find_mode(_ACTION);
+            show_popup_find_replace = true;
+        }
     } else {
         return;
     }
