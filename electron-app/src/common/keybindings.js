@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-10-05
+  Last Update : 2025-10-06
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -45,6 +45,11 @@ window.addEventListener('keyup', () => {
     const ACTIONS = keybindings[total_shortcut];
     if (ACTIONS) handle_shortcut(ACTIONS);
     pressed_keys = [];
+});
+
+document.getElementById('searchInput').addEventListener('input', () => {
+    if (!show_popup_find_replace) return;
+    search();
 });
 
 function generate_key(_keydown) {
@@ -237,6 +242,45 @@ function toggle_replace_find_mode(_action) {
     }
 }
 
+function search() {
+    const SEARCH_INPUT = document.getElementById('searchInput');
+    const SEARCH_VALUE = SEARCH_INPUT.value;
+    if (!SEARCH_VALUE) return;
+
+    const CODE_EDITOR = document.getElementById('code-editor');
+    if (!CODE_EDITOR) return;
+
+    const CONTENT = CODE_EDITOR.innerText;
+    let index = 0;
+    const MATCHES = [];
+
+    while ((index = CONTENT.indexOf(SEARCH_VALUE, index)) !== -1) {
+        MATCHES.push(index);
+        index += SEARCH_VALUE.length;
+    }
+
+    highlight_matches(MATCHES, SEARCH_VALUE);
+
+}
+
+function highlight_matches(_matches, _searchValue) {
+    const CODE_EDITOR = document.getElementById('code-editor');
+    const TEXT = CODE_EDITOR.innerText;
+    if (!CODE_EDITOR) return;
+
+    let highlighted_text = '';
+    let last_index = 0;
+
+    _matches.forEach((match_index, i) => {
+        highlighted_text += TEXT.slice(last_index, match_index);
+        highlighted_text += `<span class="highlight">${TEXT.slice(match_index, match_index + _searchValue.length)}</span>`;
+        last_index = match_index + _searchValue.length;
+    });
+
+    highlighted_text += TEXT.slice(last_index);
+    CODE_EDITOR.innerHTML = highlighted_text;
+}
+
 async function handle_shortcut(_ACTION) {
     if (_ACTION == 'close ide') {
         ipcRenderer.send('quit-app');
@@ -291,6 +335,10 @@ async function handle_shortcut(_ACTION) {
             'A++ IDE - Editor',
             'A++ IDE - Éditeur'
         ]
+
+        const SELECTION = window.getSelection();
+        const RANGE = SELECTION.rangeCount ? SELECTION.getRangeAt(0) : null;
+
         if (!AUTORIZED_PAGES.includes(document.title)) return;
         if (show_popup_find_replace) {
             if ((_ACTION === 'find' && !is_replace_mode) || (_ACTION === 'replace' && is_replace_mode)) {
@@ -298,10 +346,38 @@ async function handle_shortcut(_ACTION) {
                 show_popup_find_replace = false;
             } else {
                 toggle_replace_find_mode(_ACTION);
+                const SEARCH_INPUT = document.getElementById('searchInput');
+                if (SEARCH_INPUT && SEARCH_INPUT.offsetParent !== null) {
+                    setTimeout(() => {
+                        requestAnimationFrame(() => {
+                            SEARCH_INPUT.focus();
+                        });
+                    }, 0);
+                }
+                if (SELECTION && RANGE) {
+                    SEARCH_INPUT.value = RANGE.toString();
+                    setTimeout(() => {
+                        search();
+                    }, 0);
+                }
             }
         } else {
             document.getElementById('searchReplacePanel').style.display = 'block';
             toggle_replace_find_mode(_ACTION);
+            const SEARCH_INPUT = document.getElementById('searchInput');
+            if (SEARCH_INPUT && SEARCH_INPUT.offsetParent !== null) {
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        SEARCH_INPUT.focus();
+                    });
+                }, 0);
+            }
+            if (SELECTION && RANGE) {
+                SEARCH_INPUT.value = RANGE.toString();
+                setTimeout(() => {
+                    search();
+                }, 0);
+            }
             show_popup_find_replace = true;
         }
     } else {
