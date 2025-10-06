@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the renderer in A++ IDE
   Author      : Arthur
   Created     : 2025-08-13
-  Last Update : 2025-10-05
+  Last Update : 2025-10-06
   ==============================================================================
 */
 import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } from "../wasm/crypto_lib/lib.js";
@@ -324,6 +324,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
             { label: t('submit_button'), action: async (_password) => {
               await verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file);
             }},
+            { label: t('logout_button'), action: () => window.location.href = '../login/login.html' },
             { label: t('quit_button'), action: () => ipcRenderer.send('quit-app') }
         ]
     });
