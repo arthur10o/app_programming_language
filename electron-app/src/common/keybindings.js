@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-10-06
+  Last Update : 2025-10-10
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -261,6 +261,7 @@ function search() {
 
     highlight_matches(MATCHES, SEARCH_VALUE);
 
+    document.getElementById('searchResultsIndex').textContent = MATCHES.length;
 }
 
 function highlight_matches(_matches, _searchValue) {
@@ -326,6 +327,54 @@ async function handle_shortcut(_ACTION) {
         const CURRENT_FILE = document.title || '';
         if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
         window.location.href = '../login/login.html';
+    } else if (_ACTION == 'open settings') {
+        const FORBIDEN_PAGES = [
+            'A++ IDE - Settings',
+            'A++ IDE - Configuración',
+            'A++ IDE - Paramètres',
+            'A++ IDE - Login',
+            'A++ IDE - Iniciar sesión',
+            'A++ IDE - Connexion',
+            'A++ IDE - Sign Up',
+            'A++ IDE - Registrarse',
+            'A++ IDE - Inscription'
+        ]
+        const CURRENT_FILE = document.title || '';
+        if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
+        if (document.querySelector('.popup-overlay')) return;
+        window.location.href = '../settings/settings.html';
+    }  else if (_ACTION == 'open editor') {
+        const FORBIDEN_PAGES = [
+            'A++ IDE - Editor',
+            'A++ IDE - Editor',
+            'A++ IDE - Éditeur',
+            'A++ IDE - Login',
+            'A++ IDE - Iniciar sesión',
+            'A++ IDE - Connexion',
+            'A++ IDE - Sign Up',
+            'A++ IDE - Registrarse',
+            'A++ IDE - Inscription'
+        ];
+        const CURRENT_FILE = document.title || '';
+        if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
+        if (document.querySelector('.popup-overlay')) return;
+        window.location.href = '../editor/editor.html';
+    } else if (_ACTION == 'open home') {
+        const FORBIDEN_PAGES = [
+            'A++ IDE - Home',
+            'A++ IDE - Inicio',
+            'A++ IDE - Accueil',
+            'A++ IDE - Login',
+            'A++ IDE - Iniciar sesión',
+            'A++ IDE - Connexion',
+            'A++ IDE - Sign Up',
+            'A++ IDE - Registrarse',
+            'A++ IDE - Inscription'
+        ];
+        const CURRENT_FILE = document.title || '';
+        if (FORBIDEN_PAGES.includes(CURRENT_FILE)) return;
+        if (document.querySelector('.popup-overlay')) return;
+        window.location.href = '../home/index.html';
     } else if (_ACTION == 'full screen') {
         ipcRenderer.send('toggle-fullscreen');
     } else if (_ACTION == 'find' || _ACTION == 'replace') {

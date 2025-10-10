@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-10-05
+  Last Update : 2025-10-09
   ==============================================================================
 */
 const fs = require('fs');
@@ -170,6 +170,11 @@ function update_theme() {
             ACTIONS_BUTTON_ELEMENT.addEventListener('active', () => {
                 ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
             });
+        }
+
+        const SEARCH_STAT_ELEMENT = document.getElementsByClassName('search-stat');
+        for (let i = 0; i < SEARCH_STAT_ELEMENT.length; i++) {
+            SEARCH_STAT_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.search-stat-color'];
         }
 
         const html_ELEMENT = document.documentElement;

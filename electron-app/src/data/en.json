@@ -50,6 +50,7 @@
     "label_syntax_highlighting": "Syntax Highlighting",
     "label_show_line_numbers": "Show Line Numbers",
     "label_replace": "Replace:",
+    "label_results": "results",
 
     "option_dark": "Dark",
     "option_light": "Light",

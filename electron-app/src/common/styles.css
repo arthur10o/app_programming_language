@@ -5,7 +5,7 @@
     Description : Styles sheet for all pages on the app
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-10-06
+    Last Update : 2025-10-09
     ==============================================================================
 */
 * {
@@ -336,6 +336,19 @@ button[type="submit"]:active {
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 0.9rem;
+}
+
+.search-stat {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #ddd;
+    opacity: 0.8;
+}
+
+.search-stat span {
+    margin-left: 4px;
+    font-weight: bold;
 }
 
 @keyframes spinLoader {
