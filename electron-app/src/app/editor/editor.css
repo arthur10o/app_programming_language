@@ -6,7 +6,7 @@
                     - Styles for the editor and text area to write code
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-09-20
+    Last Update : 2025-10-10
     ==============================================================================
 */
 .editor-container {
@@ -54,12 +54,14 @@
     text-align: left;
     direction: ltr;
     transition: box-shadow 0.2s;
+
+    line-height: 1.3em;
 }
 
 #line-numbers {
-    min-width: 40px;
+    min-width: 48px;
+    width: 48px;
     padding-top: 15px;
-    padding-bottom: 15px;
     text-align: right;
     font-size: 1.1rem;
     position: absolute;
@@ -69,4 +71,23 @@
     z-index: 2;
     user-select: none;
     transition: opacity 0.2s;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#line-numbers-inner {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 6px;
+}
+
+#line-numbers-inner div {
+    line-height: 1.3em;
+    height: 1.3em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: inherit;
+    font-family: inherit;
 }

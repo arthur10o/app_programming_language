@@ -50,6 +50,7 @@
     "label_syntax_highlighting": "Surlignage syntaxique",
     "label_show_line_numbers": "Afficher les numéros de ligne",
     "label_replace": "Remplacer:",
+    "label_results": "résultats",
 
     "option_dark": "Sombre",
     "option_light": "Clair",
