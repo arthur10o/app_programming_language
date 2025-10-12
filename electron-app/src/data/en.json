@@ -74,6 +74,7 @@
     "submit_button": "Submit",
     "close_button": "Close",
     "logout_button": "Logout",
+    "button_replace": "Replace",
     "button_replace_all": "Replace All",
 
     "go_to_settings_button": "Open Settings",

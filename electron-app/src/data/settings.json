@@ -89,7 +89,11 @@
                 ".action-button:hover-background-color": "#1e88e5",
                 ".action-button:hover-box-shadow": "0 6px 15px rgba(0, 0, 0, 0.3)",
                 ".action-button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.2)",
-                ".search-stat-color": "#ddd"
+                ".search-stat-color": "#ddd",
+                ".arrow-up-color": "#82cfff",
+                ".arrow-up-color:hover": "#42a5f5",
+                ".arrow-down-color": "#82cfff",
+                ".arrow-down-color:hover": "#42a5f5"
             },
             "login_signup": {
                 ".login-container-background-color": "rgba(30, 42, 56, 0.9)",
@@ -245,7 +249,12 @@
                 ".action-button:hover-background-color": "#1565c0",
                 ".action-button:hover-box-shadow": "0 6px 15px rgba(0, 0, 0, 0.15)",
                 ".action-button:active-box-shadow": "0 2px 5px rgba(0, 0, 0, 0.1)",
-                ".search-stat-color": "#1e2a38"
+                ".search-stat-color": "#1e2a38",
+                ".arrow-up-color": "#1e88e5",
+                ".arrow-up-color:hover": "#1565c0",
+                ".arrow-down-color": "#1e88e5",
+                ".arrow-down-color:hover": "#1565c0"
+                
             },
             "login_signup": {
                 ".login-container-background-color": "rgba(255, 255, 255, 0.9)",
