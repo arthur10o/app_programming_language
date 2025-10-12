@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-10-10
+  Last Update : 2025-10-12
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -15,6 +15,8 @@ let keybindings = {};
 let pressed_keys = [];
 let show_popup_find_replace = false;
 let is_replace_mode = false;
+let last_search = '';
+let current_index_navigate_search_result = -1;
 
 window.addEventListener('load', () => {
     const DATA_PATH = path.resolve(__dirname, '../../data/keybindings.json');
@@ -29,6 +31,64 @@ window.addEventListener('load', () => {
     } catch (error) {
         ipcRenderer.send('show-popup', 'keybindings_load_error', 'keybindings_load_message_error', 'error', [], [{ label: "close_button", action: null }], 0);
         return;
+    }
+
+    const CODE_EDITOR = document.getElementById('code-editor') || document.getElementById('console-output');
+    if (CODE_EDITOR) {
+        CODE_EDITOR.addEventListener('input', () => {
+            const COUNT_DISPLAY = document.getElementById('searchResultsIndex');
+            const SEARCH_INPUT = document.getElementById('searchInput');
+            if (!SEARCH_INPUT || ! show_popup_find_replace || !SEARCH_INPUT.value.trim()) {
+                removeHighlights(CODE_EDITOR);
+                if (COUNT_DISPLAY) COUNT_DISPLAY.textContent = '0';
+                return;
+            }
+
+            try {
+                syntax_highlighting();
+            } catch(_) {
+                try {
+                    syntax_highlighting();
+                } catch(_) {}
+            }
+            search();
+        });
+    }
+
+    const ARROW_UP = document.getElementsByClassName('arrow-up');
+    if (ARROW_UP) {
+        ARROW_UP[0].addEventListener('click', () => {
+            navigate_search_result('up');
+        });
+    }
+
+    const ARROW_DOWN = document.getElementsByClassName('arrow-down');
+    if (ARROW_DOWN) {
+        ARROW_DOWN[0].addEventListener('click', () => {
+            navigate_search_result('down');
+        });
+    }
+
+    const SEARCH_INPUT = document.getElementById('searchInput');
+    if (SEARCH_INPUT) {
+        SEARCH_INPUT.addEventListener('input', () => {
+            if (!show_popup_find_replace) return;
+            search();
+        });
+    }
+
+    const REPLACE_BUTTON = document.getElementById('replaceBtn');
+    if (REPLACE_BUTTON) {
+        REPLACE_BUTTON.addEventListener('click', async () => {
+            await replace('one');
+        });
+    }
+
+    const REPLACE_ALL_BUTTON = document.getElementById('replaceAllBtn');
+    if (REPLACE_ALL_BUTTON) {
+        REPLACE_ALL_BUTTON.addEventListener('click', async () => {
+            await replace('all');
+        });
     }
 });
 
@@ -45,11 +105,6 @@ window.addEventListener('keyup', () => {
     const ACTIONS = keybindings[total_shortcut];
     if (ACTIONS) handle_shortcut(ACTIONS);
     pressed_keys = [];
-});
-
-document.getElementById('searchInput').addEventListener('input', () => {
-    if (!show_popup_find_replace) return;
-    search();
 });
 
 function generate_key(_keydown) {
@@ -242,44 +297,94 @@ function toggle_replace_find_mode(_action) {
     }
 }
 
-function search() {
-    const SEARCH_INPUT = document.getElementById('searchInput');
-    const SEARCH_VALUE = SEARCH_INPUT.value;
-    if (!SEARCH_VALUE) return;
+async function replace(_to_replace) {
+    if (!show_popup_find_replace) return;
+    if (document.getElementById('searchResultsIndex').innerText == 0) return;
 
-    const CODE_EDITOR = document.getElementById('code-editor');
-    if (!CODE_EDITOR) return;
+    let search_result;
+    if (_to_replace == 'all') search_result = document.querySelectorAll('span.highlight');
+    else if (_to_replace == 'one') search_result = document.querySelectorAll('.current-highlight');
+    if (search_result.length == 0) return;
 
-    const CONTENT = CODE_EDITOR.innerText;
-    let index = 0;
-    const MATCHES = [];
-
-    while ((index = CONTENT.indexOf(SEARCH_VALUE, index)) !== -1) {
-        MATCHES.push(index);
-        index += SEARCH_VALUE.length;
-    }
-
-    highlight_matches(MATCHES, SEARCH_VALUE);
-
-    document.getElementById('searchResultsIndex').textContent = MATCHES.length;
+    const VALUE_TO_REPLACE = document.getElementById('replaceInput').value;
+    if (VALUE_TO_REPLACE.length == 0) return;
+    search_result.forEach(element => {
+        if (element.textContent != undefined) {
+            element.textContent = VALUE_TO_REPLACE;
+        }
+    });
+    current_index_navigate_search_result--;
+    search();
+    navigate_search_result('down');
 }
 
-function highlight_matches(_matches, _searchValue) {
-    const CODE_EDITOR = document.getElementById('code-editor');
-    const TEXT = CODE_EDITOR.innerText;
+async function search() {
+    const SEARCH_INPUT = document.getElementById('searchInput');
+    const SEARCH_VALUE = SEARCH_INPUT.value.trim();
+    const COUNT_DISPLAY = document.getElementById('search-count');
+    if (!SEARCH_VALUE) {
+        removeHighlights(document.getElementById('code-editor'));
+        if (COUNT_DISPLAY) COUNT_DISPLAY.textContent = '';
+        return;
+    }
+
+    last_search = SEARCH_INPUT.value;
+    const CODE_EDITOR = document.getElementById('code-editor') || document.getElementById('console-output');
     if (!CODE_EDITOR) return;
 
-    let highlighted_text = '';
-    let last_index = 0;
+    removeHighlights(CODE_EDITOR);
 
-    _matches.forEach((match_index, i) => {
-        highlighted_text += TEXT.slice(last_index, match_index);
-        highlighted_text += `<span class="highlight">${TEXT.slice(match_index, match_index + _searchValue.length)}</span>`;
-        last_index = match_index + _searchValue.length;
+    const regex = new RegExp(SEARCH_VALUE, 'gi');
+    let matchCount = 0;
+
+    function highlightNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const matches = [...node.nodeValue.matchAll(regex)];
+            if (matches.length > 0) {
+                const span = document.createElement('span');
+                let replaced = node.nodeValue.replace(regex, (m) => {
+                    matchCount++;
+                    return `<span class="highlight">${m}</span>`;
+                });
+                span.innerHTML = replaced;
+                node.replaceWith(...span.childNodes);
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE && node.childNodes) {
+            node.childNodes.forEach(highlightNode);
+        }
+    }
+
+    CODE_EDITOR.childNodes.forEach(highlightNode);
+    document.getElementById('searchResultsIndex').innerText = matchCount;
+}
+
+function removeHighlights(container) {
+    const highlights = container.querySelectorAll('span.highlight');
+    highlights.forEach(span => {
+        const parent = span.parentNode;
+        if (!parent) return;
+        parent.replaceChild(document.createTextNode(span.textContent), span);
+        parent.normalize();
     });
+}
 
-    highlighted_text += TEXT.slice(last_index);
-    CODE_EDITOR.innerHTML = highlighted_text;
+function navigate_search_result(_direction) {
+    if (!show_popup_find_replace) return;
+
+    const SEARCH_RESULT = document.querySelectorAll('span.highlight');
+    if (SEARCH_RESULT.length == 0) return;
+
+    if (_direction == 'up') {
+        current_index_navigate_search_result = (current_index_navigate_search_result - 1 + SEARCH_RESULT.length) % SEARCH_RESULT.length;
+    } else if (_direction == 'down') {
+        current_index_navigate_search_result = (current_index_navigate_search_result + 1) % SEARCH_RESULT.length;
+    }
+
+    const CURRENT_HIGHLIGHT = SEARCH_RESULT[current_index_navigate_search_result];
+    CURRENT_HIGHLIGHT.scrollIntoView({behavior: 'smooth', block: 'center'});
+
+    SEARCH_RESULT.forEach(span => span.classList.remove('current-highlight'));
+    CURRENT_HIGHLIGHT.classList.add('current-highlight');
 }
 
 async function handle_shortcut(_ACTION) {
@@ -378,17 +483,22 @@ async function handle_shortcut(_ACTION) {
     } else if (_ACTION == 'full screen') {
         ipcRenderer.send('toggle-fullscreen');
     } else if (_ACTION == 'find' || _ACTION == 'replace') {
-        const AUTORIZED_PAGES = [
+        const AUTORIZED_PAGES_SEARCH = [
             'A++ IDE - Console',
             'A++ IDE - Consola',
             'A++ IDE - Editor',
             'A++ IDE - Éditeur'
-        ]
+        ];
+        const AUTORIZED_PAGES_REPLACE = [
+            'A++ IDE - Editor',
+            'A++ IDE - Éditeur'
+        ];
 
         const SELECTION = window.getSelection();
         const RANGE = SELECTION.rangeCount ? SELECTION.getRangeAt(0) : null;
 
-        if (!AUTORIZED_PAGES.includes(document.title)) return;
+        if (_ACTION == 'find' && !AUTORIZED_PAGES_SEARCH.includes(document.title)) return;
+        if (_ACTION == 'replace' && ! AUTORIZED_PAGES_REPLACE.includes(document.title)) return;
         if (show_popup_find_replace) {
             if ((_ACTION === 'find' && !is_replace_mode) || (_ACTION === 'replace' && is_replace_mode)) {
                 document.getElementById('searchReplacePanel').style.display = 'none';
@@ -398,6 +508,7 @@ async function handle_shortcut(_ACTION) {
                 const SEARCH_INPUT = document.getElementById('searchInput');
                 if (SEARCH_INPUT && SEARCH_INPUT.offsetParent !== null) {
                     setTimeout(() => {
+                        SEARCH_INPUT.value = last_search;
                         requestAnimationFrame(() => {
                             SEARCH_INPUT.focus();
                         });
@@ -416,6 +527,7 @@ async function handle_shortcut(_ACTION) {
             const SEARCH_INPUT = document.getElementById('searchInput');
             if (SEARCH_INPUT && SEARCH_INPUT.offsetParent !== null) {
                 setTimeout(() => {
+                    SEARCH_INPUT.value = last_search;
                     requestAnimationFrame(() => {
                         SEARCH_INPUT.focus();
                     });

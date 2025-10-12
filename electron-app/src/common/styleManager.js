@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-10-09
+  Last Update : 2025-10-12
   ==============================================================================
 */
 const fs = require('fs');
@@ -155,26 +155,65 @@ function update_theme() {
             REPLACE_ROW_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.replace-row-color'];
         }
 
-        const ACTIONS_BUTTON_ELEMENT = document.getElementById('replaceAllBtn');
-        if (ACTIONS_BUTTON_ELEMENT) {
-            ACTIONS_BUTTON_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
-            ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
-            ACTIONS_BUTTON_ELEMENT.addEventListener('mouseenter', () => {
-                ACTIONS_BUTTON_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-background-color'];
-                ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-box-shadow'];
+        const ACTIONS_BUTTON_REPLACE_ALL_ELEMENT = document.getElementById('replaceAllBtn');
+        if (ACTIONS_BUTTON_REPLACE_ALL_ELEMENT) {
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.addEventListener('mouseenter', () => {
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-background-color'];
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-box-shadow'];
             });
-            ACTIONS_BUTTON_ELEMENT.addEventListener('mouseout', () => {
-                ACTIONS_BUTTON_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
-                ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.addEventListener('mouseout', () => {
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
             });
-            ACTIONS_BUTTON_ELEMENT.addEventListener('active', () => {
-                ACTIONS_BUTTON_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.addEventListener('active', () => {
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
+            });
+        }
+
+        const ACTIONS_BUTTON_REPLACE_ELEMENT = document.getElementById('replaceBtn');
+        if (ACTIONS_BUTTON_REPLACE_ELEMENT) {
+            ACTIONS_BUTTON_REPLACE_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+            ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            ACTIONS_BUTTON_REPLACE_ELEMENT.addEventListener('mouseenter', () => {
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-background-color'];
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-box-shadow'];
+            });
+            ACTIONS_BUTTON_REPLACE_ELEMENT.addEventListener('mouseout', () => {
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            });
+            ACTIONS_BUTTON_REPLACE_ELEMENT.addEventListener('active', () => {
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
             });
         }
 
         const SEARCH_STAT_ELEMENT = document.getElementsByClassName('search-stat');
         for (let i = 0; i < SEARCH_STAT_ELEMENT.length; i++) {
             SEARCH_STAT_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.search-stat-color'];
+        }
+
+        const ARROW_UP_ELEMENT = document.getElementsByClassName('arrow-up');
+        for (let i = 0; i < ARROW_UP_ELEMENT.length; i++) {
+            ARROW_UP_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-up-color'];
+            ARROW_UP_ELEMENT[i].addEventListener('mouseenter', () => {
+                ARROW_UP_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-up-color:hover'];
+            });
+            ARROW_UP_ELEMENT[i].addEventListener('mouseout', () => {
+                ARROW_UP_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-up-color'];
+            });
+        }
+
+        const ARROW_DOWN_ELEMENT = document.getElementsByClassName('arrow-down');
+        for (let i = 0; i < ARROW_DOWN_ELEMENT.length; i++) {
+            ARROW_DOWN_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-down-color'];
+            ARROW_DOWN_ELEMENT[i].addEventListener('mouseenter', () => {
+                ARROW_DOWN_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-down-color:hover'];
+            });
+            ARROW_DOWN_ELEMENT[i].addEventListener('mouseout', () => {
+                ARROW_DOWN_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-down-color'];
+            });
         }
 
         const html_ELEMENT = document.documentElement;

@@ -74,6 +74,7 @@
     "submit_button": "Enviar",
     "close_button": "Cerrar",
     "logout_button": "Desconexión",
+    "button_replace": "Reemplazar",
     "button_replace_all": "Reemplazar todo",
 
     "go_to_settings_button": "Abrir configuración",
