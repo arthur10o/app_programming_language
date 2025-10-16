@@ -9,7 +9,7 @@
   ==============================================================================
 */
 function syntax_highlighting(user_settings = {}) {
-    var_const_list = [];
+    let var_const_list = [];
     const PREVIEW = document.getElementById('code-editor');
     let CODES_LINES = Array.from(PREVIEW.querySelectorAll('.code-line'));
     if (!CODES_LINES.length) {
