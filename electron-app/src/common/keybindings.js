@@ -6,17 +6,20 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-10-12
+  Last Update : 2025-10-16
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
 
 let keybindings = {};
 let pressed_keys = [];
+let undo_stack = [];
+let redo_stack = [];
 let show_popup_find_replace = false;
 let is_replace_mode = false;
 let last_search = '';
 let current_index_navigate_search_result = -1;
+const MAX_HISTORY_UNDO_REDO = 100;
 
 window.addEventListener('load', () => {
     const DATA_PATH = path.resolve(__dirname, '../../data/keybindings.json');
@@ -36,6 +39,7 @@ window.addEventListener('load', () => {
     const CODE_EDITOR = document.getElementById('code-editor') || document.getElementById('console-output');
     if (CODE_EDITOR) {
         CODE_EDITOR.addEventListener('input', () => {
+            save_state_undo_redo();
             const COUNT_DISPLAY = document.getElementById('searchResultsIndex');
             const SEARCH_INPUT = document.getElementById('searchInput');
             if (!SEARCH_INPUT || ! show_popup_find_replace || !SEARCH_INPUT.value.trim()) {
@@ -115,6 +119,7 @@ async function comment_line() {
     const CODE_EDITOR = document.getElementById('code-editor');
     if (!CODE_EDITOR) return;
 
+    save_state_undo_redo();
 
     let syntax_highlighting;
     try {
@@ -255,6 +260,8 @@ async function delete_current_line() {
     const CODE_EDITOR = document.getElementById('code-editor');
     if (!CODE_EDITOR) return;
 
+    save_state_undo_redo();
+
     const SELECTION = window.getSelection();
     if (!SELECTION.rangeCount) return;
     const RANGE = SELECTION.getRangeAt(0);
@@ -300,6 +307,8 @@ function toggle_replace_find_mode(_action) {
 async function replace(_to_replace) {
     if (!show_popup_find_replace) return;
     if (document.getElementById('searchResultsIndex').innerText == 0) return;
+
+    save_state_undo_redo();
 
     let search_result;
     if (_to_replace == 'all') search_result = document.querySelectorAll('span.highlight');
@@ -385,6 +394,82 @@ function navigate_search_result(_direction) {
 
     SEARCH_RESULT.forEach(span => span.classList.remove('current-highlight'));
     CURRENT_HIGHLIGHT.classList.add('current-highlight');
+}
+
+function save_state_undo_redo() {
+    const CODE_EDITOR = document.getElementById('code-editor');
+    const CURRENT_STATE = document.getElementById('code-editor').innerText;
+
+    const SELECTION = window.getSelection();
+    let start = 0;
+    let end = 0;
+    if (SELECTION.rangeCount > 0) {
+        const RANGE = SELECTION.getRangeAt(0);
+        start = get_caret_character_offset_within(CODE_EDITOR, RANGE.startContainer, RANGE.startOffset);
+        end = get_caret_character_offset_within(CODE_EDITOR, RANGE.endContainer, RANGE.endOffset);
+    }
+
+    const STATE = {
+        text: CURRENT_STATE,
+        selection_start: start,
+        selection_end: end
+    };
+
+    const LAST_STATE = undo_stack[undo_stack.length - 1];
+    if (!LAST_STATE || LAST_STATE.text !== CURRENT_STATE) {
+        undo_stack.push(STATE);
+
+        if (undo_stack.length > MAX_HISTORY_UNDO_REDO) {
+            undo_stack.shift();
+        }
+    }
+}
+
+function undo() {
+    if (undo_stack.length <= 1) return;
+
+    const CODE_EDITOR = document.getElementById('code-editor');
+    const CURRENT_STATE = {
+        text: CODE_EDITOR.innerText,
+        selection_start: window.getSelection().anchorOffset,
+        selection_end: window.getSelection().focusOffset
+    };
+    redo_stack.push(CURRENT_STATE);
+
+    undo_stack.pop();
+    const PREVIOUS_STATE = undo_stack[undo_stack.length - 1];
+
+    CODE_EDITOR.innerText  = PREVIOUS_STATE.text;
+
+    setTimeout(() => {
+        setCaretPosition(CODE_EDITOR, PREVIOUS_STATE.selection_start, PREVIOUS_STATE.selection_end);
+    }, 0);
+}
+
+function redo() {
+    if (redo_stack.length == 0) return;
+
+    const CODE_EDITOR = document.getElementById('code-editor');
+    const CURRENT_STATE = {
+        text: CODE_EDITOR.innerText,
+        selection_start: window.getSelection().anchorOffset,
+        selection_end: window.getSelection().focusOffset
+    };
+
+    if (undo_stack.length == 0 || undo_stack[undo_stack.length - 1].text !== CURRENT_STATE.text) {
+        undo_stack.push(CURRENT_STATE);
+
+        if (undo_stack.length > MAX_HISTORY_UNDO_REDO) {
+            undo_stack.shift();
+        }
+    }
+    
+    const NEXT_STATE = redo_stack.pop();
+    CODE_EDITOR.innerText = NEXT_STATE.text;
+
+    setTimeout(() => {
+        setCaretPosition(CODE_EDITOR, NEXT_STATE.selection_start, NEXT_STATE.selection_end);
+    }, 0);
 }
 
 async function handle_shortcut(_ACTION) {
@@ -541,6 +626,14 @@ async function handle_shortcut(_ACTION) {
             }
             show_popup_find_replace = true;
         }
+    } else if (_ACTION == 'undo' || _ACTION == 'redo' || _ACTION == 'redo (alternative)') {
+        const AUTORIZED_PAGES = [
+            'A++ IDE - Editor',
+            'A++ IDE - Éditeur'
+        ];
+        if (!AUTORIZED_PAGES.includes(document.title)) return;
+        if (_ACTION == 'redo' || _ACTION == 'redo (alternative)') redo();
+        else if (_ACTION == 'undo') undo();
     } else {
         return;
     }
