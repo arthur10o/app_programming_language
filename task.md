@@ -7,7 +7,7 @@
 - [x] Light and Dark Mode Integration
 - [x] Language Selection Functionality
 - [ ] GitHub Integration (via Git)
-- [ ] Customizable Keyboard Shortcuts
+- [x] Customizable Keyboard Shortcuts
 - [x] User Login System (to save individual settings and preferences)
 - [ ] Profile management
 - [x] License Path Added to Credits
