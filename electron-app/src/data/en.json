@@ -5,6 +5,7 @@
     "title_login": "A++ IDE - Login",
     "title_settings": "A++ IDE - Settings",
     "title_signup": "A++ IDE - Sign Up",
+    "title_keybindings": "A++ IDE - Keybindings",
 
     "loader_text": "Loading...",
 
@@ -14,6 +15,7 @@
     "h1_login": "Login",
     "h1_settings": "Settings",
     "h1_signup": "Sign Up",
+    "h1_keybindings": "Keybindings",
 
     "error_text_email": "Invalid email format.",
     "error_text_password_confirmation": "Passwords do not match.",
@@ -22,6 +24,10 @@
     "p_header_console": "Track the execution of your orders and applications in real time.",
     "p_header_home": "A development environment for the A++ language.",
     "p_header_settings": "Customize your development environment according to your preferences.",
+    "p_header_keybindings": "Configure your keyboard shortcuts for optimal productivity.",
+
+    "table_header_action": "Action",
+    "table_header_keybinding": "Keybinding",
 
     "legend_appearrance": "Appearance",
     "legend_editor_features": "Editor Features",
@@ -81,6 +87,7 @@
     "go_to_editor_button": "Open Editor",
     "go_to_console_button": "Open Console",
     "go_to_home_button": "Back to Home",
+    "keybindings_button": "Keybindings",
 
     "copyright": "© 2025 A++ IDE. All rights reserved.",
 

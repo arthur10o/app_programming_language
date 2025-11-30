@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-10-12
+  Last Update : 2025-11-29
   ==============================================================================
 */
 const fs = require('fs');
@@ -442,6 +442,17 @@ function update_theme() {
 
                                         // Update settings CSS
         if (document.title == 'A++ IDE - Settings' || document.title == 'A++ IDE - Paramètres' || document.title == 'A++ IDE - Configuración') {
+            const a_ELEMENT = document.getElementsByTagName('a');
+            for (let i = 0; i < a_ELEMENT.length; i++) {
+                a_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['hyperlinks-color'];
+                a_ELEMENT[i].addEventListener('mouseenter', () => {
+                    a_ELEMENT[i].style.color = 'inherit';
+                });
+                a_ELEMENT[i].addEventListener('mouseout', () => {
+                    a_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['hyperlinks-color'];
+                });
+            }
+
             const settings_ELEMENT = document.getElementsByClassName('settings');
             for (let i = 0; i < settings_ELEMENT.length; i++) {
                 settings_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.settings?.['.settings-background-color'];
@@ -490,6 +501,87 @@ function update_theme() {
             const value_animate_ELEMENT = document.getElementsByClassName('value-animate');
             for (let i = 0; i < value_animate_ELEMENT.length; i++) {
                 value_animate_ELEMENT[i].style.color = settings.theme?.[current_theme]?.settings?.['.value-animate-color'];
+            }
+        }
+
+                                        // Update keybindings CSS
+        if (document.title == 'A++ IDE - Raccourcis clavier' || document.title == 'A++ IDE - Atajos de teclado' || document.title == 'A++ IDE - Keybindings') {
+            const TR_ELEMENTS = document.getElementsByTagName('tr');
+            for (let i = 0; i < TR_ELEMENTS.length; i++) {
+                TR_ELEMENTS[i].style.borderBottomColor = settings.theme?.[current_theme]?.keybindings?.['tr-border-bottom'];
+            }
+
+            const T_BODY_ELEMENTS = document.getElementsByTagName('tbody');
+            for (let i = 0; i < T_BODY_ELEMENTS.length; i++) {
+                const T_BODY_ELEMENTS_I_TR = T_BODY_ELEMENTS[i].getElementsByTagName('tr');
+                for (let j = 0; j < T_BODY_ELEMENTS_I_TR.length; j++) {
+                    T_BODY_ELEMENTS_I_TR[j].style.borderBottomColor = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-border-bottom-color'];
+                    T_BODY_ELEMENTS_I_TR[j].style.borderBottom = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-border-bottom'];
+                    T_BODY_ELEMENTS_I_TR[j].addEventListener('mouseenter', () => {
+                        T_BODY_ELEMENTS_I_TR[j].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-hover-background-color'];
+                        T_BODY_ELEMENTS_I_TR[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-hover-box-shadow'];
+                    });
+                    T_BODY_ELEMENTS_I_TR[j].addEventListener('mouseout', () => {
+                        T_BODY_ELEMENTS_I_TR[j].style.backgroundColor = '';
+                        T_BODY_ELEMENTS_I_TR[j].style.boxShadow = '';
+                    });
+                }
+                const TD_FIRST_CHILD_ELEMENTS = document.querySelectorAll('tbody td:first-child');
+                for (let j = 0; j <TD_FIRST_CHILD_ELEMENTS.length; j++) {
+                    TD_FIRST_CHILD_ELEMENTS[j].style.color = settings.theme?.[current_theme]?.keybindings?.['tbody-td-first-child-color'];
+                }
+            }
+
+            const KEY_CHIP_ELEMENTS = document.getElementsByClassName('key_chip');
+            for (let i = 0; i < KEY_CHIP_ELEMENTS.length; i++) {
+                const KEY_ELEMMENTS = KEY_CHIP_ELEMENTS[i].getElementsByClassName('key');
+                for (let j = 0; j < KEY_ELEMMENTS.length; j++) {
+                    KEY_ELEMMENTS[j].style.background = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-background-color'];
+                    KEY_ELEMMENTS[j].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border-color'];
+                    KEY_ELEMMENTS[j].style.color = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-color'];
+                    KEY_ELEMMENTS[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-box-shadow'];
+                    KEY_ELEMMENTS[j].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border'];
+                    KEY_ELEMMENTS[j].addEventListener('mouseenter', () => {
+                        KEY_ELEMMENTS[j].style.background = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-hover-background-color'];
+                        KEY_ELEMMENTS[j].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-hover-border-color'];
+                        KEY_ELEMMENTS[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-hover-box-shadow'];
+                    });
+                    KEY_ELEMMENTS[j].addEventListener('mouseout', () => {
+                        KEY_ELEMMENTS[j].style.background = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-background-color'];
+                        KEY_ELEMMENTS[j].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border-color'];
+                        KEY_ELEMMENTS[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-box-shadow'];
+                        KEY_ELEMMENTS[j].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border'];
+                    });
+                }
+                const HINT_ELEMENTS = KEY_CHIP_ELEMENTS[i].getElementsByClassName('hint');
+                for (let j = 0; j < HINT_ELEMENTS.length; j++) {
+                    HINT_ELEMENTS[j].style.color = settings.theme?.[current_theme]?.keybindings?.['.key-chip-hint-color'];
+                }
+                KEY_CHIP_ELEMENTS[i].addEventListener('mouseenter', () => {
+                    KEY_CHIP_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-hover-background-color'];
+                });
+                KEY_CHIP_ELEMENTS[i].addEventListener('mouseout', () => {
+                    KEY_CHIP_ELEMENTS[i].style.backgroundColor = '';
+                });
+            }
+
+            const KEY_INPUT_ELEMENTS = document.getElementsByClassName('key_input');
+            for (let i = 0; i < KEY_INPUT_ELEMENTS.length; i++) {
+                KEY_INPUT_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-background-color'];
+                KEY_INPUT_ELEMENTS[i].style.color = settings.theme?.[current_theme]?.keybindings?.['.key-input-color'];
+                KEY_INPUT_ELEMENTS[i].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-border-color'];
+                KEY_INPUT_ELEMENTS[i].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-input-border'];
+                KEY_INPUT_ELEMENTS[i].addEventListener('focus', () => {
+                    KEY_INPUT_ELEMENTS[i].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-focus-border'];
+                    KEY_INPUT_ELEMENTS[i].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-input-focus-box-shadow'];
+                    KEY_INPUT_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-focus-background-color'];
+                    KEY_INPUT_ELEMENTS[i].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-input-border'];
+                });
+                KEY_INPUT_ELEMENTS[i].addEventListener('blur', () => {
+                    KEY_INPUT_ELEMENTS[i].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-border-color'];
+                    KEY_INPUT_ELEMENTS[i].style.boxShadow = '';
+                    KEY_INPUT_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-background-color'];
+                });
             }
         }
 

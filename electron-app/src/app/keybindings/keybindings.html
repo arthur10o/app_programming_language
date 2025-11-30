@@ -1,0 +1,57 @@
+<!--
+  ==============================================================================
+  File        : keybindings.html
+  Version     : 1.0
+  Description : HTML file for the A++ IDE keybindings
+                - Main user interface for keybindings configuration
+  Author      : Arthur
+  Created     : 2025-11-01
+  Last Update : 2025-11-29
+  ==============================================================================
+-->
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title data-i18n="title_keybindings"></title>
+    <link rel='stylesheet' href='keybindings.css'>
+    <link rel='stylesheet' href='../../common/styles.css'>
+</head>
+<body>
+  <div class="container">
+      <header>
+          <h1 data-i18n="h1_keybindings"></h1>
+          <p data-i18n="p_header_keybindings"></p>
+      </header>
+      <br>
+      <main>
+        <div class="keybindings_container">
+          <table class="keybindings_table">
+            <thead>
+              <tr>
+                <th data-i18n="table_header_action"></th>
+                <th data-i18n="table_header_keybinding"></th>
+              </tr>
+            </thead>
+            <tbody id="keybindings_body">
+            </tbody>
+          </table>
+        </div>
+        <div class='action-buttons'>
+          <button data-i18n="save_button" class='button' id='save-settings' type='button' onclick='save_keybindings(event)'></button>
+          <button data-i18n="reset_button_settings" class='button' id='reset-settings' type='button' onclick='reset_keybindings(event)'></button>
+          <button data-i18n="go_to_home_button" class='button' id='back-home' onclick='window.location.href = "../home/index.html";'></button>
+          <button data-i18n="go_to_settings_button" class='button' id='settings' onclick="window.location.href = '../settings/settings.html'"></button>
+        </div>
+      </main>
+      <footer>
+        <p><a data-i18n="copyright" href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'></a></p>
+      </footer>
+    </div>
+    <script src='../../common/styleManager.js'></script>
+    <script src="keybindings.js"></script>
+    <script type="module" src='../../common/renderer.js'></script>
+    <script src='../../common/keybindings.js'></script>
+</body>
+</html>
