@@ -44,20 +44,23 @@
       "control+shift+k": "remove line",
       "control+altgraph+dead": "toggle terminal",
       "control++": "toggle terminal (alternative)",
+      "control+,": "open settings",
+      "control+p": "open editor",
+      "control+shift+p": "open home",
       "control+shift+q": "log out",
       "control+alt+q": "change account",
       "f11": "full screen",
       "control+f": "find",
       "control+h": "replace",
+      "control+z": "undo",
+      "control+y": "redo",
+      "control+shift+z": "redo (alternative)",
       "control+f5": "run file",
       "control+click": "go to definition",
       "control+shift+f5": "debug",
       "f10": "step over",
       "control+shift+f11": "step into",
-      "shift+f11": "step out",
-      "control+z": "undo",
-      "control+y": "redo",
-      "control+shift+z": "redo (alternative)"
+      "shift+f11": "step out"
     }
   }
 ]

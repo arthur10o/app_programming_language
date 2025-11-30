@@ -1,0 +1,134 @@
+/*
+    ==============================================================================
+    File        : keybindings.css
+    Version     : 1.0
+    Description : Styles sheet for the keybindings component of the A++ IDE.
+    Author      : Arthur
+    Created     : 2025-11-29
+    Last Update : 2025-11-30
+    ==============================================================================
+*/
+.keybindings_container {
+    width: 100%;
+}
+
+.keybindings_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.keybindings_table th {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.keybindings_table td {
+    padding: 1rem 1.25rem;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.keybindings_table td:first-child {
+    font-weight: 600;
+    min-width: 220px;
+}
+
+.keybindings_table td:last-child {
+    text-align: right;
+}
+
+.key_chip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.key_chip .key {
+    display: inline-block;
+    padding: 0.45rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+    white-space: nowrap;
+    min-width: 2.2rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.key_chip .key:hover {
+    transform: translateY(-2px);
+}
+
+.key_chip .hint {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.key_input {
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: 200px;
+    transition: all 0.2s ease;
+}
+
+.key_input:focus {
+    outline: none;
+}
+
+.action-buttons {
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    .keybindings_table {
+        font-size: 0.9rem;
+    }
+
+    .keybindings_table th {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .keybindings_table td {
+        padding: 0.75rem 1rem;
+    }
+
+    .keybindings_table td:first-child {
+        min-width: 160px;
+    }
+
+    .key_chip {
+        gap: 0.4rem;
+        padding: 0.3rem;
+    }
+
+    .key_chip .key {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+        min-width: 1.8rem;
+    }
+
+    .key_input {
+        width: 160px;
+        font-size: 0.85rem;
+        padding: 0.5rem 0.7rem;
+    }
+
+    .keybindings_table td:last-child {
+        text-align: center;
+    }
+}

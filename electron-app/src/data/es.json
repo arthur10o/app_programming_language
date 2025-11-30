@@ -5,6 +5,7 @@
     "title_login": "A++ IDE - Iniciar sesión",
     "title_settings": "A++ IDE - Configuración",
     "title_signup": "A++ IDE - Registrarse",
+    "title_keybindings": "A++ IDE - Atajos de teclado",
 
     "loader_text": "Cargando...",
 
@@ -14,6 +15,7 @@
     "h1_login": "Iniciar sesión",
     "h1_settings": "Configuración",
     "h1_signup": "Registrarse",
+    "h1_keybindings": "Atajos de teclado",
 
     "error_text_email": "Formato de correo electrónico inválido.",
     "error_text_password_confirmation": "Las contraseñas no coinciden.",
@@ -22,6 +24,10 @@
     "p_header_console": "Sigue la ejecución de tus comandos y aplicaciones en tiempo real.",
     "p_header_home": "Un entorno de desarrollo para el lenguaje A++.",
     "p_header_settings": "Personaliza tu entorno de desarrollo según tus preferencias.",
+    "p_header_keybindings": "Configura tus atajos de teclado para una productividad óptima.",
+
+    "table_header_action": "Acción",
+    "table_header_keybinding": "Atajo de teclado",
 
     "legend_appearrance": "Apariencia",
     "legend_editor_features": "Características del editor",
@@ -81,6 +87,7 @@
     "go_to_editor_button": "Abrir editor",
     "go_to_console_button": "Abrir consola",
     "go_to_home_button": "Volver a inicio",
+    "keybindings_button": "Atajos de teclado",
 
     "copyright": "© 2025 A++ IDE. Todos los derechos reservados.",
 

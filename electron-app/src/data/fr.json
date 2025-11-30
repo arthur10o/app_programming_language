@@ -5,6 +5,7 @@
     "title_login": "A++ IDE - Connexion",
     "title_settings": "A++ IDE - Paramètres",
     "title_signup": "A++ IDE - Inscription",
+    "title_keybindings": "A++ IDE - Raccourcis clavier",
 
     "loader_text": "Chargement...",
 
@@ -14,6 +15,7 @@
     "h1_login": "Connexion",
     "h1_settings": "Paramètres",
     "h1_signup": "Inscription",
+    "h1_keybindings": "Raccourcis clavier",
 
     "error_text_email": "Format de l'email invalide.",
     "error_text_password_confirmation": "Les mots de passe ne correspondent pas.",
@@ -22,6 +24,10 @@
     "p_header_console": "Suivez l'exécution de vos commandes et applications en temps réel.",
     "p_header_home": "Un environnement de développement pour le langage A++.",
     "p_header_settings": "Personnalisez votre environnement de développement selon vos préférences.",
+    "p_header_keybindings": "Configurez vos raccourcis clavier pour une productivité optimale.",
+
+    "table_header_action": "Action",
+    "table_header_keybinding": "Raccourci clavier",
 
     "legend_appearrance": "Apparence",
     "legend_editor_features": "Fonctionnalités de l'éditeur",
@@ -81,6 +87,7 @@
     "go_to_editor_button": "Ouvrir l'éditeur",
     "go_to_console_button": "Ouvrir la console",
     "go_to_home_button": "Retour à l'accueil",
+    "keybindings_button": "Raccourcis clavier",
 
     "copyright": "© 2025 A++ IDE. Tous droits réservés.",
 

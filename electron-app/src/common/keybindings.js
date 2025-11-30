@@ -6,7 +6,7 @@
                 - Functionality to execute commands based on keyboard shortcuts
   Author      : Arthur
   Created     : 2025-08-14
-  Last Update : 2025-10-16
+  Last Update : 2025-11-29
   ==============================================================================
 */
 const { ipcRenderer } = require('electron');
@@ -21,21 +21,12 @@ let last_search = '';
 let current_index_navigate_search_result = -1;
 const MAX_HISTORY_UNDO_REDO = 100;
 
+ipcRenderer.send('get-user-connected-information');
+ipcRenderer.on('received-connected-user-information', (event, _user_information) => {
+    keybindings = _user_information?.keybindings || {};
+});
+
 window.addEventListener('load', () => {
-    const DATA_PATH = path.resolve(__dirname, '../../data/keybindings.json');
-    if (!fs.existsSync(DATA_PATH)) {
-        ipcRenderer.send('show-popup', 'keybindings_file_missing', 'keybindings_file_missing_message', 'error', [], [{ label: "close_button", action: null }], 0);
-        return;
-    }
-
-    try {
-        const DATA = fs.readFileSync(DATA_PATH, 'utf8');
-        keybindings = JSON.parse(DATA);
-    } catch (error) {
-        ipcRenderer.send('show-popup', 'keybindings_load_error', 'keybindings_load_message_error', 'error', [], [{ label: "close_button", action: null }], 0);
-        return;
-    }
-
     const CODE_EDITOR = document.getElementById('code-editor') || document.getElementById('console-output');
     if (CODE_EDITOR) {
         CODE_EDITOR.addEventListener('input', () => {
