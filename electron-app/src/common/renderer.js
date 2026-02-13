@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the renderer in A++ IDE
   Author      : Arthur
   Created     : 2025-08-13
-  Last Update : 2025-08-25
+  Last Update : 2026-02-13
   ==============================================================================
 */
 import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } from "../wasm/crypto_lib/lib.js";
@@ -231,6 +231,7 @@ function showNotification({
 
     inputElem.placeholder = input.placeholder || '';
     inputElem.name = input.name || '';
+    inputElem.spellcheck = false;
 
     inputValues[input.name] = '';
     inputElem.addEventListener('input', () => {
