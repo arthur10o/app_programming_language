@@ -1,20 +1,20 @@
 [
   {
-    "user_id": "782c2fce-509b-477c-b6d7-4f41e8e19964",
+    "user_id": "384d63c4-6cfb-455b-b750-8ecff6ccb029",
     "username": {
-      "cipher": "/FXjJkSxYBersv9YuJnfgMXGqtbS",
-      "nonce": "HsVBiNwJ0og1M355"
+      "cipher": "T3G87ZHWY0f9xe/8vWpepmSCrpYw",
+      "nonce": "lB41lRJmEmetRH1E"
     },
     "email": {
-      "cipher": "woWkpruS3NfcCPbvPmu5O8oUUKw+mNwvUmzYm8Jj8WLksGTRLw==",
-      "nonce": "RHbPzNVe5DNR3vtk"
+      "cipher": "9vV43p4jT6bNkmzB2oPin3UfNRuMgvbwGgkP/t/Tamw5",
+      "nonce": "PYabz7yi27oqf/df"
     },
     "aes_key_encrypted": {
-      "cipher": "7IuNYMT4NVZ1AWh+tCaFLCwnrV52P8/iY0AfEyZ+FyuGQz3IllNyJ25qS45FAKKgpJe3vdjzcFhLHiWi",
-      "nonce": "m0+t4euneSnTfpcY"
+      "cipher": "8ga/JrNh7lsTi/y4KeActtnTP8LDnw3DWITPT0QfGC4FJ9vHZJTiOV4Pn9UdK21/PKQYEHvTZOepJ3Xb",
+      "nonce": "0foMQ/bPBj8GYEaO"
     },
-    "aes_salt": "yJ+kAqSh0PNNy0Y5pnazyA==",
-    "password": "$argon2id$v=19$m=262144,t=6,p=2$zxMbrHGa7zoDlb3E7fnDcA$2XSTroh4evJdkn6e4SCwpKbQpKaBX7Rk6IPo+k6dHdk",
+    "aes_salt": "TNiHwqjxfel4U4syq00xQA==",
+    "password": "$argon2id$v=19$m=262144,t=6,p=2$iltGqZ5Ll/L7C6ZRzl9NrQ$OEjRg4WuU7kus5FOG/FjMLQ13YF2/uOjLMYcXeD3hmQ",
     "profil_picture": "",
     "don't_show_message_behavior_close_file": null,
     "don't_show_message_behavior_new_file": null,
@@ -25,8 +25,8 @@
         "unit": "px"
       },
       "fontFamily": "Segoe UI",
-      "language": "fr",
-      "autoSave": true,
+      "language": "en",
+      "autoSave": false,
       "tabSize": 4,
       "autocomplete": true,
       "showSuggestions": true,
