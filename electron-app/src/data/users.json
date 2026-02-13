@@ -25,8 +25,8 @@
         "unit": "px"
       },
       "fontFamily": "Segoe UI",
-      "language": "en",
-      "autoSave": false,
+      "language": "fr",
+      "autoSave": true,
       "tabSize": 4,
       "autocomplete": true,
       "showSuggestions": true,

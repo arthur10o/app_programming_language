@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "wasm": "cd rust-crypto-lib && wasm-pack build --target web",
-    "dist" : "npm run wasm && electron-builder"
+    "dist": "npm run wasm && electron-builder"
   },
   "repository": {
     "type": "git",
@@ -25,17 +25,23 @@
     "electron-builder": "^26.7.0"
   },
   "build": {
-    "appId": "com.monapp.app",
-    "productName": "MonApp",
+    "appId": "com.aplusplus.ide",
+    "productName": "A++ IDE",
     "files": [
       "src/**/*",
       "main.js",
       "preload.js",
       "rust/pkg/**/*",
-      "package.json"
+      "package.json",
+      "public/**/*"
     ],
     "linux": {
-      "target": ["AppImage", "deb"]
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Development",
+      "icon": "public/assets/icons/app-logo.png"
     }
   }
 }

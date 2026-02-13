@@ -34,7 +34,7 @@ function createWindow() {
             contextIsolation: false,
             enableRemoteModule: true
         },
-        icon: PATH.join(__dirname, 'public/assets/icons/app-logo.png')
+        icon: PATH.join(__dirname, 'public', 'assets', 'icons', 'app-logo.png')
     });
 
     Menu.setApplicationMenu(null);
