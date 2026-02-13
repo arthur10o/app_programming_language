@@ -6,7 +6,7 @@
     Purpose     : Provides the main interface for users to navigate the IDE
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-28
+    Last Update : 2025-09-28
     ==============================================================================
 -->
 <!DOCTYPE html>
@@ -14,36 +14,29 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>A++ IDE - Home</title>
+    <title data-i18n="title_home"></title>
     <link rel='stylesheet' href='home.css'>
     <link rel='stylesheet' href='../../common/styles.css'>
 </head>
 <body>
     <div id="loader" style="display:none;">
         <div class="spinner"></div>
-        <span>Loading...</span>
+        <span data-i18n="loader_text"></span>
     </div>
     <div class='container'>
         <header>
-            <h1>A++ IDE</h1>
-            <p>A development environment for the A++ language</p>
+            <h1 data-i18n="h1_home"></h1>
+            <p data-i18n="p_header_home"></p>
         </header>
-        <div class="top-right-menu">
-            <div class="menu-trigger" onclick="toggle_menu()">
-                <img alt="User" class="user-icon">
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu">
-            </div>
-        </div>
         <main>
             <div class='action-buttons'>
-                <button class='button' id='open-editor'>Open Editor</button>
-                <button class='button' id='open-console'>Open Console</button>
-                <button class='button' id='settings'>Settings</button>
+                <button data-i18n="go_to_editor_button" class='button' id='open-editor'></button>
+                <button data-i18n="go_to_console_button" class='button' id='open-console'></button>
+                <button data-i18n="go_to_settings_button" class='button' id='settings'></button>
             </div>
         </main>
         <footer>
-            <p><a href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'>&copy; 2025 A++ IDE. All rights reserved.</a></p>
+            <p><a data-i18n="copyright" href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'></a></p>
         </footer>
     </div>
     <script src='home.js'></script>

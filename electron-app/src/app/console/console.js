@@ -6,12 +6,22 @@
                 - Functionality to clear console output
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-19
+  Last Update : 2025-09-01
   ==============================================================================
 */
 const CONSOLE_OUTPUT = document.getElementById('console-output');
 const CLEAR_BUTTON = document.getElementById('clear-console');
 
-CLEAR_BUTTON.addEventListener('click', () => {
-    CONSOLE_OUTPUT.innerHTML = 'Welcome to the console. Messages will appear here...';
+async function init_console_text() {
+  await wait_for_translation();
+  if (CONSOLE_OUTPUT) {
+    CONSOLE_OUTPUT.innerText = t('default_message_console_output');
+  }
+}
+
+CLEAR_BUTTON.addEventListener('click', async () => {
+  await wait_for_translation();
+  CONSOLE_OUTPUT.innerText = t('default_message_console_output');
 });
+
+init_console_text();

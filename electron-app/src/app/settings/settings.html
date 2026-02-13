@@ -6,7 +6,7 @@
                 - Main user interface for settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-25
+  Last Update : 2025-11-02
   ==============================================================================
 -->
 <!DOCTYPE html>
@@ -14,98 +14,102 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>A++ IDE - Settings</title>
+    <title data-i18n="title_settings"></title>
     <link rel='stylesheet' href='settings.css'>
     <link rel='stylesheet' href='../../common/styles.css'>
 </head>
 <body>
     <div id="loader" style="display:none;">
         <div class="spinner"></div>
-            <span>Loading...</span>
+            <span data-i18n="loader_text"></span>
     </div>
     <div class='container settings-container'>
         <header>
-            <h1>Settings</h1>
-            <p>Customize your development environment according to your preferences.</p>
+            <h1 data-i18n="h1_settings"></h1>
+            <p data-i18n="p_header_settings"></p>
         </header>
         <br>
         <main>
             <form class='settings' aria-label='IDE Settings'>
                 <fieldset>
-                    <legend>Appearance</legend>
+                    <legend data-i18n="legend_appearrance"></legend>
                     <div class='setting-item'>
-                        <label for='theme'>Theme</label>
+                        <label data-i18n="label_theme" for='theme'></label>
                         <select id='theme'>
-                            <option value='dark'>Dark</option>
-                            <option value='light'>Light</option>
+                            <option data-i18n="option_dark" value='dark'></option>
+                            <option data-i18n="option_light" value='light'></option>
                         </select>
                     </div>
                     <div class='setting-item'>
-                        <label for='font-size'>Font Size</label>
+                        <label data-i18n="label_font_size" for='font-size'></label>
                         <input type='range' id='font-size' min='10' max='30' step='1' value='16'>
                         <span id='font-size-value'>16</span>px
                     </div>
                     <div class='font-item'>
-                        <label for='font-family'>Font Family</label>
+                        <label data-i18n="label_font_family" for='font-family'></label>
                         <select id='font-family'>
-                            <option value='Segoe UI'>Segoe UI</option>
-                            <option value='monospace'>Monospace</option>
-                            <option value='sans-serif'>Sans-serif</option>
-                            <option value='serif'>Serif</option>
+                            <option data-i18n="option_segoe_UI" value='Segoe UI'></option>
+                            <option data-i18n="option_monospace" value='monospace'></option>
+                            <option data-i18n="option_sans_serif" value='sans-serif'></option>
+                            <option data-i18n="option_serif" value='serif'></option>
                         </select>
                     </div>
                     <div class='language-item'>
-                        <label for='language'>Language</label>
+                        <label data-i18n="label_language" for='language'></label>
                         <select id='language'>
-                            <option value='en'>English</option>
-                            <option value='fr'>French</option>
-                            <option value='es'>Spanish</option>
+                            <option data-i18n="option_en" value='en'></option>
+                            <option data-i18n="option_fr" value='fr'></option>
+                            <option data-i18n="option_es" value='es'></option>
                         </select>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Editor Features</legend>
+                    <legend data-i18n="legend_editor_features"></legend>
                     <div class='setting-item'>
-                        <label for='auto-save'>Auto Save</label>
+                        <label data-i18n="label_auto_save" for='auto-save'></label>
                         <input type='checkbox' id='auto-save'>
                     </div>
                     <div class='tabulation-size-item'>
-                        <label for='tabulation-size'>Tabulation Size</label>
+                        <label data-i18n="label_tab_size" for='tabulation-size'></label>
                         <input type='range' id='tabulation-size' min='1' max='8' value='4'>
                         <span id='tab-size-value'>4</span>
                     </div>
                     <div class='autocomplete-item'>
-                        <label for='autocomplete'>Autocomplete</label>
+                        <label data-i18n="label_auto_complete" for='autocomplete'></label>
                         <input type='checkbox' id='autocomplete' checked>
                     </div>
                     <div class='suggestions-item'>
-                        <label for='suggestions'>Show Suggestions</label>
+                        <label data-i18n="label_show_suggestion" for='suggestions'></label>
                         <input type='checkbox' id='suggestions' checked>
                     </div>
                     <div class='syntax-highlighting-item'>
-                        <label for='syntax-highlighting'>Syntax Highlighting</label>
+                        <label data-i18n="label_syntax_highlighting" for='syntax-highlighting'></label>
                         <input type='checkbox' id='syntax-highlighting' checked>
                     </div>
                     <div class='line-numbers-item'>
-                        <label for='line-numbers'>Show Line Numbers</label>
+                        <label data-i18n="label_show_line_numbers" for='line-numbers'></label>
                         <input type='checkbox' id='line-numbers' checked>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>Preview</legend>
+                    <legend data-i18n="keybindings_button"></legend>
+                    <a class='button' id='btn_custom_keybindings' style="padding: 7.5px;" data-i18n="keybindings_button" href = "../keybindings/keybindings.html"></a>
+                </fieldset>
+                <fieldset>
+                    <legend data-i18n="legend_preview"></legend>
                     <div id='preview-area' style='margin:10px 0; padding:10px; font-family:monospace;'>
                         <span id='code-editor'></span>
                     </div>
                 </fieldset>
             </form>
             <div class='action-buttons'>
-                <button class='button' id='save-settings' type='button' onclick='saveSettings(event)'>Save</button>
-                <button class='button' id='reset-settings' type='button' onclick='resetSettings(event)'>Reset</button>
-                <button class='button' id='back-home' type='button' onclick='window.location.href = "../home/index.html";'>Back to Home</button>
+                <button data-i18n="save_button" class='button' id='save-settings' type='button' onclick='saveSettings(event)'></button>
+                <button data-i18n="reset_button_settings" class='button' id='reset-settings' type='button' onclick='resetSettings(event)'></button>
+                <button data-i18n="go_to_home_button" class='button' id='back-home' type='button' onclick='window.location.href = "../home/index.html";'></button>
             </div>
         </main>
         <footer>
-            <p><a href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'>&copy; 2025 A++ IDE. All rights reserved.</a></p>
+            <p><a data-i18n="copyright" href='https://github.com/arthur10o/app_programming_language/blob/main/LICENSE'></a></p>
         </footer>
     </div>
     <script src='settings.js'></script>

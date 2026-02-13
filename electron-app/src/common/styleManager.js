@@ -6,7 +6,7 @@
                 - Functionality to update styles based on user settings
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-28
+  Last Update : 2025-11-29
   ==============================================================================
 */
 const fs = require('fs');
@@ -20,7 +20,7 @@ function update_theme() {
     const DATA_PATH = path.resolve(__dirname, '../../data/settings.json');
 
     if (!fs.existsSync(DATA_PATH)) {
-        ipcRenderer.send('show-popup', 'Settings Load Error', `The settings file does not exist at:\n${DATA_PATH}`, 'error', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', 'settings_load_error', 'unable_load_user_settings_file', 'error', [], [{ label: "close_button", action: null }], 0);
         return;
     }
 
@@ -36,15 +36,17 @@ function update_theme() {
             const DATA = fs.readFileSync(DATA_PATH, 'utf8');
             settings = JSON.parse(DATA);
         } catch (error) {
-            ipcRenderer.send('show-popup', 'Settings Load Error', 'An error occurred while reading or parsing the settings file.\n\n' + 'This may be due to invalid JSON format.\n\n' + `Error message:\n${error.message}`, 'error', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'settings_load_error', 'error_when_reading_json_file', 'error', [], [{ label: "close_button", action: null }], 0);
             return;
         }
 
         let current_theme = user_settings?.preferences?.['theme'] || 'dark';
         let font_size_size = user_settings?.preferences?.fontSize?.['size'];
         let font_size_unit = user_settings?.preferences?.fontSize?.['unit'];
+        let font_family = user_settings?.preferences?.['fontFamily'];
+        
         if (!current_theme) {
-            ipcRenderer.send('show-popup', 'Theme Load Error', `The theme setting could not be found in your configuration file.\n\nPlease check your settings or reset them to default`, 'error', [], [{ label: "Close", action: null }], 0);
+            ipcRenderer.send('show-popup', 'theme_load_error', 'theme_settings_could_not_be_found', 'error', [], [{ label: "close_button", action: null }], 0);
         }
 
                                         // Update common CSS
@@ -84,11 +86,143 @@ function update_theme() {
             });
         }
 
+        const SPINNER_ELEMENT = document.getElementsByClassName('spinner');
+        for (let i = 0; i < SPINNER_ELEMENT.length; i++) {
+            SPINNER_ELEMENT[i].style.borderTop = settings.theme?.[current_theme]?.common_css?.['.spinner-border-top'];
+            SPINNER_ELEMENT[i].style.borderColor = settings.theme?.[current_theme]?.common_css?.['.spinner-border'];
+        }
+
+        const LOADER_ELEMENT = document.getElementById('loader');
+        if (LOADER_ELEMENT) {
+            LOADER_ELEMENT.style.background = settings.theme?.[current_theme]?.common_css?.['#loader-background'];
+            LOADER_ELEMENT.getElementsByTagName('span')[0].style.color = settings.theme?.[current_theme]?.common_css?.['#loader-span-color'];
+        }
+
+        const SEARCH_REPLACE_PANEL_ELEMENT = document.getElementsByClassName('search-replace-panel');
+        for (let i = 0; i < SEARCH_REPLACE_PANEL_ELEMENT.length; i++) {
+            SEARCH_REPLACE_PANEL_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.search-replace-panel-background-color'];
+            SEARCH_REPLACE_PANEL_ELEMENT[i].style.border = settings.theme?.[current_theme]?.common_css?.['.search-replace-panel-border'];
+            SEARCH_REPLACE_PANEL_ELEMENT[i].style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.search-replace-panel-box-shadow'];
+        }
+
+        const SEARCH_HEADER_INPUT_ELEMENT = document.getElementById('searchInput');
+        if (SEARCH_HEADER_INPUT_ELEMENT) {
+            SEARCH_HEADER_INPUT_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.search-header-input-background-color'];
+            SEARCH_HEADER_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.search-header-input-border'];
+            SEARCH_HEADER_INPUT_ELEMENT.style.color = settings.theme?.[current_theme]?.common_css?.['.search-header-input-color'];
+            SEARCH_HEADER_INPUT_ELEMENT.addEventListener('focus', () => {
+                SEARCH_HEADER_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.search-header-input:focus-border'];
+                SEARCH_HEADER_INPUT_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.search-header-input:focus-box-shadow'];
+            });
+            SEARCH_HEADER_INPUT_ELEMENT.addEventListener('blur', () => {
+                SEARCH_HEADER_INPUT_ELEMENT.style.border = '';
+                SEARCH_HEADER_INPUT_ELEMENT.style.boxShadow = '';
+            });
+        }
+
+        const SEARCH_REPLACE_INPUT_ELEMENT = document.getElementById('replaceInput');
+        if (SEARCH_REPLACE_INPUT_ELEMENT) {
+            SEARCH_REPLACE_INPUT_ELEMENT.addEventListener('focus', () => {
+                SEARCH_REPLACE_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.search-replace-input:focus-border'];
+                SEARCH_REPLACE_INPUT_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.search-replace-input:focus-box-shadow'];
+            });
+            SEARCH_REPLACE_INPUT_ELEMENT.addEventListener('blur', () => {
+                SEARCH_REPLACE_INPUT_ELEMENT.style.border = '';
+                SEARCH_REPLACE_INPUT_ELEMENT.style.boxShadow = '';
+            });
+        }
+
+        const CLOSE_BUTTON_ELEMENT = document.getElementsByClassName('close-btn');
+        for (let i = 0; i < CLOSE_BUTTON_ELEMENT.length; i++) {
+            CLOSE_BUTTON_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.close-button-color'];
+            CLOSE_BUTTON_ELEMENT[i].addEventListener('mouseenter', () => {
+                CLOSE_BUTTON_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.close-button-hover-color'];
+            });
+            CLOSE_BUTTON_ELEMENT[i].addEventListener('mouseout', () => {
+                CLOSE_BUTTON_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.close-button-color'];
+            });
+        }
+
+        const REPLACE_INPUT_ELEMENT = document.getElementById('replaceInput');
+        if (REPLACE_INPUT_ELEMENT) {
+            REPLACE_INPUT_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.replace-row-input-background-color'];
+            REPLACE_INPUT_ELEMENT.style.border = settings.theme?.[current_theme]?.common_css?.['.replace-row-input-border'];
+            REPLACE_INPUT_ELEMENT.style.color = settings.theme?.[current_theme]?.common_css?.['.search-replace-input-color'];
+        }
+
+        const REPLACE_ROW_ELEMENT = document.getElementsByClassName('replace-row');
+        for (let i = 0; i < REPLACE_ROW_ELEMENT.length; i++) {
+            REPLACE_ROW_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.replace-row-color'];
+        }
+
+        const ACTIONS_BUTTON_REPLACE_ALL_ELEMENT = document.getElementById('replaceAllBtn');
+        if (ACTIONS_BUTTON_REPLACE_ALL_ELEMENT) {
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.addEventListener('mouseenter', () => {
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-background-color'];
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-box-shadow'];
+            });
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.addEventListener('mouseout', () => {
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            });
+            ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.addEventListener('active', () => {
+                ACTIONS_BUTTON_REPLACE_ALL_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
+            });
+        }
+
+        const ACTIONS_BUTTON_REPLACE_ELEMENT = document.getElementById('replaceBtn');
+        if (ACTIONS_BUTTON_REPLACE_ELEMENT) {
+            ACTIONS_BUTTON_REPLACE_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+            ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            ACTIONS_BUTTON_REPLACE_ELEMENT.addEventListener('mouseenter', () => {
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-background-color'];
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:hover-box-shadow'];
+            });
+            ACTIONS_BUTTON_REPLACE_ELEMENT.addEventListener('mouseout', () => {
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.backgroundColor = settings.theme?.[current_theme]?.common_css?.['.action-button-background-color'];
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button-box-shadow'];
+            });
+            ACTIONS_BUTTON_REPLACE_ELEMENT.addEventListener('active', () => {
+                ACTIONS_BUTTON_REPLACE_ELEMENT.style.boxShadow = settings.theme?.[current_theme]?.common_css?.['.action-button:active-box-shadow'];
+            });
+        }
+
+        const SEARCH_STAT_ELEMENT = document.getElementsByClassName('search-stat');
+        for (let i = 0; i < SEARCH_STAT_ELEMENT.length; i++) {
+            SEARCH_STAT_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.search-stat-color'];
+        }
+
+        const ARROW_UP_ELEMENT = document.getElementsByClassName('arrow-up');
+        for (let i = 0; i < ARROW_UP_ELEMENT.length; i++) {
+            ARROW_UP_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-up-color'];
+            ARROW_UP_ELEMENT[i].addEventListener('mouseenter', () => {
+                ARROW_UP_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-up-color:hover'];
+            });
+            ARROW_UP_ELEMENT[i].addEventListener('mouseout', () => {
+                ARROW_UP_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-up-color'];
+            });
+        }
+
+        const ARROW_DOWN_ELEMENT = document.getElementsByClassName('arrow-down');
+        for (let i = 0; i < ARROW_DOWN_ELEMENT.length; i++) {
+            ARROW_DOWN_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-down-color'];
+            ARROW_DOWN_ELEMENT[i].addEventListener('mouseenter', () => {
+                ARROW_DOWN_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-down-color:hover'];
+            });
+            ARROW_DOWN_ELEMENT[i].addEventListener('mouseout', () => {
+                ARROW_DOWN_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['.arrow-down-color'];
+            });
+        }
+
         const html_ELEMENT = document.documentElement;
         html_ELEMENT.style.fontSize = `${font_size_size}${font_size_unit}`;
 
+        document.body.style.fontFamily = font_family;
+
                                         // Update login/signup css
-        if (document.title == 'A++ IDE - Sign Up' || document.title == 'A++ IDE - Login') {
+        if (document.title == 'A++ IDE - Sign Up' || document.title == 'A++ IDE - Login' || document.title == 'A++ IDE - Connexion' || document.title == 'A++ IDE - Inscription' || document.title == 'A++ IDE - Iniciar sesión' || document.title == 'A++ IDE - Registrarse') {
             const login_container_ELEMENT = document.getElementsByClassName('login-container');
             for (let i = 0; i < login_container_ELEMENT.length; i++) {
                 login_container_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.login_signup?.['.login-container-background-color'];
@@ -246,7 +380,7 @@ function update_theme() {
         }
 
                                         // Update index CSS
-        if (document.title == 'A++ IDE - Home') {
+        if (document.title == 'A++ IDE - Home' || document.title == 'A++ IDE - Accueil' || document.title == 'A++ IDE - Inicio') {
             const h1_ELEMENT = document.getElementsByTagName('h1');
             for (let i = 0; i < h1_ELEMENT.length; i++) {
                 h1_ELEMENT[i].style.color = settings.theme?.[current_theme]?.home?.['h1-color'];
@@ -266,7 +400,7 @@ function update_theme() {
         }
 
                                         // Update console CSS
-        if (document.title == 'A++ IDE - Console') {
+        if (document.title == 'A++ IDE - Console' || document.title == 'A++ IDE - Consola') {
             const console_ELEMENT = document.getElementsByClassName('console');
             for (let i = 0; i < console_ELEMENT.length; i++) {
                 console_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.console?.['.console-background-color'];
@@ -281,7 +415,7 @@ function update_theme() {
         }
 
                                         // Update editor CSS
-        if (document.title == 'A++ IDE - Editor') {
+        if (document.title == 'A++ IDE - Editor' || document.title == 'A++ IDE - Éditeur') {
             const editor_ELEMENT = document.getElementsByClassName('editor');
             for (let i = 0; i < editor_ELEMENT.length; i++) {
                 editor_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.editor?.['.editor-background-color'];
@@ -307,7 +441,18 @@ function update_theme() {
         }
 
                                         // Update settings CSS
-        if (document.title == 'A++ IDE - Settings') {
+        if (document.title == 'A++ IDE - Settings' || document.title == 'A++ IDE - Paramètres' || document.title == 'A++ IDE - Configuración') {
+            const a_ELEMENT = document.getElementsByTagName('a');
+            for (let i = 0; i < a_ELEMENT.length; i++) {
+                a_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['hyperlinks-color'];
+                a_ELEMENT[i].addEventListener('mouseenter', () => {
+                    a_ELEMENT[i].style.color = 'inherit';
+                });
+                a_ELEMENT[i].addEventListener('mouseout', () => {
+                    a_ELEMENT[i].style.color = settings.theme?.[current_theme]?.common_css?.['hyperlinks-color'];
+                });
+            }
+
             const settings_ELEMENT = document.getElementsByClassName('settings');
             for (let i = 0; i < settings_ELEMENT.length; i++) {
                 settings_ELEMENT[i].style.backgroundColor = settings.theme?.[current_theme]?.settings?.['.settings-background-color'];
@@ -356,6 +501,87 @@ function update_theme() {
             const value_animate_ELEMENT = document.getElementsByClassName('value-animate');
             for (let i = 0; i < value_animate_ELEMENT.length; i++) {
                 value_animate_ELEMENT[i].style.color = settings.theme?.[current_theme]?.settings?.['.value-animate-color'];
+            }
+        }
+
+                                        // Update keybindings CSS
+        if (document.title == 'A++ IDE - Raccourcis clavier' || document.title == 'A++ IDE - Atajos de teclado' || document.title == 'A++ IDE - Keybindings') {
+            const TR_ELEMENTS = document.getElementsByTagName('tr');
+            for (let i = 0; i < TR_ELEMENTS.length; i++) {
+                TR_ELEMENTS[i].style.borderBottomColor = settings.theme?.[current_theme]?.keybindings?.['tr-border-bottom'];
+            }
+
+            const T_BODY_ELEMENTS = document.getElementsByTagName('tbody');
+            for (let i = 0; i < T_BODY_ELEMENTS.length; i++) {
+                const T_BODY_ELEMENTS_I_TR = T_BODY_ELEMENTS[i].getElementsByTagName('tr');
+                for (let j = 0; j < T_BODY_ELEMENTS_I_TR.length; j++) {
+                    T_BODY_ELEMENTS_I_TR[j].style.borderBottomColor = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-border-bottom-color'];
+                    T_BODY_ELEMENTS_I_TR[j].style.borderBottom = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-border-bottom'];
+                    T_BODY_ELEMENTS_I_TR[j].addEventListener('mouseenter', () => {
+                        T_BODY_ELEMENTS_I_TR[j].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-hover-background-color'];
+                        T_BODY_ELEMENTS_I_TR[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['tbody-tr-hover-box-shadow'];
+                    });
+                    T_BODY_ELEMENTS_I_TR[j].addEventListener('mouseout', () => {
+                        T_BODY_ELEMENTS_I_TR[j].style.backgroundColor = '';
+                        T_BODY_ELEMENTS_I_TR[j].style.boxShadow = '';
+                    });
+                }
+                const TD_FIRST_CHILD_ELEMENTS = document.querySelectorAll('tbody td:first-child');
+                for (let j = 0; j <TD_FIRST_CHILD_ELEMENTS.length; j++) {
+                    TD_FIRST_CHILD_ELEMENTS[j].style.color = settings.theme?.[current_theme]?.keybindings?.['tbody-td-first-child-color'];
+                }
+            }
+
+            const KEY_CHIP_ELEMENTS = document.getElementsByClassName('key_chip');
+            for (let i = 0; i < KEY_CHIP_ELEMENTS.length; i++) {
+                const KEY_ELEMMENTS = KEY_CHIP_ELEMENTS[i].getElementsByClassName('key');
+                for (let j = 0; j < KEY_ELEMMENTS.length; j++) {
+                    KEY_ELEMMENTS[j].style.background = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-background-color'];
+                    KEY_ELEMMENTS[j].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border-color'];
+                    KEY_ELEMMENTS[j].style.color = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-color'];
+                    KEY_ELEMMENTS[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-box-shadow'];
+                    KEY_ELEMMENTS[j].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border'];
+                    KEY_ELEMMENTS[j].addEventListener('mouseenter', () => {
+                        KEY_ELEMMENTS[j].style.background = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-hover-background-color'];
+                        KEY_ELEMMENTS[j].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-hover-border-color'];
+                        KEY_ELEMMENTS[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-hover-box-shadow'];
+                    });
+                    KEY_ELEMMENTS[j].addEventListener('mouseout', () => {
+                        KEY_ELEMMENTS[j].style.background = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-background-color'];
+                        KEY_ELEMMENTS[j].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border-color'];
+                        KEY_ELEMMENTS[j].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-box-shadow'];
+                        KEY_ELEMMENTS[j].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-chip-key-border'];
+                    });
+                }
+                const HINT_ELEMENTS = KEY_CHIP_ELEMENTS[i].getElementsByClassName('hint');
+                for (let j = 0; j < HINT_ELEMENTS.length; j++) {
+                    HINT_ELEMENTS[j].style.color = settings.theme?.[current_theme]?.keybindings?.['.key-chip-hint-color'];
+                }
+                KEY_CHIP_ELEMENTS[i].addEventListener('mouseenter', () => {
+                    KEY_CHIP_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-chip-hover-background-color'];
+                });
+                KEY_CHIP_ELEMENTS[i].addEventListener('mouseout', () => {
+                    KEY_CHIP_ELEMENTS[i].style.backgroundColor = '';
+                });
+            }
+
+            const KEY_INPUT_ELEMENTS = document.getElementsByClassName('key_input');
+            for (let i = 0; i < KEY_INPUT_ELEMENTS.length; i++) {
+                KEY_INPUT_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-background-color'];
+                KEY_INPUT_ELEMENTS[i].style.color = settings.theme?.[current_theme]?.keybindings?.['.key-input-color'];
+                KEY_INPUT_ELEMENTS[i].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-border-color'];
+                KEY_INPUT_ELEMENTS[i].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-input-border'];
+                KEY_INPUT_ELEMENTS[i].addEventListener('focus', () => {
+                    KEY_INPUT_ELEMENTS[i].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-focus-border'];
+                    KEY_INPUT_ELEMENTS[i].style.boxShadow = settings.theme?.[current_theme]?.keybindings?.['.key-input-focus-box-shadow'];
+                    KEY_INPUT_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-focus-background-color'];
+                    KEY_INPUT_ELEMENTS[i].style.border = settings.theme?.[current_theme]?.keybindings?.['.key-input-border'];
+                });
+                KEY_INPUT_ELEMENTS[i].addEventListener('blur', () => {
+                    KEY_INPUT_ELEMENTS[i].style.borderColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-border-color'];
+                    KEY_INPUT_ELEMENTS[i].style.boxShadow = '';
+                    KEY_INPUT_ELEMENTS[i].style.backgroundColor = settings.theme?.[current_theme]?.keybindings?.['.key-input-background-color'];
+                });
             }
         }
 

@@ -1,20 +1,20 @@
 [
   {
-    "user_id": "b0c92bb7-6139-48bf-bef5-506113e78eba",
+    "user_id": "384d63c4-6cfb-455b-b750-8ecff6ccb029",
     "username": {
-      "cipher": "FUeQpCfSLN14ciHRiTCjn7bJcvpk",
-      "nonce": "H0fRt/XO5rGkpnEX"
+      "cipher": "T3G87ZHWY0f9xe/8vWpepmSCrpYw",
+      "nonce": "lB41lRJmEmetRH1E"
     },
     "email": {
-      "cipher": "Y4Clzdswr3xWrNG3eFhFUTvPEwMe7w2Anr1bJrazqYpyYkm0/g==",
-      "nonce": "rAMKloyrbrFNxrGV"
+      "cipher": "9vV43p4jT6bNkmzB2oPin3UfNRuMgvbwGgkP/t/Tamw5",
+      "nonce": "PYabz7yi27oqf/df"
     },
     "aes_key_encrypted": {
-      "cipher": "UvMwvD6jQNxq0SKAnV62kkhlMKt0w7Qp3Lf1vjGsh42ompUgMZq5yj/m7g5P2ykAwtDdVRv/CpZY6BIb",
-      "nonce": "aFFnvHqv9O9m+1sT"
+      "cipher": "8ga/JrNh7lsTi/y4KeActtnTP8LDnw3DWITPT0QfGC4FJ9vHZJTiOV4Pn9UdK21/PKQYEHvTZOepJ3Xb",
+      "nonce": "0foMQ/bPBj8GYEaO"
     },
-    "aes_salt": "KuhwrP+TDoEZxbaEYfRckg==",
-    "password": "$argon2id$v=19$m=262144,t=6,p=2$2cnk8qOvRbTH/rdszAYeGg$4Xr5iuhzOasdX8SMhGtfaC6X/TM64WmEbRfwG7bsHmw",
+    "aes_salt": "TNiHwqjxfel4U4syq00xQA==",
+    "password": "$argon2id$v=19$m=262144,t=6,p=2$iltGqZ5Ll/L7C6ZRzl9NrQ$OEjRg4WuU7kus5FOG/FjMLQ13YF2/uOjLMYcXeD3hmQ",
     "profil_picture": "",
     "don't_show_message_behavior_close_file": null,
     "don't_show_message_behavior_new_file": null,
@@ -34,49 +34,33 @@
       "showLineNumbers": true
     },
     "keybindings": {
-      "control+shift+q": "log out",
-      "control+alt+q": "change account",
       "control+s": "save file",
       "control+o": "open file",
       "control+n": "new file",
       "control+w": "close file",
       "meta+f4": "close ide",
       "control+q": "close ide",
+      "control+shift+/": "comment line",
+      "control+shift+k": "remove line",
+      "control+altgraph+dead": "toggle terminal",
+      "control++": "toggle terminal (alternative)",
+      "control+,": "open settings",
+      "control+p": "open editor",
+      "control+shift+p": "open home",
+      "control+shift+q": "log out",
+      "control+alt+q": "change account",
+      "f11": "full screen",
+      "control+f": "find",
+      "control+h": "replace",
       "control+z": "undo",
       "control+y": "redo",
       "control+shift+z": "redo (alternative)",
-      "control+shift+k": "remove line",
-      "control+shift+arrowdown": "duplication down",
-      "control+shift+arrowup": "duplication up",
-      "control+shift+/": "comment line",
-      "control+a": "select all",
-      "shift+meta+arrowdown": "copy line down",
-      "shift+meta+arrowup": "copy line up",
-      "alt+arrowdown": "move line down",
-      "alt+arrowup": "move line up",
-      "alt+shift+arrowdown": "multi cursor down",
-      "alt+shift+arrowup": "multi cursor up",
-      "control+click": "go to definition",
-      "control+p": "go to file",
-      "control+g": "go to line",
-      "control+shift+o": "go to symbol",
-      "control+b": "toggle sidebar",
-      "control+f": "find",
-      "control+shift+f": "find in files",
-      "control+h": "replace",
-      "control+shift+h": "replace in files",
-      "control+shift+p": "command palette",
-      "control+altgraph+dead": "toggle terminal",
       "control+f5": "run file",
+      "control+click": "go to definition",
       "control+shift+f5": "debug",
       "f10": "step over",
       "control+shift+f11": "step into",
-      "shift+f11": "step out",
-      "control+tab": "next tab",
-      "control+shift+tab": "previous tab",
-      "control+shift+t": "reopen closed tab",
-      "control+altgraph+\\": "split editor",
-      "f11": "full screen"
+      "shift+f11": "step out"
     }
   }
 ]

@@ -5,7 +5,7 @@
     Dependencies: electron, path
     Author      : Arthur
     Created     : 2025-07-26
-    Last Update : 2025-08-28
+    Last Update : 2025-11-29
 */
 const { app, ipcMain, BrowserWindow, Menu, dialog } = require('electron');
 const PATH = require('path');
@@ -68,6 +68,13 @@ app.on('activate', () => {
     }
 });
 
+ipcMain.on('toggle-fullscreen', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win) {
+        win.setFullScreen(!win.isFullScreen());
+    }
+});
+
 ipcMain.on('quit-app', () => {
     app.quit();
 });
@@ -101,7 +108,6 @@ ipcMain.on('register-user', (event, _new_user) => {
 
     try {
         fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(data_users, null, 2));
-        console.log("User registered successfully.");
     } catch (err) {
         console.error('Failed to write to users.json:', err);
     }
@@ -161,6 +167,28 @@ ipcMain.on('save-settings-user-connected', (event, _settings) => {
         const userIndex = users.findIndex(u => u.user_id === CONNECTED_USER_ID);
         if (userIndex !== -1) {
             users[userIndex].preferences = _settings;
+            fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
+            USER_INFORMATION = users[userIndex];
+        } else {
+            console.warn('User not found while saving settings.');
+        }
+    } catch (err) {
+        console.error('Failed to save user settings:', err);
+    }
+});
+
+ipcMain.on('save-keybindings-user-connected', (event, _keybindings) => {
+    const PATH_USERS_FILE = PATH.resolve(__dirname, 'src/data/users.json');
+    try {
+        let users = [];
+        if (fs.existsSync(PATH_USERS_FILE)) {
+            const data = fs.readFileSync(PATH_USERS_FILE, 'utf8');
+            users = data.trim() ? JSON.parse(data) : [];
+        }
+
+        const userIndex = users.findIndex(u => u.user_id === CONNECTED_USER_ID);
+        if (userIndex !== -1) {
+            users[userIndex].keybindings = _keybindings;
             fs.writeFileSync(PATH_USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
             USER_INFORMATION = users[userIndex];
         } else {

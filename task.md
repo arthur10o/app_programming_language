@@ -5,11 +5,10 @@
 ### 1.1 General Features
 - [x] User Interface (UI) Design
 - [x] Light and Dark Mode Integration
-- [ ] Language Selection Functionality
+- [x] Language Selection Functionality
 - [ ] GitHub Integration (via Git)
-- [ ] Customizable Keyboard Shortcuts
-- [ ] User Login System (to save individual settings and preferences)
-- [ ] 2FA to secure the connection
+- [x] Customizable Keyboard Shortcuts
+- [x] User Login System (to save individual settings and preferences)
 - [ ] Profile management
 - [x] License Path Added to Credits
 - [ ] Possibility of creating graphical interfaces
@@ -17,9 +16,9 @@
 - [ ] Creating a header file
 - [ ] Creating a custom file editor (file explorer + visual editor)
 - [ ] Added A++ logo in File Explorer for specific files
-- [ ]  Digital signature of IDE binaries
-- [ ]  Verification hash during updates (anti-tampering)
-- [ ]  Redundancy & automatic backup of user projects
+- [ ] Digital signature of IDE binaries
+- [ ] Verification hash during updates (anti-tampering)
+- [ ] Redundancy & automatic backup of user projects
 
 ### 1.2 Code Editor
 - [ ] Code Auto-Completion
@@ -28,8 +27,9 @@
 - [x] Save code to files
 - [x] Load code to files
 - [ ] “Run” Button Linked to the Parser
-- [ ] Auto-Save Functionality
-- [ ] Line Numbering
+- [x] Auto-Save Functionality
+- [ ] Feature to display suggestions
+- [x] Line Numbering
 - [ ] Advanced error handling
 - [ ] Automatic code refactoring using artificial intelligence (AI-powered refactoring)
 - [ ] Documentation generated automatically from code (docstring + schema type)
@@ -47,10 +47,10 @@
 - [x] Save Settings
 - [x] Reset Settings
 - [x] Toggle Light/Dark Mode
-- [ ] Font Size Customization
-- [ ] Font Style Customization
-- [ ] Language Selection
-- [ ] Tab Size Configuration
+- [x] Font Size Customization
+- [x] Font Style Customization
+- [x] Language Selection
+- [x] Tab Size Configuration
 - [ ] Added plugin system for language
 - [ ] Added Hot Reload / Live coding
 - [ ] Enabling/disabling built-in AI features (refacto, doc, bots)

@@ -13,6 +13,9 @@ import init, { verify_password, derive_key_from_password, decrypt_aes_256_gcm } 
 const { shell, ipcRenderer } = require('electron');
 
 let wasmInitialized = false;
+let settings = {};
+let current_translations = {};
+let translations_loaded = false;
 
 (async () => {
     if (!wasmInitialized) {
@@ -20,6 +23,16 @@ let wasmInitialized = false;
         wasmInitialized = true;
     }
 })();
+
+document.addEventListener('DOMContentLoaded', async () => {
+  ipcRenderer.send('get-user-connected-information');
+  ipcRenderer.once('received-connected-user-information', async (event, _user_settings) => {
+    settings = _user_settings;
+    await load_translation(settings?.preferences?.['language'] || 'en');
+    translations_loaded = true;
+    update_theme();
+  });
+});
 
 document.addEventListener('click', (event) => {
   const TARGET = event.target;
@@ -30,19 +43,24 @@ document.addEventListener('click', (event) => {
   }
 });
 
-ipcRenderer.on('show-pop-up-valid-session', (event, _connected_user_id, _user_with_session, _connected_user_file) => {
+ipcRenderer.on('show-pop-up-valid-session', async (event, _connected_user_id, _user_with_session, _connected_user_file) => {
+  while (!translations_loaded) {
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
+
   showNotification({
-      title: "Session verification",
-      message: "Please enter your password.",
+      title: t('session_verification'),
+      message: t('enter_password'),
       type: "info",
       inputs: [
-          { type: 'text', name: 'password', placeholder: 'Enter your password'}
+          { type: 'text', name: 'password', placeholder: t('placeholder_password')}
       ],
       buttons: [
-          { label: "Submit", action: async (_password) => {
+          { label: t('submit_button'), action: async (_password) => {
             await verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file);
           }},
-          { label: "Quit", action: () => ipcRenderer.send('quit-app') }
+          { label: t('logout_button'), action: () => window.location.href = '../login/login.html' },
+          { label: t('quit_button'), action: () => ipcRenderer.send('quit-app') }
       ]
   });
   setTimeout(() => {
@@ -68,7 +86,7 @@ function showNotification({
   type = "info",
   inputs = [],
   buttons = [
-    { label: "Close", action: null }
+    { label: t("close_button"), action: null }
   ],
   autoClose = 0
 }) {
@@ -210,10 +228,10 @@ function showNotification({
   popup.className = `popup popup-${type}`;
 
   const titleElem = document.createElement('h2');
-  titleElem.textContent = title;
+  titleElem.textContent = t(title);
 
   const messageElem = document.createElement('p');
-  messageElem.textContent = message;
+  messageElem.textContent = t(message);
 
   popup.appendChild(titleElem);
   popup.appendChild(messageElem);
@@ -246,7 +264,7 @@ function showNotification({
 
   buttons.forEach(btn => {
     const button = document.createElement('button');
-    button.textContent = btn.label;
+    button.textContent = t(btn.label);
     button.onclick = () => {
       popup.classList.add('fade-out');
       overlay.classList.add('fade-out');
@@ -285,7 +303,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
     setTimeout(() => {
       document.getElementById('loader').style.display = 'none';
     }, 600);
-    ipcRenderer.send('show-popup', 'Session Verification Failed', 'User session mismatch detected. Please restart the application.', 'error', [], [{ label: "Close", action: null }], 0);
+    ipcRenderer.send('show-popup', t('session_verification_failed'), t('user_session_mismatch'), 'error', [], [{ label: t('close_button'), action: null }], 0);
     return;
   }
 
@@ -297,17 +315,18 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
       document.getElementById('loader').style.display = 'none';
     }, 600);
     showNotification({
-        title: "Invalid Password",
-        message: "The password entered is incorrect. Please try again.",
+        title: t('invalid_password'),
+        message: t('password_entered_is_incorrect'),
         type: "error",
         inputs: [
-            { type: 'text', name: 'password', placeholder: 'Enter your password' }
+            { type: 'text', name: 'password', placeholder: t('placeholder_password') }
         ],
         buttons: [
-            { label: "Submit", action: async (_password) => {
+            { label: t('submit_button'), action: async (_password) => {
               await verify_session_is_correct(_password, _connected_user_id, _user_with_session, _connected_user_file);
             }},
-            { label: "Quit", action: () => ipcRenderer.send('quit-app') }
+            { label: t('logout_button'), action: () => window.location.href = '../login/login.html' },
+            { label: t('quit_button'), action: () => ipcRenderer.send('quit-app') }
         ]
     });
     return;
@@ -327,7 +346,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
         setTimeout(() => {
           document.getElementById('loader').style.display = 'none';
         }, 600);
-        ipcRenderer.send('show-popup', 'Decryption Error', `Invalid AES key size. Expected 32 bytes, received ${AES_KEY_BYTES.length}.`, 'error', [], [{ label: "Close", action: null }], 0);
+        ipcRenderer.send('show-popup', t('decryption_error'),  t_replace('error_invalid_aes_key_size', { received: AES_KEY_BYTES.length }), 'error', [], [{ label: t('close_button'), action: null }], 0);
         return;
     }
 
@@ -350,7 +369,7 @@ async function verify_session_is_correct(_values, _connected_user_id, _user_with
     setTimeout(() => {
       document.getElementById('loader').style.display = 'none';
     }, 600);
-    ipcRenderer.send('show-popup', 'Session Verification Error', 'An error occurred while verifying your session. Please try again or log in again.', 'error', [], [{ label: "Login", action: () => window.location.href = '../app/login/login.html' }], 0);
+    ipcRenderer.send('show-popup', t('session_verification_error'), t('error_occured_while_verifying_session'), 'error', [], [{ label: t('button_submit_login'), action: () => window.location.href = '../app/login/login.html' }], 0);
   }
 }
 
@@ -362,4 +381,46 @@ function base64_to_bytes(_base64) {
         BYTES[i] = BINARY.charCodeAt(i);
     }
     return BYTES;
+}
+
+async function load_translation(_lang) {
+  try {
+    const RESPONSE = await fetch(`../../data/${_lang}.json`);
+    const TRANSLATION = await RESPONSE.json();
+    current_translations = TRANSLATION;
+
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+      const KEY = element.getAttribute('data-i18n');
+      if (TRANSLATION[KEY]) {
+        element.innerText = TRANSLATION[KEY];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+      const KEY = element.getAttribute('data-i18n-placeholder');
+      if (TRANSLATION[KEY]) {
+        element.placeholder = TRANSLATION[KEY];
+      }
+    });
+  } catch (err) {
+    console.error(`Translation loading failed for language "${_lang}"`, err);
+  }
+}
+
+function t(_key) {
+  return current_translations[_key] || _key;
+}
+
+function t_replace(key, replacements = {}) {
+  let text = current_translations[key] || key;
+  for (const [placeholder, value] of Object.entries(replacements)) {
+    text = text.replace(`{${placeholder}}`, value);
+  }
+  return text;
+}
+
+async function wait_for_translation() {
+  while(!window.translations_loaded) {
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
 }

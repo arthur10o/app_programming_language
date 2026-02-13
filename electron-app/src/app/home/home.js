@@ -5,7 +5,7 @@
   Description : JavaScript file to manage the home in A++ IDE
   Author      : Arthur
   Created     : 2025-07-26
-  Last Update : 2025-08-21
+  Last Update : 2025-09-28
   ==============================================================================
 */
 document.addEventListener('DOMContentLoaded', () => {
@@ -25,18 +25,4 @@ document.addEventListener('DOMContentLoaded', () => {
     SETTINGS_BUTTON.addEventListener('click', () => {
         window.location.href = '../settings/settings.html';
     });
-});
-
-function toggle_menu() {
-    const menu = document.getElementById('dropdown-menu');
-    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-}
-
-window.addEventListener('click', function (e) {
-    const trigger = document.querySelector('.menu-trigger');
-    const menu = document.getElementById('dropdown-menu');
-
-    if (!trigger.contains(e.target)) {
-        menu.style.display = 'none';
-    }
 });
