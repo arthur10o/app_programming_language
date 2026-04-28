@@ -1,5 +1,7 @@
 node_modules/
 
+electron-app/src/data/connected_user.json
+
 target/
 
 .DS_Store
