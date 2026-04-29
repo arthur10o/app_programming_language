@@ -16,6 +16,9 @@ target/
 src/data/connected_user.json
 src/data/users.json
 
+# Build
+dist/
+
 # Backup
 *.rs.bk
 

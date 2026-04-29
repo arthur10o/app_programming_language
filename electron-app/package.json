@@ -5,20 +5,29 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron .",
-    "wasm": "cd rust-crypto-lib && wasm-pack build --target web",
-    "dist": "npm run wasm && electron-builder",
-    "build": "tsc",
-    "dev": "ts-node src/main/main.ts",
+
+    "build:ts": "tsc",
+    "build:wasm": "cd rust-crypto-lib && wasm-pack build --target web",
+    "build": "npm run build:ts && npm run build:wasm",
+
+    "dist": "npm run build && electron-builder",
+
+    "start": "npm run build && electron .",
+
+    "dev": "tsc -w",
     "lint": "eslint src --ext .ts",
+
     "format": "prettier --write src"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arthur10o/app_programming_language.git"
   },
+  "author": {
+    "name": "Arthur",
+    "email": "test@test.test"
+  },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/arthur10o/app_programming_language/issues"
@@ -39,12 +48,10 @@
     "appId": "com.aplusplus.ide",
     "productName": "A++ IDE",
     "files": [
-      "src/**/*",
-      "main.js",
-      "preload.js",
-      "rust/pkg/**/*",
-      "package.json",
-      "public/**/*"
+      "dist/**/*",
+      "public/**/*",
+      "rust-crypto-lib/pkg/**/*",
+      "package.json"
     ],
     "linux": {
       "target": [
