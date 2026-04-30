@@ -1,15 +1,3 @@
-/*
-    ============================================================================
-    File        : lib.rs
-    Version     : 1.0
-    Description : Library of hash and password verification functions
-                  using Argon2 for the A++ IDE project. Designed
-                  for use with WebAssembly (wasm-bindgen).
-    Author      : Arthur
-    Created     : 2025-08-19
-    Last Update : 2025-09-01
-    ============================================================================
-*/
 use wasm_bindgen::prelude::*;
 
 use argon2::{Argon2, PasswordHasher, password_hash::SaltString, PasswordVerifier, password_hash::PasswordHash, Params, Algorithm, Version};
