@@ -1,14 +1,3 @@
-/*
-  ==============================================================================
-  File        : styleManager.js
-  Version     : 1.0
-  Description : JavaScript file to manage the styles in A++ IDE
-                - Functionality to update styles based on user settings
-  Author      : Arthur
-  Created     : 2025-07-26
-  Last Update : 2025-11-29
-  ==============================================================================
-*/
 const fs = require('fs');
 const path = require('path');
 
