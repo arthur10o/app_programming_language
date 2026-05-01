@@ -9,7 +9,7 @@
     "build:ts": "tsc",
     "copy:static": "mkdir -p dist/src/ && cp -r src/app dist/src/app && cp -r src/common dist/src/common && cp -r public dist/src/public",
     "copy:data": "cp -r src/data/ dist/src/data/",
-    "build:wasm": "cd rust-crypto-lib && wasm-pack build --target web",
+    "build:wasm": "cd rust-crypto-lib && wasm-pack build --target web --out-dir ../dist/wasm/crypto_lib",
     "build": "npm run build:ts && npm run copy:static && npm run copy:data && npm run build:wasm",
 
     "dist": "npm run build && electron-builder",

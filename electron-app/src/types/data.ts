@@ -20,6 +20,10 @@ interface SessionData {
     dateOfExpiration: number;
 };
 
+export interface DerivedKey {
+    key: string;
+}
+
 interface EncryptedField {
     cipher: Cipher;
     nonc: Nonce;
@@ -33,6 +37,7 @@ interface FontSize {
 interface EditorPreferences {
     theme: Theme;
     fontSize: FontSize;
+    fontUnit: FontUnit;
     fontFamily: FontFamily;
     language: Language;
     autosave: boolean;
@@ -76,7 +81,7 @@ interface Keybindings {
 };
 
 interface User {
-    userId: string,
+    userId: UserId,
     username: EncryptedField;
     email: EncryptedField;
     aesKeyEncrypted: EncryptedField;

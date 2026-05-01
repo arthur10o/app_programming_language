@@ -50,4 +50,4 @@ export class TranslationManager implements TranslationService {
     }
 }
 
-export const tranlationManager = new TranslationManager();
+export const translationManager = new TranslationManager();

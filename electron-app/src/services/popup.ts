@@ -1,5 +1,5 @@
 import { PopupOptions, PopupInput, PopupButton } from "../types/popup";
-import { tranlationManager } from "./translation";
+import { translationManager } from "./translation";
 
 export class PopupManager {
     private static instance: PopupManager;
@@ -167,10 +167,10 @@ export class PopupManager {
         const popup = document.createElement('div');
         popup.className = `popup popup-${options.type}`;
         const titleElement = document.createElement('h2');
-        titleElement.textContent = tranlationManager.t(options.title);
+        titleElement.textContent = translationManager.t(options.title);
         popup.appendChild(titleElement);
         const messageElement = document.createElement('p');
-        messageElement.textContent = tranlationManager.t(options.message);
+        messageElement.textContent = translationManager.t(options.message);
         popup.appendChild(messageElement);
         const inputValues: Record<string, string> = {};
         options.inputs?.forEach((input) => {
@@ -193,7 +193,7 @@ export class PopupManager {
             inputElement = document.createElement('input');
             inputElement.type = input.type || 'text';
         }
-        inputElement.placeholder = tranlationManager.t(input.placeholder || '');
+        inputElement.placeholder = translationManager.t(input.placeholder || '');
         inputElement.name = input.name;
         inputElement.spellcheck = false;
         return inputElement;
