@@ -51,7 +51,7 @@
 - [x] Font Style Customization
 - [x] Language Selection
 - [x] Tab Size Configuration
-- [ ] Added plugin system for language
+- [x] Added plugin system for language
 - [ ] Added Hot Reload / Live coding
 - [ ] Enabling/disabling built-in AI features (refacto, doc, bots)
 - [ ] Settings for customizing the file editor
