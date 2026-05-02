@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
 
-    "build:wasm": "cd rust-crypto-lib && wasm-pack build --target web --out-dir ../dist/wasm/crypto_lib",
-    "build": "npm run build:wasm",
+    "build:wasm:rust:crypto": "cd rust-crypto-lib && wasm-pack build --target web --out-dir ../src/wasm/crypto_lib",
+    "build": "npm run build:wasm:rust:crypto",
 
     "dist": "npm run build && electron-builder",
 
