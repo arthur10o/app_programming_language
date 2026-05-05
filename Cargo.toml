@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "electron-app/rust-crypto-lib",
+    "electron-app/rust-interpreter"
+]
