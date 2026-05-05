@@ -1,8 +1,7 @@
 use serde::Serialize;
-use wasm_bindgen::prelude::*;
 
 #[derive(Debug, Clone, Serialize)]
-enum Literal {
+pub enum Literal {
     Bool(bool),
     String(String),
     Integer(i64),
@@ -10,14 +9,14 @@ enum Literal {
 }
 
 #[derive(Debug, Clone, Serialize)]
-enum Keyword {
+pub enum Keyword {
     Let, Const, Func, Class,
     For, While, If, Else,
     Return, Break, Continue, Pass
 }
 
 #[derive(Debug, Clone, Serialize)]
-enum Operator {
+pub enum Operator {
     Plus, PlusPlus, PlusEqual, 
     Minus, MinusMinus, MinusEqual,
     Star, StarStar, StarEqual,
@@ -28,7 +27,7 @@ enum Operator {
 }
 
 #[derive(Debug, Clone, Serialize)]
-enum Punctuation {
+pub enum Punctuation {
     Comma, Semicolon, Colon,
     Dot, LeftParenthesis,
     RightParenthesis, LeftBrace,
@@ -36,7 +35,7 @@ enum Punctuation {
 }
 
 #[derive(Debug, Clone, Serialize)]
-enum TokenKind {
+pub enum TokenKind {
     Literal(Literal),
     Identifier(String),
     Keyword(Keyword),
@@ -78,13 +77,13 @@ impl<'a> Lexer<'a> {
     pub fn tokenize(mut self) -> (Vec<Token>, Vec<LexerError>) {
         let mut tokens = Vec::new();
 
-        while let Some(&c) = self.input.peek() {
+        while let Some(&_c) = self.input.peek() {
             self.skip_whitespace();
             self.skip_comment();
 
-            let Some(&c) = self.input.peek() else { break };
+            let Some(&_c) = self.input.peek() else { break };
 
-            let token = match c {
+            let token = match _c {
                 '0'..='9' => self.read_number(),
                 'a'..='z' | 'A'..='Z' | '_' =>  self.read_identifier(),
                 '"' | '\'' => self.read_string(),
@@ -350,6 +349,7 @@ impl<'a> Lexer<'a> {
                     TokenKind::Operator(Operator::Slash)
                 }
             },
+            '%' => TokenKind::Operator(Operator::Modulo),
             '=' => {
                 if self.match_char('=') {
                     TokenKind::Operator(Operator::EqualEqual)
