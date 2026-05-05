@@ -1,18 +1,6 @@
-/*
-  ==============================================================================
-  File        : editor.js
-  Version     : 1.0
-  Description : JavaScript file to manage the editor in A++ IDE
-                - Save and load with a button
-                - Auto-save based on user settings
-                - Dynamic updating of editor content with formatting
-                - Syntax highlighting based on user settings
-                - IPC event management for interaction with the backend
-  Author      : Arthur
-  Created     : 2025-07-26
-  Last Update : 2025-10-05
-  ==============================================================================
-*/
+import init, { interpret_code } from '../../wasm/interpreter_lib/rust_interpreter.js';
+
+let wasmInitialized = false;
 let user_settings = {};
 let auto_save_interval = null;
 let auto_save_debounce = null;
@@ -20,9 +8,19 @@ let last_saved_content = '';
 let can_auto_save = false;
 let wasAtBottomBeforeInput = false;
 
-window.addEventListener('DOMContentLoaded', () => {
-    const {syntax_highlighting} = require('../../common/syntaxHighlighting.js');
+(async () => {
+    if (!wasmInitialized) {
+        await init();
+        wasmInitialized = true;
+    }
+})();
 
+window.addEventListener('DOMContentLoaded', async () => {
+    const {syntax_highlighting} = require('../../common/syntaxHighlighting.js');
+    if (!wasmInitialized) {
+        await init();
+        wasmInitialized = true;
+    }
     const BUTTON_LOAD_CODE = document.getElementById('load-code');
     const BUTTON_SAVE_CODE = document.getElementById('save-code');
     const CODE_EDITOR = document.getElementById('code-editor');
@@ -59,6 +57,14 @@ window.addEventListener('DOMContentLoaded', () => {
         CODE_EDITOR.parentNode.style.position = 'relative';
         CODE_EDITOR.parentNode.insertBefore(lineNumberDiv, CODE_EDITOR);
     }
+
+    document.getElementById('run-code').addEventListener('click', async () => {
+        const result = await interpret_code(
+            document.getElementById('code-editor').innerText
+        );
+
+        alert(JSON.stringify(result, null, 2));
+    });
 
     function getNumericStyleProperty(el, prop) {
         const val = window.getComputedStyle(el)[prop];

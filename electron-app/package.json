@@ -5,17 +5,13 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
+    "build:wasm:rust:interpreter": "cd rust-interpreter && wasm-pack build --target web --out-dir ../src/wasm/interpreter_lib",
     "build:wasm:rust:crypto": "cd rust-crypto-lib && wasm-pack build --target web --out-dir ../src/wasm/crypto_lib",
-    "build": "npm run build:wasm:rust:crypto",
-
+    "build": "npm run build:wasm:rust:crypto && npm run build:wasm:rust:interpreter",
     "dist": "npm run build && electron-builder",
-
     "start": "npm run build && electron .",
-
     "dev": "tsc -w",
     "lint": "eslint src --ext .ts",
-
     "format": "prettier --write src"
   },
   "repository": {
@@ -36,7 +32,7 @@
     "@types/node": "^25.6.0",
     "@typescript-eslint/eslint-plugin": "^8.59.1",
     "@typescript-eslint/parser": "^8.59.1",
-    "electron": "^41.3.0",
+    "electron": "^41.5.0",
     "electron-builder": "^26.7.0",
     "eslint": "^10.2.1",
     "prettier": "^3.8.3",
@@ -53,11 +49,26 @@
       "package.json"
     ],
     "extraResources": [
-        { "from": "dist/src/app/", "to": "app/" },
-        { "from": "dist/src/common/", "to": "common/" },
-        { "from": "dist/src/data/", "to": "data/" },
-        { "from": "dist/renderer.js", "to": "renderer.js" },
-        { "from": "dist/wasm/crypto_lib/", "to": "wasm/crypto_lib/" }
+      {
+        "from": "dist/src/app/",
+        "to": "app/"
+      },
+      {
+        "from": "dist/src/common/",
+        "to": "common/"
+      },
+      {
+        "from": "dist/src/data/",
+        "to": "data/"
+      },
+      {
+        "from": "dist/renderer.js",
+        "to": "renderer.js"
+      },
+      {
+        "from": "dist/wasm/crypto_lib/",
+        "to": "wasm/crypto_lib/"
+      }
     ],
     "linux": {
       "target": [
