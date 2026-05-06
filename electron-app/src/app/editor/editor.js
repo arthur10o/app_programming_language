@@ -62,8 +62,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         const result = await interpret_code(
             document.getElementById('code-editor').innerText
         );
+        const tokens = result[0];
+        const errors_lexer = result[1];
+        const variables = result[2];
+        const errors_parser = result[3];
 
-        alert(JSON.stringify(result, null, 2));
+        alert("Tokens:\n" + JSON.stringify(tokens, null, 2));
+        alert("Errors Lexer:\n" + JSON.stringify(errors_lexer, null, 2));
+        alert("Variables:\n" + JSON.stringify(variables, null, 2));
+        alert("Errors Parser:\n" + JSON.stringify(errors_parser, null, 2));
     });
 
     function getNumericStyleProperty(el, prop) {

@@ -8,14 +8,14 @@ pub enum Literal {
     Float(f64)
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub enum Keyword {
     Let, Const, Func, Class,
     For, While, If, Else,
     Return, Break, Continue, Pass
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub enum Operator {
     Plus, PlusPlus, PlusEqual, 
     Minus, MinusMinus, MinusEqual,
@@ -26,7 +26,7 @@ pub enum Operator {
     GreaterEqual, And, Or, Not
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub enum Punctuation {
     Comma, Semicolon, Colon,
     Dot, LeftParenthesis,
@@ -62,6 +62,50 @@ pub struct Lexer<'a> {
     line: usize,
     column: usize,
     errors: Vec<LexerError>
+}
+
+impl TokenKind {
+    pub fn as_str(&self) -> String {
+        match self {
+            TokenKind::Keyword(k) => format!("{:?}", k),
+            TokenKind::Identifier(name) => name.clone(),
+            TokenKind::Literal(lit) => match lit {
+                Literal::Integer(i) => i.to_string(),
+                Literal::Float(f) => f.to_string(),
+                Literal::Bool(b) =>  b.to_string(),
+                Literal::String(s) => s.clone()
+            },
+            TokenKind::Operator(op) => match op {
+                Operator::Equal => "=".to_string(),
+                Operator::Plus => "+".to_string(),
+                Operator::PlusPlus => "++".to_string(),
+                Operator::PlusEqual => "+=".to_string(),
+                Operator::Minus => "-".to_string(),
+                Operator::MinusEqual => "-=".to_string(),
+                Operator::MinusMinus => "--".to_string(),
+                Operator::Star => "*".to_string(),
+                Operator::StarStar => "**".to_string(),
+                Operator::StarEqual => "*=".to_string(),
+                Operator::Slash => "/".to_string(),
+                Operator::SlashEqual => "/=".to_string(),
+                Operator::Modulo => "%".to_string(),
+                Operator::EqualEqual => "==".to_string(),
+                Operator::NotEqual => "!=".to_string(),
+                Operator::Less => "<".to_string(),
+                Operator::LessEqual => "<=".to_string(),
+                Operator::Greater => ">".to_string(),
+                Operator::GreaterEqual => ">=".to_string(),
+                Operator::And => "&&".to_string(),
+                Operator::Or => "||".to_string(),
+                Operator::Not => "!".to_string(),
+            },
+            TokenKind::Punctuation(p) => match p {
+                Punctuation::Colon => ":".to_string(),
+                Punctuation::Semicolon => ";".to_string(),
+                _ => format!("{:?}", p)
+            }
+        }
+    }
 }
 
 impl<'a> Lexer<'a> {

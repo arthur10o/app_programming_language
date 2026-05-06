@@ -1,6 +1,6 @@
 # app_programming_language
 
-`A++ Programing Language` is a project that allows you to write and run `A++`.
+`A++ Programming Language` is a project that allows you to write and run `A++`.
 
 ## Language Documentation
 ### Operators
@@ -9,9 +9,9 @@
 | `+`       | Addition               |
 | `++`      | Increment              |
 | `+=`      | Add and assign         |
-| `-`       | Substraction           |
+| `-`       | Subtraction            |
 | `--`      | Decrement              |
-| `-=`      | Substract and assign   |
+| `-=`      | Subtract and assign    |
 | `*`       | Multiplication         |
 | `**`      | Power                  |
 | `*=`      | Multiply and assign    |
@@ -42,8 +42,41 @@
 | `while`   | Loop with condition    |
 | `return`  | Return a value         |
 | `break`   | Exit a loop            |
-| `continue`| Skip iteration        |
+| `continue`| Skip iteration         |
 | `pass`    | No operation           |
+
+### Variables and Constants
+
+In `A++`, variables are declared using `var` and can be modified, whereas constants are declared using `const` and cannot be reassigned after initialization.
+
+#### Syntax
+
+```JS
+    var variableName: Type = value;
+    const constantName: Type = value;
+```
+
+#### Examples
+
+```JS
+    var age: Integer = 30;                  // Integer variable
+    const pi: Float = 3.14159;              // Floating-point constant
+    var isActive: Boolean = true;           // Boolean variable
+    const greeting: String = "Hello World"; // String constant
+
+    // Type inference example
+    var score = 100;                        // Integer inferred from value
+    const message = "Hello World";          // String inferred from value
+
+    // Declaration without initialization
+    var counter: Integer;                   // Must be initialized before use
+```
+
+#### Notes
+
+- Constants must be initialized when they are declared.
+- If the type is omitted, A++ attempts to infer it from the initial value.
+- Variables can be declared without initialization but using them before they are assigned a value will result in an error.
 
 ### Literals
 | Type      | Example            |Description             |

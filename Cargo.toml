@@ -3,3 +3,4 @@ members = [
     "electron-app/rust-crypto-lib",
     "electron-app/rust-interpreter"
 ]
+resolver = "2"
